@@ -1,0 +1,120 @@
+[
+	{
+		"class" : "RPG::Recipe",
+		"@id" : 1,
+		"@name" : "Sandwich",
+		"@description" : "A lunchtime classic. Restores a small amount of HP.",
+		"@success_rate" : 0.80,
+		"@actor_id" : 1,
+		"@ingredients" :
+		[
+			{
+				"class" : "RPG::Recipe::Ingredient",
+				"@type" : 0,
+				"@item_id" : 20
+			},
+			{
+				"class" : "RPG::Recipe::Ingredient",
+				"@type" : 0,
+				"@category_id" : 8
+			},
+			{
+				"class" : "RPG::Recipe::Ingredient",
+				"@type" : 1,
+				"@category_id" : 6,
+				"@level" : 1
+			}
+		],
+		"@effects" : 
+		[
+			{
+				"class" : "RPG::Recipe::Effect",
+				"@type" : 0,
+				"@code" : 11,
+				"@data_id" : 0,
+				"@value1" : 0.05,
+				"@value2" : 0
+			},
+			{
+				"class" : "RPG::Recipe::Effect",
+				"@type" : 1,
+				"@code" : 11,
+				"@data_id" : 0,
+				"@value1" : 0.02,
+				"@value2" : 0
+			},
+			{
+				"class" : "RPG::Recipe::Effect",
+				"@type" : 2,
+				"@code" : 11,
+				"@data_id" : 0,
+				"@value1" : 0.01,
+				"@value2" : 0
+			},
+			{
+				"class" : "RPG::Recipe::Effect",
+				"@type" : 3,
+				"@code" : 11,
+				"@data_id" : 0,
+				"@value1" : 0.05,
+				"@value2" : 0
+			}
+		]
+	},
+	{
+		"class" : "RPG::Recipe",
+		"@id" : 2,
+		"@name" : "Cabbage Roll",
+		"@description" : "Juicy morsels of meat wrapped in tender cabbage leaves. Restores a small amount of TP.",
+		"@success_rate" : 0.75,
+		"@actor_id" : 2,
+		"@ingredients" :
+		[
+			{
+				"class" : "RPG::Recipe::Ingredient",
+				"@type" : 0,
+				"@item_id" : 25
+			},
+			{
+				"class" : "RPG::Recipe::Ingredient",
+				"@type" : 0,
+				"@item_id" : 26
+			}
+		],
+		"@effects" : 
+		[
+			{
+				"class" : "RPG::Recipe::Effect",
+				"@type" : 0,
+				"@code" : 12,
+				"@data_id" : 0,
+				"@value1" : 0.05,
+				"@value2" : 0
+			},
+			{
+				"class" : "RPG::Recipe::Effect",
+				"@type" : 1,
+				"@code" : 12,
+				"@data_id" : 0,
+				"@value1" : 0.02,
+				"@value2" : 0
+			},
+			{
+				"class" : "RPG::Recipe::Effect",
+				"@type" : 2,
+				"@code" : 12,
+				"@data_id" : 0,
+				"@value1" : 0.01,
+				"@value2" : 0
+			},
+			{
+				"class" : "RPG::Recipe::Effect",
+				"@type" : 3,
+				"@code" : 12,
+				"@data_id" : 0,
+				"@value1" : 0.05,
+				"@value2" : 0
+			}
+		]
+	}
+]

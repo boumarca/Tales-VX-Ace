@@ -1,0 +1,128 @@
+[
+	{
+		"class" : "RPG::Capacity",
+		"@id" : 1,
+		"@name" : "Strength",
+		"@icon_index" : 11,
+		"@description" : "Increase P.Atk by 5%.",
+		"@sp_cost" : 2,
+		"@ctype_id" : 1,
+		"@features" : 
+		[
+			{
+				"class" : "RPG::BaseItem::Feature",
+				"@code" : 21,
+				"@data_id" : 2,
+				"@value" : 1.05
+			}
+		]
+	},
+	{
+		"class" : "RPG::Capacity",
+		"@id" : 2,
+		"@name" : "Defence",
+		"@icon_index" : 11,
+		"@description" : "Increase P.Def by 5%.",
+		"@sp_cost" : 2,
+		"@ctype_id" : 1,
+		"@features" : 
+		[
+			{
+				"class" : "RPG::BaseItem::Feature",
+				"@code" : 21,
+				"@data_id" : 3,
+				"@value" : 1.05
+			}
+		]
+	},
+	{
+		"class" : "RPG::Capacity",
+		"@id" : 3,
+		"@name" : "Magic",
+		"@icon_index" : 11,
+		"@description" : "Increase M.Atk by 5%.",
+		"@sp_cost" : 2,
+		"@ctype_id" : 1,
+		"@features" : 
+		[
+			{
+				"class" : "RPG::BaseItem::Feature",
+				"@code" : 21,
+				"@data_id" : 4,
+				"@value" : 1.05
+			}
+		]
+	},
+	{
+		"class" : "RPG::Capacity",
+		"@id" : 4,
+		"@name" : "Resist",
+		"@icon_index" : 11,
+		"@description" : "Increase M.Def by 5%.",
+		"@sp_cost" : 2,
+		"@ctype_id" : 1,
+		"@features" :
+		[		
+			{
+				"class" : "RPG::BaseItem::Feature",
+				"@code" : 21,
+				"@data_id" : 5,
+				"@value" : 1.05
+			}
+		]
+	},
+	{
+		"class" : "RPG::Capacity",
+		"@id" : 5,
+		"@name" : "Special",
+		"@icon_index" : 12,
+		"@description" : "Trigger a Mystic Arte during Over Limit. Hold [Normal Attack] after an Arcane Arte.",
+		"@sp_cost" : 10,
+		"@ctype_id" : 2,
+		"@features" :
+		[
+			{
+				"class" : "RPG::BaseItem::Feature",
+				"@code" : 0,
+				"@data_id" : 0,
+				"@value" : 0
+			}
+		]
+	},
+	{
+		"class" : "RPG::Capacity",
+		"@id" : 6,
+		"@name" : "HP Gain",
+		"@icon_index" : 13,
+		"@description" : "Recover 5% HP when defeating an enemy.",
+		"@sp_cost" : 4,
+		"@ctype_id" : 3,
+		"@features" :
+		[
+			{
+				"class" : "RPG::BaseItem::Feature",
+				"@code" : 0,
+				"@data_id" : 0,
+				"@value" : 0
+			}
+		]
+	},
+	{
+		"class" : "RPG::Capacity",
+		"@id" : 7,
+		"@name" : "TP Gain",
+		"@icon_index" : 13,
+		"@description" : "Recover 2% HP when defeating an enemy.",
+		"@sp_cost" : 4,
+		"@ctype_id" : 3,
+		"@features" : 
+		[
+			{
+				"class" : "RPG::BaseItem::Feature",
+				"@code" : 0,
+				"@data_id" : 0,
+				"@value" : 0
+			}
+		]
+	}
+]
