@@ -60,6 +60,7 @@ class Window_ItemHelp < Window_ToggleHelp
   #     item : Skills and items etc.
   #--------------------------------------------------------------------------
   def set_item(item)
+    clear
     set_picture(item ? item.image : nil)
     set_subtype(item ? parse_subtype(item) : "")
     set_params(item ? item.params : nil) if item.is_a?(RPG::EquipItem)
