@@ -9,14 +9,18 @@ class Window_SynthesisLevelup < Window_Modal
   #--------------------------------------------------------------------------
   # * Constants
   #--------------------------------------------------------------------------
-  WINDOW_WIDTH = 304  
+  WINDOW_WIDTH    = 304 
+  ITEM_LIST_SIZE  = 12 
   #--------------------------------------------------------------------------
   # * Object Initialization
   #--------------------------------------------------------------------------
   def initialize(x, y, level)
     super(x, y, window_width, window_height) 
     @level = level
+    @page = 1
     setup_new_items
+    draw_header
+    draw_page_number
   end
   #--------------------------------------------------------------------------
   # * Get Window Height
@@ -28,7 +32,7 @@ class Window_SynthesisLevelup < Window_Modal
   # * Get Window Height
   #--------------------------------------------------------------------------
   def window_height
-    fitting_height(14)
+    fitting_height(ITEM_LIST_SIZE + 2)
   end
   #--------------------------------------------------------------------------
   # * Object Initialization
@@ -38,7 +42,6 @@ class Window_SynthesisLevelup < Window_Modal
     @new_items += $data_items.select {|item| newly_craftable?(item) }
     @new_items += $data_weapons.select {|item| newly_craftable?(item) }
     @new_items += $data_armors.select {|item| newly_craftable?(item) }
-    puts @new_items.to_s 
   end
   #--------------------------------------------------------------------------
   # * Is Item Newly Craftable
@@ -46,4 +49,16 @@ class Window_SynthesisLevelup < Window_Modal
   def newly_craftable?(item)
     !item.nil? && item.synthesis_level == @level
   end
+  #--------------------------------------------------------------------------
+  # * Draw Header
+  #--------------------------------------------------------------------------
+  def draw_header
+    draw_text(0,0, contents.width, line_height, Vocab::NEW_ITEMS, Bitmap::ALIGN_CENTER)
+  end
+  #--------------------------------------------------------------------------
+  # * Draw Page Number
+  #-------------------------------------------------------------------------- 
+  def draw_page_number
+    draw_text(0, line_height * (ITEM_LIST_SIZE + 1), contents.width, line_height, sprintf("%d/%d", @page, @new_items.size / ITEM_LIST_SIZE + 1), Bitmap::ALIGN_RIGHT)
+  end 
 end

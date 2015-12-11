@@ -192,6 +192,7 @@ module Vocab
   MATERIAL_ERROR        = "You don't have all the materials!"
   INVENTORY_FULL        = "You can't carry anymore %s"
   CONFIRM_CRAFT         = "Craft %s?"
+  NEW_ITEMS             = "New craftable items!"
   
   #Yes/No
   YES                   = "Yes"
