@@ -136,13 +136,7 @@ class Scene_Synthesis < Scene_ItemBase
         SynthesisManager.reset      
         SynthesisManager.item = item
         if SynthesisManager.synthesizable?(item)
-          Sound.play_use_item
-          SynthesisManager.make_item
-          #display_results
-          @item_window.refresh
-          @material_window.refresh
-          @level_window.refresh
-          @item_window.activate
+          call_confirm_window(sprintf(Vocab::CONFIRM_CRAFT, item.name), method(:process_cooking), nil, @item_window)
         else
           Sound.play_buzzer
           @system_window = Window_SystemMessage.new(Vocab::MATERIAL_ERROR)
@@ -154,6 +148,18 @@ class Scene_Synthesis < Scene_ItemBase
         @system_window.change_context(@item_window)
       end
     end
+  end
+  #--------------------------------------------------------------------------
+  # * Process cooking
+  #--------------------------------------------------------------------------
+  def process_cooking
+    Sound.play_use_item
+    SynthesisManager.make_item
+    #display_results
+    @item_window.refresh
+    @material_window.refresh
+    @level_window.refresh
+    @item_window.activate
   end
   #--------------------------------------------------------------------------
   # * Display Results

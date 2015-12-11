@@ -191,6 +191,7 @@ module Vocab
   MATERIALS             = "Required Materials"
   MATERIAL_ERROR        = "You don't have all the materials!"
   INVENTORY_FULL        = "You can't carry anymore %s"
+  CONFIRM_CRAFT         = "Craft %s?"
   
   #Yes/No
   YES                   = "Yes"

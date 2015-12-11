@@ -90,10 +90,10 @@ class Scene_MenuBase < Scene_Base
   # * New Method
   # * Call Confirm Window
   #--------------------------------------------------------------------------
-  def call_confirm_window(message, on_ok, on_cancel, context = nil)
+  def call_confirm_window(message, on_ok, on_cancel = nil, context = nil)
     @system_window = Window_SystemChoice.new(message)
     @system_window.set_handler(:ok, on_ok)
-    @system_window.set_handler(:cancel, on_cancel)
+    @system_window.set_handler(:cancel, on_cancel) if !on_cancel.nil?
     @system_window.change_context(context)    
   end
 end
