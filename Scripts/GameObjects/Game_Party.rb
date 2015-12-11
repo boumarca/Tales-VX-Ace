@@ -21,7 +21,6 @@ class Game_Party < Game_Unit
   MAX_ITEMS                 = 15          # maximum items hold
   MAX_MATERIAL              = 99          # maximum materials hold
   SHORTCUT_SLOTS            = 4           # Number of Cooking Shortcuts
-  SYNTHESIS_MAX_LEVEL       = 99          # Maximum level for item synthesis
   #--------------------------------------------------------------------------
   # * Public Instance Variables
   #--------------------------------------------------------------------------
@@ -31,7 +30,6 @@ class Game_Party < Game_Unit
   attr_reader   :grade                    # party's grade
   attr_reader   :max_combo                # max combo
   attr_accessor :hungry                   # party's hunger status
-  attr_reader   :synthesis_level          # synthesis_level
   #--------------------------------------------------------------------------
   # * Modified
   # * Object Initialization
@@ -51,8 +49,6 @@ class Game_Party < Game_Unit
 	  @hungry = true
 	  @recipes = []
     @cooking_shortcuts = []
-    @synthesis_level = 1
-    @synthesis_exp = 0
     init_all_items
     init_cooking_shortcuts
   end
@@ -671,50 +667,4 @@ class Game_Party < Game_Unit
   def cooking_shortcuts
     @cooking_shortcuts
   end 
-  #--------------------------------------------------------------------------
-  # * New Method
-  # * Get Total EXP Required for Rising to Specified Synthesis Level
-  #--------------------------------------------------------------------------
-  def synthesis_exp_for_level(level)
-    100 * level
-  end
-  #--------------------------------------------------------------------------
-  # * New Method
-  # * Get EXP for Next Synthesis Level
-  #--------------------------------------------------------------------------
-  def next_synthesis_level_exp
-    synthesis_exp_for_level(@synthesis_level)
-  end
-  #--------------------------------------------------------------------------
-  # * New Method
-  # * Determine Maximum Synthesis Level
-  #--------------------------------------------------------------------------
-  def max_synthesis_level?
-    @synthesis_level >= SYNTHESIS_MAX_LEVEL
-  end
-  #--------------------------------------------------------------------------
-  # * New Method
-  # * Change Synthesis Experience
-  #--------------------------------------------------------------------------
-  def change_synthesis_exp(exp)
-    @synthesis_exp = exp
-    puts sprintf("%s / %s Next: %s", @synthesis_exp, next_synthesis_level_exp, next_synthesis_level_exp - @synthesis_exp)
-    last_level = @synthesis_level
-    level_up_synthesis while !max_synthesis_level? && @synthesis_exp >= next_synthesis_level_exp
-  end
-  #--------------------------------------------------------------------------
-  # * New Method
-  # * Level Up Synthesis
-  #--------------------------------------------------------------------------
-  def level_up_synthesis
-    @synthesis_exp %= synthesis_exp_for_level(@synthesis_level)
-    @synthesis_level += 1    
-  end
-  #--------------------------------------------------------------------------
-  # * New Method
-  # * Get Synthesis EXP (Account for Experience Rate)
-  #--------------------------------------------------------------------------
-  def gain_synthesis_exp(exp)
-    change_synthesis_exp(@synthesis_exp + exp)
-  end
 end

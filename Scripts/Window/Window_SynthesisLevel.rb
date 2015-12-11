@@ -36,7 +36,7 @@ class Window_SynthesisLevel < Window_Base
   # * Draw Synthesis Level
   #--------------------------------------------------------------------------
   def draw_level
-    str = sprintf("%s : %d", Vocab.level, $game_party.synthesis_level)
+    str = sprintf("%s : %d", Vocab.level, $game_crafting.synthesis_level)
     draw_text(0, 0, contents.width, line_height, str, Bitmap::ALIGN_CENTER)
   end
   #--------------------------------------------------------------------------

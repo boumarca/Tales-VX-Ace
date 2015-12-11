@@ -116,6 +116,7 @@ module DataManager
     $game_troop         = Game_Troop.new
     $game_map           = Game_Map.new
     $game_player        = Game_Player.new
+    $game_crafting      = Game_Crafting.new
   end
   #--------------------------------------------------------------------------
   # * Set Up New Game
@@ -251,6 +252,7 @@ module DataManager
     contents[:troop]         = $game_troop
     contents[:map]           = $game_map
     contents[:player]        = $game_player
+    contents[:crafting]      = $game_crafting
     contents
   end
   #--------------------------------------------------------------------------
@@ -268,6 +270,7 @@ module DataManager
     $game_troop         = contents[:troop]
     $game_map           = contents[:map]
     $game_player        = contents[:player]
+    $game_crafting      = contents[:crafting]
   end
   #--------------------------------------------------------------------------
   # * Reload Map if Data Is Updated

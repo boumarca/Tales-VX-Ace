@@ -77,7 +77,7 @@ class Window_SynthesisItemList < Window_ItemList
   # * Check if the item has been learned
   #--------------------------------------------------------------------------
   def learned?(item)
-    item.synthesis_level > 0 && item.synthesis_level <= $game_party.synthesis_level
+    item.synthesis_level > 0 && item.synthesis_level <= $game_crafting.synthesis_level
   end
   #--------------------------------------------------------------------------
   # * Override

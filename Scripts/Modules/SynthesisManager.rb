@@ -32,7 +32,7 @@ module SynthesisManager
   # * Make Item
   #--------------------------------------------------------------------------
   def self.make_item
-    $game_party.gain_synthesis_exp(get_exp)
+    $game_crafting.gain_synthesis_exp(get_exp)
     $game_party.gain_item(@item, 1)
     use_material
   end
@@ -83,6 +83,6 @@ module SynthesisManager
   # * Get Exp For Synthesizing
   #--------------------------------------------------------------------------
   def self.get_exp
-    return BASE_EXP * @item.synthesis_level / $game_party.synthesis_level
+    return BASE_EXP * @item.synthesis_level / $game_crafting.synthesis_level
   end
 end

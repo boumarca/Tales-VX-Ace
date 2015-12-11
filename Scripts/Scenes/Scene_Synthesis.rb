@@ -156,11 +156,11 @@ class Scene_Synthesis < Scene_ItemBase
   #--------------------------------------------------------------------------
   def process_cooking
     Sound.play_use_item
-    old_level = $game_party.synthesis_level
+    old_level = $game_crafting.synthesis_level
     SynthesisManager.make_item
     @level_window.refresh
-    if old_level < $game_party.synthesis_level
-      @levelup_window = Window_SynthesisLevelup.new(LEVELUP_WINDOW_X, LEVELUP_WINDOW_Y, $game_party.synthesis_level)
+    if old_level < $game_crafting.synthesis_level
+      @levelup_window = Window_SynthesisLevelup.new(LEVELUP_WINDOW_X, LEVELUP_WINDOW_Y, $game_crafting.synthesis_level)
       @levelup_window.change_context(@item_window)
     end    
     @item_window.refresh
