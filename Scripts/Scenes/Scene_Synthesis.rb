@@ -21,6 +21,8 @@ class Scene_Synthesis < Scene_ItemBase
   HELP_WINDOW_Y     = 340
   RESULT_WINDOW_X   = 96
   RESULT_WINDOW_Y   = 52
+  LEVELUP_WINDOW_X  = 168
+  LEVELUP_WINDOW_Y  = 76
   #--------------------------------------------------------------------------
   # * Start Processing
   #--------------------------------------------------------------------------
@@ -154,12 +156,15 @@ class Scene_Synthesis < Scene_ItemBase
   #--------------------------------------------------------------------------
   def process_cooking
     Sound.play_use_item
+    old_level = $game_party.synthesis_level
     SynthesisManager.make_item
-    #display_results
+    @level_window.refresh
+    if old_level < $game_party.synthesis_level
+      @levelup_window = Window_SynthesisLevelup.new(LEVELUP_WINDOW_X, LEVELUP_WINDOW_Y, $game_party.synthesis_level)
+      @levelup_window.change_context(@item_window)
+    end    
     @item_window.refresh
     @material_window.refresh
-    @level_window.refresh
-    @item_window.activate
   end
   #--------------------------------------------------------------------------
   # * Display Results
