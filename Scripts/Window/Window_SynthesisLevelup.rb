@@ -17,10 +17,11 @@ class Window_SynthesisLevelup < Window_Modal
   def initialize(x, y, level)
     super(x, y, window_width, window_height) 
     @level = level
-    @page = 1
+    @page = 0
     setup_new_items
     draw_header
     draw_page_number
+    draw_items
   end
   #--------------------------------------------------------------------------
   # * Get Window Height
@@ -59,6 +60,18 @@ class Window_SynthesisLevelup < Window_Modal
   # * Draw Page Number
   #-------------------------------------------------------------------------- 
   def draw_page_number
-    draw_text(0, line_height * (ITEM_LIST_SIZE + 1), contents.width, line_height, sprintf("%d/%d", @page, @new_items.size / ITEM_LIST_SIZE + 1), Bitmap::ALIGN_RIGHT)
+    draw_text(0, line_height * (ITEM_LIST_SIZE + 1), contents.width, line_height, sprintf("%d/%d", @page + 1, @new_items.size / ITEM_LIST_SIZE + 1), Bitmap::ALIGN_RIGHT)
   end 
+  #--------------------------------------------------------------------------
+  # * Draw Items
+  #-------------------------------------------------------------------------- 
+  def draw_items
+    start_index = @page * ITEM_LIST_SIZE
+    end_index = [(@page + 1) * (ITEM_LIST_SIZE - 1), @new_items.size].min
+      line = 1
+    for i in start_index ... end_index
+      draw_item_name(@new_items[i], 0, line_height * line)
+      line += 1
+    end
+  end
 end
