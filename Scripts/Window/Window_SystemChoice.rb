@@ -18,19 +18,19 @@ class Window_SystemChoice < Window_Command
     message_rect = message_size(message)
     
     x = Graphics.width / 2 - message_rect.width / 2 - standard_padding
-    y = Graphics.height / 2 - message_rect.height / 2 - standard_padding
+    y = Graphics.height / 2 - window_height / 2
     @width = message_rect.width + standard_padding * 2 + 2
     super(x, y)
     self.z = 200
     self.openness = 0
-    draw_text_ex(0, 0, message)
+    draw_text(0, 0, message_rect.width, line_height, message, Bitmap::ALIGN_CENTER) 
     set_handler(:cancel, method(:return_context))
   end
   #--------------------------------------------------------------------------
   # * Get Message Size
   #-------------------------------------------------------------------------
   def message_size(message)
-    dummy_window = Window_Base.new(0,0,0,0)
+    dummy_window = Window_Base.new(0,0,0,0) 
     dummy_window.hide
     message_rect = dummy_window.text_size(message)
     dummy_window.dispose

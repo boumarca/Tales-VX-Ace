@@ -117,9 +117,9 @@ module Vocab
   end
   
   #Item Use
-  ITEM_USE    = "Utiliser sur qui?"
-  ITEM_EQUIP  = "Équiper sur qui?"
-  ITEM_DROP   = "Voulez-vous jeter \\C[1]%s\\C[0]?"
+  ITEM_USE    = "Who will use it?"
+  ITEM_EQUIP  = "Who will equip?"
+  ITEM_DROP   = "Drop %s?"
   
   #ATTRIBUTES PARAMS
   AATR = "A.Atr"
