@@ -19,9 +19,7 @@ class Window_SynthesisLevelup < Window_Modal
     @level = level
     @page = 0
     setup_new_items
-    draw_header
-    draw_page_number
-    draw_items
+    refresh
   end
   #--------------------------------------------------------------------------
   # * Get Window Height
@@ -67,11 +65,34 @@ class Window_SynthesisLevelup < Window_Modal
   #-------------------------------------------------------------------------- 
   def draw_items
     start_index = @page * ITEM_LIST_SIZE
-    end_index = [(@page + 1) * (ITEM_LIST_SIZE - 1), @new_items.size].min
-      line = 1
-    for i in start_index ... end_index
+    end_index = [(@page + 1) * ITEM_LIST_SIZE - 1, @new_items.size].min
+    line = 1
+    for i in start_index .. end_index
       draw_item_name(@new_items[i], 0, line_height * line)
       line += 1
     end
+    @page += 1
+  end
+  #--------------------------------------------------------------------------
+  # * Override
+  # * Processing When OK Button Is Pressed
+  #--------------------------------------------------------------------------
+  def process_close
+    if @page * ITEM_LIST_SIZE > @new_items.size - 1
+      super
+    else
+      Sound.play_cancel
+      Input.update
+      refresh
+    end
+  end
+  #--------------------------------------------------------------------------
+  # * Draw Items
+  #-------------------------------------------------------------------------- 
+  def refresh
+    contents.clear
+    draw_header
+    draw_page_number
+    draw_items
   end
 end
