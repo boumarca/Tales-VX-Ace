@@ -152,9 +152,9 @@ class Scene_Synthesis < Scene_ItemBase
     end
   end
   #--------------------------------------------------------------------------
-  # * Process cooking
+  # * Process crafting
   #--------------------------------------------------------------------------
-  def process_cooking
+  def process_synthesis
     Sound.play_use_item
     old_level = $game_crafting.synthesis_level
     SynthesisManager.make_item
