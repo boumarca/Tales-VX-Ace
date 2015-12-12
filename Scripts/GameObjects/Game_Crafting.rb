@@ -118,7 +118,7 @@ class Game_Crafting
     item.synthesis_materials.each { |material| 
       it = get_item_from_material(material)
       puts it.name.to_s
-      $game_party.lose_item(it, 1) 
+      $game_party.lose_item(it, material.quantity) 
     }
   end
 end
