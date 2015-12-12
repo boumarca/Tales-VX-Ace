@@ -138,7 +138,7 @@ class Scene_Synthesis < Scene_ItemBase
         SynthesisManager.reset      
         SynthesisManager.item = item
         if SynthesisManager.synthesizable?(item)
-          call_confirm_window(sprintf(Vocab::CONFIRM_CRAFT, item.name), method(:process_cooking), nil, @item_window)
+          call_confirm_window(sprintf(Vocab::CONFIRM_CRAFT, item.name), method(:process_synthesis), nil, @item_window)
         else
           Sound.play_buzzer
           @system_window = Window_SystemMessage.new(Vocab::MATERIAL_ERROR)
