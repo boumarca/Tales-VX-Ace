@@ -62,8 +62,8 @@ class Window_SynthesisMaterial < Window_Base
     if material
       rect = Rect.new(0, line_height * (index + 1), contents.width - MARGIN_X, line_height)
       rect.width -= 4
-      draw_item_name(SynthesisManager.get_item_from_material(material), rect.x, rect.y, enable?(material))
-      draw_item_number(rect, material.quantity, SynthesisManager.quantity(material))
+      draw_item_name($game_crafting.get_item_from_material(material), rect.x, rect.y, enable?(material))
+      draw_item_number(rect, material.quantity, $game_crafting.quantity(material))
     end
   end
   #--------------------------------------------------------------------------
@@ -77,6 +77,6 @@ class Window_SynthesisMaterial < Window_Base
   # * Display in Enabled State?
   #--------------------------------------------------------------------------
   def enable?(material)
-    SynthesisManager.owns_enough?(material) 
+    $game_crafting.owns_enough?(material) 
   end
 end

@@ -165,6 +165,6 @@ class Window_SynthesisItemList < Window_ItemList
   # * Display in Enabled State?
   #--------------------------------------------------------------------------
   def enable?(item)
-    SynthesisManager.synthesizable?(item)
+    $game_crafting.synthesizable?(item)
   end
 end

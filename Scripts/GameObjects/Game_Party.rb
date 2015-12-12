@@ -368,7 +368,7 @@ class Game_Party < Game_Unit
   end
   #--------------------------------------------------------------------------
   # * Consume Items
-  #    If the specified object is a consumable item, the number in investory
+  #    If the specified object is a consumable item, the number in inventory
   #    will be reduced by 1.
   #--------------------------------------------------------------------------
   def consume_item(item)

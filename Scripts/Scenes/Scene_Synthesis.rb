@@ -135,9 +135,7 @@ class Scene_Synthesis < Scene_ItemBase
     else
       @item_window.deactivate
       if !$game_party.item_max?(item)
-        SynthesisManager.reset      
-        SynthesisManager.item = item
-        if SynthesisManager.synthesizable?(item)
+        if $game_crafting.synthesizable?(item)
           call_confirm_window(sprintf(Vocab::CONFIRM_CRAFT, item.name), method(:process_synthesis), nil, @item_window)
         else
           Sound.play_buzzer
@@ -157,7 +155,7 @@ class Scene_Synthesis < Scene_ItemBase
   def process_synthesis
     Sound.play_use_item
     old_level = $game_crafting.synthesis_level
-    SynthesisManager.make_item
+    $game_crafting.make_item(@item_window.item)
     @level_window.refresh
     if old_level < $game_crafting.synthesis_level
       @levelup_window = Window_SynthesisLevelup.new(LEVELUP_WINDOW_X, LEVELUP_WINDOW_Y, $game_crafting.synthesis_level)

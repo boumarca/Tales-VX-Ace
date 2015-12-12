@@ -68,7 +68,7 @@ class Window_Modal < Window_Base
     process_handling
   end
   #--------------------------------------------------------------------------
-  # * Modified
+  # * Override
   # * Handling Processing for OK and Cancel Etc.
   #--------------------------------------------------------------------------
   def process_handling
