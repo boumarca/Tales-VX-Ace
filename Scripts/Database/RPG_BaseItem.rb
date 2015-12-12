@@ -8,7 +8,6 @@ class RPG::BaseItem
   #--------------------------------------------------------------------------
   attr_accessor :image
   attr_accessor :subtype_id  
-  attr_accessor :synthesis_level
   #--------------------------------------------------------------------------
   # * Modified
   # * Initialize a New Base Item
