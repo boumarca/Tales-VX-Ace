@@ -120,6 +120,7 @@ module YEA
       [    :recipes,    "Recipes"],
       [    :cooking,    "Cooking"],
       [      :party,      "Party"],
+      [   :crafting,   "Crafting"],
     ] # Do not remove this.
     
   end # DEBUG
@@ -1416,6 +1417,7 @@ class Scene_Debug < Scene_MenuBase
     create_recipe_windows
     create_cooking_windows
     create_party_windows
+    create_crafting_windows
   end
   
   #--------------------------------------------------------------------------
@@ -1439,6 +1441,7 @@ class Scene_Debug < Scene_MenuBase
     @command_window.set_handler(:recipes,     method(:command_recipes))
     @command_window.set_handler(:cooking,     method(:command_cooking))
     @command_window.set_handler(:party,       method(:command_party))
+    @command_window.set_handler(:crafting,    method(:command_crafting))
   end
   
   #--------------------------------------------------------------------------
@@ -1811,6 +1814,11 @@ class Scene_Debug < Scene_MenuBase
       when :actors
         text  = "Modify Parameters.\n"
         text += "Press A to modify this actor's stats\n"
+        text += "Hold SHIFT for increments of 10.\n"
+        text += "Hold CTRL for increments of 100."
+      when :crafting
+        text  = "Adjust Crafting Level.\n"
+        text += "Press Right to increase level.\n"
         text += "Hold SHIFT for increments of 10.\n"
         text += "Hold CTRL for increments of 100."
       else

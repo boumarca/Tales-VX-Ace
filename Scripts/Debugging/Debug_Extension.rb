@@ -497,6 +497,66 @@ class Window_DebugActorParams < Window_DebugActor
 end # Window_DebugActorParams
 
 #==============================================================================
+# ■ Window_DebugCrafting
+#==============================================================================
+
+class Window_DebugCrafting < Window_Debug
+ 
+  #--------------------------------------------------------------------------
+  # make_command_list
+  #--------------------------------------------------------------------------
+  def make_command_list
+   add_command("Synthesis Level", :exp)
+  end
+  
+  #--------------------------------------------------------------------------
+  # draw_item
+  #--------------------------------------------------------------------------
+  def draw_item(index)
+    contents.clear_rect(item_rect_for_text(index))
+    name = command_name(index)
+    draw_text(item_rect_for_text(index), name, 0)
+    text = get_parameter(index)
+    draw_text(item_rect_for_text(index), text, 2)
+  end
+  
+  #--------------------------------------------------------------------------
+  # get_parameter
+  #--------------------------------------------------------------------------
+  def get_parameter(index)
+    case command_symbol(index)
+    when :exp
+      $game_crafting.synthesis_level
+    else
+      return 0
+    end
+  end
+  
+  #--------------------------------------------------------------------------
+  # set_parameter
+  #--------------------------------------------------------------------------
+  def set_parameter(value)
+    case current_symbol
+    when :exp
+      value.times { $game_crafting.gain_synthesis_exp($game_crafting.next_synthesis_level_exp)}
+    end
+  end
+  
+  #--------------------------------------------------------------------------
+  # cursor_right
+  #--------------------------------------------------------------------------
+  def cursor_right(wrap = false)
+    Sound.play_cursor
+    delta = Input.press?(:SHIFT) ? 10 : 1
+    delta = Input.press?(:CTRL) ? 100 : delta
+    delta = Input.press?(:ALT) ? 1000 : delta
+    set_parameter(delta) 
+    draw_item(index)
+    refresh
+  end  
+end #Window_DebugCrafting
+
+#==============================================================================
 # ■ Scene_Debug
 #==============================================================================
 
@@ -793,6 +853,34 @@ class Scene_Debug < Scene_MenuBase
   def on_actor_cancel
     @dummy_window.show
     @actor_window.hide
+    @command_window.activate
+    refresh_help_window
+  end
+  
+#--------------------------------------------------------------------------
+  # new method: create_crafting_window
+  #--------------------------------------------------------------------------
+  def create_crafting_windows
+    @crafting_window = Window_DebugCrafting.new
+    @crafting_window.set_handler(:cancel, method(:on_crafting_cancel))
+  end
+  
+  #--------------------------------------------------------------------------
+  # new method: command_recipe
+  #--------------------------------------------------------------------------
+  def command_crafting
+    @dummy_window.hide
+    @crafting_window.show
+    @crafting_window.activate
+    refresh_help_window
+  end
+
+  #--------------------------------------------------------------------------
+  # * new method: on_crafting_cancel
+  #--------------------------------------------------------------------------
+  def on_crafting_cancel
+    @dummy_window.show
+    @crafting_window.hide
     @command_window.activate
     refresh_help_window
   end

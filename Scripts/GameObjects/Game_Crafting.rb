@@ -68,7 +68,7 @@ class Game_Crafting
   # * Get Synthesis EXP (Account for Experience Rate)
   #--------------------------------------------------------------------------
   def gain_synthesis_exp(exp)
-    change_synthesis_exp(@synthesis_exp + exp)
+    change_synthesis_exp(@synthesis_exp + exp) unless max_synthesis_level?
   end
   #--------------------------------------------------------------------------
   # * Get Item From Material information
