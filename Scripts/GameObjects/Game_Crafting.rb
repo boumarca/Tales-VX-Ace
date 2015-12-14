@@ -2,7 +2,7 @@
 # ** New Class
 # ** Game_Crafting
 #------------------------------------------------------------------------------
-#  This class handles parties. Information such as synthesis level is included.
+#  This class handles crafting. Information such as synthesis level is included.
 #  Instances of this class are referenced by $game_crafting.
 #==============================================================================
 

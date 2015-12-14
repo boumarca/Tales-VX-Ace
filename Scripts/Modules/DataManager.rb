@@ -117,6 +117,7 @@ module DataManager
     $game_map           = Game_Map.new
     $game_player        = Game_Player.new
     $game_crafting      = Game_Crafting.new
+    $game_cooking       = Game_Cooking.new
   end
   #--------------------------------------------------------------------------
   # * Set Up New Game
@@ -253,6 +254,7 @@ module DataManager
     contents[:map]           = $game_map
     contents[:player]        = $game_player
     contents[:crafting]      = $game_crafting
+    contents[:cooking]       = $game_cooking
     contents
   end
   #--------------------------------------------------------------------------
@@ -271,7 +273,8 @@ module DataManager
     $game_map           = contents[:map]
     $game_player        = contents[:player]
     $game_crafting      = contents[:crafting]
-  end
+    $game_cooking       = contents[:cooking]
+  end 
   #--------------------------------------------------------------------------
   # * Reload Map if Data Is Updated
   #--------------------------------------------------------------------------
