@@ -167,7 +167,7 @@ class Window_DebugRecipe < Window_Debug
     contents.clear_rect(rect)
     name = command_name(index)
     draw_text(rect, name, 0)
-    text = $game_party.recipe_learn?(recipe) ? "[LEARNED]" : "[NOT LEARNED]"
+    text = $game_cooking.recipe_learn?(recipe) ? "[LEARNED]" : "[NOT LEARNED]"
     draw_text(rect, text, 2)
   end
   
@@ -184,7 +184,7 @@ class Window_DebugCooking < Window_DebugActor
   #--------------------------------------------------------------------------
   def make_command_list
     $data_recipes.each { |recipe|
-      next if !$game_party.recipe_learn?(recipe)
+      next if !$game_cooking.recipe_learn?(recipe)
       name = recipe.name
       text = sprintf("%s:", name)
       add_command(text, :recipes, true, recipe.id)
@@ -260,7 +260,7 @@ class Window_DebugParty < Window_Debug
       actor = $game_party.all_members[@list[index][:ext]]
       actor.nil? ? "None" : actor.name
     when :hunger
-      $game_party.hungry ? "[HUNGRY]" : "[NOT HUNGRY]" 
+      $game_cooking.hungry ? "[HUNGRY]" : "[NOT HUNGRY]" 
     when :gald
       $game_party.gold
     when :grade
@@ -285,7 +285,7 @@ class Window_DebugParty < Window_Debug
       $game_party.debug_actors.pop if value == 0 && current_ext == $game_party.all_members.size - 1
       $game_party.map_leader = $game_party.all_members[0].id if $game_party.map_leader.id == old_actor_id
     when :hunger
-      $game_party.hungry = value
+      $game_cooking.hungry = value
     when :gald
       $game_party.gain_gold(value)
     when :grade
@@ -308,7 +308,7 @@ class Window_DebugParty < Window_Debug
     delta = Input.press?(:ALT) ? 1000 : delta
     set_parameter(delta) unless current_symbol == :hunger || current_symbol == :member
     set_parameter(next_actor) if current_symbol == :member
-    set_parameter(!$game_party.hungry) if current_symbol == :hunger
+    set_parameter(!$game_cooking.hungry) if current_symbol == :hunger
     draw_item(index)
     refresh
   end  
@@ -323,7 +323,7 @@ class Window_DebugParty < Window_Debug
     delta = Input.press?(:ALT) ? -1000 : delta
     set_parameter(delta) unless current_symbol == :hunger || current_symbol == :member
     set_parameter(prev_actor) if current_symbol == :member
-    set_parameter(!$game_party.hungry) if current_symbol == :hunger
+    set_parameter(!$game_cooking.hungry) if current_symbol == :hunger
     draw_item(index)
     refresh
   end  
@@ -784,7 +784,7 @@ class Scene_Debug < Scene_MenuBase
   def on_recipe_ok
     @recipe_window.activate
     recipe_id = @recipe_window.current_ext
-    $game_party.learn_recipe(recipe_id)
+    $game_cooking.learn_recipe(recipe_id)
     @recipe_window.draw_item(@recipe_window.index)
   end
   

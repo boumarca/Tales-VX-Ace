@@ -50,8 +50,8 @@ class Scene_Cooking < Scene_ItemBase
     @cooking_window.set_handler(:down,   method(:select_shortcuts))
     @cooking_window.set_handler(:select, method(:select_shortcuts))
     @cooking_window.help_window = @help_window
-    @cooking_window.actor = $game_party.cook
-    @cooking_window.recipe = $game_party.recipe
+    @cooking_window.actor = $game_cooking.cook
+    @cooking_window.recipe = $game_cooking.recipe
   end
   #--------------------------------------------------------------------------
   # * Override
@@ -67,15 +67,15 @@ class Scene_Cooking < Scene_ItemBase
     @actor_window = Window_ActorCooking.new(ACTOR_WINDOW_X, ACTOR_WINDOW_Y)
     @actor_window.set_handler(:ok,      method(:on_cook_ok))
     @actor_window.set_handler(:cancel,  method(:on_cook_cancel))
-    @actor_window.recipe = $game_party.recipe
+    @actor_window.recipe = $game_cooking.recipe
   end
   #--------------------------------------------------------------------------
   # * Create Ingredients Window
   #--------------------------------------------------------------------------
   def create_ingredients_window
     @ingredients_window = Window_Ingredients.new(INGREDIENTS_WINDOW_X, INGREDIENTS_WINDOW_Y)
-    @ingredients_window.recipe = $game_party.recipe
-    @ingredients_window.mastery_level = $game_party.cook.mastery_level($game_party.recipe)
+    @ingredients_window.recipe = $game_cooking.recipe
+    @ingredients_window.mastery_level = $game_cooking.cook.mastery_level($game_cooking.recipe)
     @actor_window.ingredient_window = @ingredients_window
   end
   #--------------------------------------------------------------------------
@@ -132,12 +132,12 @@ class Scene_Cooking < Scene_ItemBase
       @actor_window.deactivate
       @recipe_window.show.activate.select(0)
     else
-      $game_party.cook = $game_party.members[@actor_window.index]
-      @cooking_window.actor = $game_party.cook
+      $game_cooking.cook = $game_party.members[@actor_window.index]
+      @cooking_window.actor = $game_cooking.cook
       @cooking_window.activate
       @actor_window.deactivate.unselect      
     end
-    @ingredients_window.mastery_level = $game_party.cook.mastery_level($game_party.recipe)
+    @ingredients_window.mastery_level = $game_cooking.cook.mastery_level($game_cooking.recipe)
     set_controls_help
   end
   #--------------------------------------------------------------------------
@@ -151,7 +151,7 @@ class Scene_Cooking < Scene_ItemBase
       @cooking_window.activate      
     end
     @actor_window.deactivate.unselect
-    @ingredients_window.mastery_level = $game_party.cook.mastery_level($game_party.recipe)
+    @ingredients_window.mastery_level = $game_cooking.cook.mastery_level($game_cooking.recipe)
     set_controls_help
   end
   #--------------------------------------------------------------------------
@@ -161,15 +161,15 @@ class Scene_Cooking < Scene_ItemBase
     if @shortcut_selection
       @shortcut_window.activate
       @shortcut_selection = false
-      $game_party.change_shortcut(@shortcut_window.index, $game_party.members[@actor_window.index], $game_party.recipes[@recipe_window.index])
+      $game_cooking.change_shortcut(@shortcut_window.index, $game_party.members[@actor_window.index], $game_cooking.recipes[@recipe_window.index])
       @actor_window.unselect
       @shortcut_window.activate
       @shortcut_window.refresh
     else
-      $game_party.recipe = $game_party.recipes[@recipe_window.index]
-      @cooking_window.recipe = $game_party.recipe
-      @ingredients_window.recipe = $game_party.recipe
-      @actor_window.recipe = $game_party.recipe
+      $game_cooking.recipe = $game_cooking.recipes[@recipe_window.index]
+      @cooking_window.recipe = $game_cooking.recipe
+      @ingredients_window.recipe = $game_cooking.recipe
+      @actor_window.recipe = $game_cooking.recipe
       @cooking_window.activate
     end
     @recipe_window.hide.deactivate.unselect
@@ -203,27 +203,27 @@ class Scene_Cooking < Scene_ItemBase
   def on_shortcut_cancel
     @shortcut_window.hide.deactivate.unselect
     @cooking_window.activate.select(1)
-    @ingredients_window.mastery_level = $game_party.cook.mastery_level($game_party.recipe)
+    @ingredients_window.mastery_level = $game_cooking.cook.mastery_level($game_cooking.recipe)
     set_controls_help
   end
   #--------------------------------------------------------------------------
   # * Cooking Process
   #--------------------------------------------------------------------------
   def cook_recipe
-    if $game_party.recipe.nil?
+    if $game_cooking.recipe.nil?
       Sound.play_buzzer
       return
     else
       @cooking_window.deactivate
       CookingManager.reset
-      if $game_party.hungry
-        CookingManager.recipe = $game_party.recipe
-        CookingManager.cook = $game_party.cook
+      if $game_cooking.hungry
+        CookingManager.recipe = $game_cooking.recipe
+        CookingManager.cook = $game_cooking.cook
         if CookingManager.recipe_cookable?
           Sound.play_recovery
           CookingManager.cook_recipe
           display_results
-          @ingredients_window.mastery_level = $game_party.cook.mastery_level($game_party.recipe)
+          @ingredients_window.mastery_level = $game_cooking.cook.mastery_level($game_cooking.recipe)
           @ingredients_window.refresh
           @actor_window.refresh
         else

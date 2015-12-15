@@ -77,7 +77,7 @@ module CookingManager
       failure_effect
     end 
     apply_effects
-    $game_party.hungry = false
+    $game_cooking.hungry = false
     @cook.use_recipe(@recipe, @success)
   end
   #--------------------------------------------------------------------------

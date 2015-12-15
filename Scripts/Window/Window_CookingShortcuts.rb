@@ -42,7 +42,7 @@ class Window_CookingShortcuts < Window_Selectable
   # * Get Recipe
   #--------------------------------------------------------------------------
   def recipe
-    index >= 0 ? $game_party.cooking_shortcuts[index].recipe : nil
+    index >= 0 ? $game_cooking.cooking_shortcuts[index].recipe : nil
   end
   #--------------------------------------------------------------------------
   # * Override
@@ -56,7 +56,7 @@ class Window_CookingShortcuts < Window_Selectable
   # * Get Number of Items
   #--------------------------------------------------------------------------
   def item_max
-    Game_Party::SHORTCUT_SLOTS
+    Game_Cooking::SHORTCUT_SLOTS
   end
   #--------------------------------------------------------------------------
   # * Override
@@ -80,7 +80,7 @@ class Window_CookingShortcuts < Window_Selectable
   #--------------------------------------------------------------------------
   def draw_item(index)
     rect = item_rect(index)
-    shortcut = $game_party.cooking_shortcuts[index]
+    shortcut = $game_cooking.cooking_shortcuts[index]
     draw_icon(RECIPE_ICON, rect.x, rect.y)
     return if shortcut.recipe.nil? || shortcut.actor.nil?
     draw_text(RECIPE_X, rect.y, contents.width - RECIPE_X, line_height, shortcut.recipe.name)

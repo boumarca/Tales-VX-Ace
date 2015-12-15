@@ -72,10 +72,10 @@ class Window_RecipeResults < Window_Modal
   # * Draw Success/Failure message
   #--------------------------------------------------------------------------
   def draw_recipe_info
-    str = sprintf(Vocab::COOKING_SUCCESS, $game_party.cook.name) if(CookingManager.success?)
-    str = sprintf(Vocab::COOKING_FAILURE, $game_party.cook.name) if(!CookingManager.success?)
+    str = sprintf(Vocab::COOKING_SUCCESS, $game_cooking.cook.name) if(CookingManager.success?)
+    str = sprintf(Vocab::COOKING_FAILURE, $game_cooking.cook.name) if(!CookingManager.success?)
     draw_text(TITLE_X, 0, contents.width, line_height, str)
-    draw_text(0, line_height, contents.width, line_height, $game_party.recipe.name, Bitmap::ALIGN_CENTER)    
+    draw_text(0, line_height, contents.width, line_height, $game_cooking.recipe.name, Bitmap::ALIGN_CENTER)    
   end
   #--------------------------------------------------------------------------
   # * Draw Effects

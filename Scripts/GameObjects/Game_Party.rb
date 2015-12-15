@@ -20,7 +20,6 @@ class Game_Party < Game_Unit
   MAX_NEW_ITEMS             = 20          # maximum of new items category
   MAX_ITEMS                 = 15          # maximum items hold
   MAX_MATERIAL              = 99          # maximum materials hold
-  SHORTCUT_SLOTS            = 4           # Number of Cooking Shortcuts
   #--------------------------------------------------------------------------
   # * Public Instance Variables
   #--------------------------------------------------------------------------
@@ -29,7 +28,6 @@ class Game_Party < Game_Unit
   attr_reader   :last_item                # for cursor memorization:  item
   attr_reader   :grade                    # party's grade
   attr_reader   :max_combo                # max combo
-  attr_accessor :hungry                   # party's hunger status
   #--------------------------------------------------------------------------
   # * Modified
   # * Object Initialization
@@ -44,13 +42,7 @@ class Game_Party < Game_Unit
     @menu_actor_id = 0
     @target_actor_id = 0
     @actors = []
-    @cook_id = 0
-    @recipe_id = 0
-	  @hungry = true
-	  @recipes = []
-    @cooking_shortcuts = []
     init_all_items
-    init_cooking_shortcuts
   end
   #--------------------------------------------------------------------------
   # * Initialize All Item Lists
@@ -60,12 +52,6 @@ class Game_Party < Game_Unit
     @items = {}
     @weapons = {}
     @armors = {}
-  end
-  #--------------------------------------------------------------------------
-  # * Init Cooking Shortcuts
-  #--------------------------------------------------------------------------
-  def init_cooking_shortcuts
-    @cooking_shortcuts = Array.new(SHORTCUT_SLOTS) { Game_CookingShortcut.new }
   end
   #--------------------------------------------------------------------------
   # * Determine Existence
@@ -241,7 +227,7 @@ class Game_Party < Game_Unit
     $game_player.refresh
     $game_map.need_refresh = true    
     remove_shortcuts_references(actor_id)
-    remove_cooking_references(actor_id)
+    $game_cooking.remove_cooking_references(actor_id)
   end
   #--------------------------------------------------------------------------
   # * Modified
@@ -253,17 +239,6 @@ class Game_Party < Game_Unit
         next if shortcut.empty?
         shortcut.clear if shortcut.actor.id == actor_id
       }
-    }
-  end
-  #--------------------------------------------------------------------------
-  # * Modified
-  # * Remove Cooking References To This Actor
-  #--------------------------------------------------------------------------
-  def remove_cooking_references(actor_id)
-    @cook_id = all_members[0].id if @cook_id == actor_id
-    @cooking_shortcuts.each { |shortcut|
-      next if shortcut.empty?
-      shortcut.clear if shortcut.actor.id == actor_id
     }
   end
   #--------------------------------------------------------------------------
@@ -600,71 +575,4 @@ class Game_Party < Game_Unit
     @map_leader_id = id
     $game_player.refresh
   end  
-  #--------------------------------------------------------------------------
-  # * Get Cook
-  #--------------------------------------------------------------------------
-  def cook
-    $game_actors[@cook_id] || members[0]
-  end
-  #--------------------------------------------------------------------------
-  # * Set Cook
-  #--------------------------------------------------------------------------
-  def cook=(actor)
-    @cook_id = actor.id
-  end
-  #--------------------------------------------------------------------------
-  # * Get Recipe
-  #--------------------------------------------------------------------------
-  def recipe
-    $data_recipes[@recipe_id] || recipes[0]
-  end
-  #--------------------------------------------------------------------------
-  # * Set Recipe
-  #--------------------------------------------------------------------------
-  def recipe=(recipe)
-    return unless recipe
-    @recipe_id = recipe.id
-  end
-  #--------------------------------------------------------------------------
-  # * Get Recipe Object Array
-  #--------------------------------------------------------------------------
-  def recipes
-    @recipes.sort.collect {|id| $data_recipes[id] }
-  end
-  #--------------------------------------------------------------------------
-  # * Learn Recipe
-  #--------------------------------------------------------------------------
-  def learn_recipe(recipe_id)
-    return if recipe_learn?($data_recipes[recipe_id])
-    @recipes.push(recipe_id)
-    @recipes.sort!
-    $game_actors.all_actors.each { |actor| actor.learn_recipe(recipe_id) } 
-  end
-  #--------------------------------------------------------------------------
-  # * Determine if Recipe Is Already Learned
-  #--------------------------------------------------------------------------
-  def recipe_learn?(recipe)
-    recipe.is_a?(RPG::Recipe) && @recipes.include?(recipe.id)
-  end
-  #--------------------------------------------------------------------------
-  # * New Method
-  # * Change Shortcuts
-  #     slot_id:  Shortcut slot ID
-  #     actor: Actor cooking the recipe (remove actor if nil)
-  #     recipe: shortcut recipe (remove recipe if nil)
-  #--------------------------------------------------------------------------
-  def change_shortcut(slot_id, actor, recipe)
-    if actor.nil? || recipe.nil?
-      @cooking_shortcuts[slot_id].clear 
-    else
-      @cooking_shortcuts[slot_id].shortcut(actor, recipe)
-    end
-  end
-  #--------------------------------------------------------------------------
-  # * New Method
-  # * Shortcuts
-  #--------------------------------------------------------------------------
-  def cooking_shortcuts
-    @cooking_shortcuts
-  end 
 end

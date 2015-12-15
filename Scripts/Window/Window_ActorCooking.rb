@@ -53,7 +53,7 @@ class Window_ActorCooking < Window_MenuActor
   # * Restore Previous Selection Position
   #--------------------------------------------------------------------------
   def select_last
-    select($game_party.members.index($game_party.cook) || 0)
+    select($game_party.members.index($game_cooking.cook) || 0)
   end
   #--------------------------------------------------------------------------
   # * Set Recipe

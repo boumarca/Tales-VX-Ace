@@ -85,14 +85,14 @@ class Window_RecipeList < Window_Selectable
   # * Create Recipe List
   #--------------------------------------------------------------------------
   def make_recipe_list
-    @data = $game_party.recipes
+    @data = $game_cooking.recipes
   end
   #--------------------------------------------------------------------------
   # * Override
   # * Restore Previous Selection Position
   #--------------------------------------------------------------------------
   def select_last
-    select($game_party.recipes.index($game_party.recipe) || 0)
+    select($game_cooking.recipes.index($game_cooking.recipe) || 0)
   end
   #--------------------------------------------------------------------------
   # * Override
