@@ -17,11 +17,8 @@ class Scene_Save < Scene_File
   def on_savefile_ok
     super
     Sound.play_ok
-    if DataManager.exists?(@index)
-      call_confirm_window(Vocab::CONFIRM_SAVE, method(:save_file), method(:on_confirm_cancel))
-    else
-      call_confirm_window(Vocab::CONFIRM_NEW_FILE, method(:save_file), method(:on_confirm_cancel))
-    end
+    text = DataManager.exists?(@index) ? Vocab::CONFIRM_SAVE : Vocab::CONFIRM_NEW_FILE
+    call_confirm_window(text, method(:save_file), method(:on_confirm_cancel))
     @savefile_windows[@index].selected = false
   end
   #--------------------------------------------------------------------------
