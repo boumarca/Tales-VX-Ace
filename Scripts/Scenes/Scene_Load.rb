@@ -62,7 +62,7 @@ class Scene_Load < Scene_File
   # * Set Controls For Actor Window 
   #--------------------------------------------------------------------------
   def set_load_controls
-    @control_help_window.add_control(Vocab::CONFIRM,    :A) 
-    @control_help_window.add_control(Vocab::BACK,       :B)
+    @control_help_window.add_control(Vocab::CONFIRM,    Input::Keys::A) 
+    @control_help_window.add_control(Vocab::BACK,       Input::Keys::B)
   end
 end

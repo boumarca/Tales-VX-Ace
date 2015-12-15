@@ -226,27 +226,27 @@ class Scene_Item < Scene_ItemBase
   # * Set Controls For Category Window 
   #--------------------------------------------------------------------------
   def set_category_controls
-    @control_help_window.add_control(Vocab::ITEM,             :A) 
-    @control_help_window.add_control(Vocab::BACK,             :B)
-    @control_help_window.add_control(Vocab::CHANGE_CATEGORY,  :L, :R)
+    @control_help_window.add_control(Vocab::ITEM,             Input::Keys::A) 
+    @control_help_window.add_control(Vocab::BACK,             Input::Keys::B)
+    @control_help_window.add_control(Vocab::CHANGE_CATEGORY,  Input::Keys::L, Input::Keys::R)
   end
   #--------------------------------------------------------------------------
   # * New Method
   # * Set Controls For Item Window 
   #--------------------------------------------------------------------------
   def set_item_controls
-    @control_help_window.add_control(Vocab::USE,              :A) 
-    @control_help_window.add_control(Vocab::BACK,             :B)
-    @control_help_window.add_control(Vocab::DROP,             :X)
-    @control_help_window.add_control(Vocab::CHANGE_CATEGORY,  :L, :R)
-    @control_help_window.add_control(Vocab::DESCRIPTION,      :C)
+    @control_help_window.add_control(Vocab::USE,              Input::Keys::A) 
+    @control_help_window.add_control(Vocab::BACK,             Input::Keys::B)
+    @control_help_window.add_control(Vocab::DROP,             Input::Keys::X)
+    @control_help_window.add_control(Vocab::CHANGE_CATEGORY,  Input::Keys::L, Input::Keys::R)
+    @control_help_window.add_control(Vocab::DESCRIPTION,      Input::Keys::START)
   end
   #--------------------------------------------------------------------------
   # * New Method
   # * Set Controls For Actor Window 
   #--------------------------------------------------------------------------
   def set_actor_controls
-    @control_help_window.add_control(Vocab::CONFIRM, :A)
-    @control_help_window.add_control(Vocab::BACK,    :B)
+    @control_help_window.add_control(Vocab::CONFIRM, Input::Keys::A)
+    @control_help_window.add_control(Vocab::BACK,    Input::Keys::B)
   end
 end

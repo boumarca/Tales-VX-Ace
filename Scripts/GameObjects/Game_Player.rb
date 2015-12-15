@@ -139,13 +139,13 @@ class Game_Player < Game_Character
     return false if @move_route_forcing
     return false if $game_map.disable_dash?
     return false if vehicle
-    return Input.press?(:B)
+    return Input.press?(Input::Keys::B)
   end
   #--------------------------------------------------------------------------
   # * Determine if Debug Pass-through State
   #--------------------------------------------------------------------------
   def debug_through?
-    $TEST && Input.press?(:CTRL)
+    $TEST && Input.press?(Input::Keys::CTRL)
   end
   #--------------------------------------------------------------------------
   # * Detect Collision (Including Followers)
@@ -367,7 +367,7 @@ class Game_Player < Game_Character
       $game_party.on_player_walk
       return if check_touch_event
     end
-    if movable? && Input.trigger?(:A)
+    if movable? && Input.trigger?(Input::Keys::A)
       return if get_on_off_vehicle
       return if check_action_event
     end
@@ -377,7 +377,7 @@ class Game_Player < Game_Character
   # * Update Encounter
   #--------------------------------------------------------------------------
   def update_encounter
-    return if $TEST && Input.press?(:CTRL)
+    return if $TEST && Input.press?(Input::Keys::CTRL)
     return if $game_party.encounter_none?
     return if in_airship?
     return if @move_route_forcing

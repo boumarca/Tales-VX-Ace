@@ -197,27 +197,27 @@ class Scene_Equip < Scene_MenuBase
   # * Set Controls For Status Window 
   #--------------------------------------------------------------------------
   def set_status_controls
-    @control_help_window.add_control(Vocab::EQUIP,        :A) 
-    @control_help_window.add_control(Vocab::BACK,         :B)
-    @control_help_window.add_control(Vocab::OPTIMIZE,     :X)
-    @control_help_window.add_control(Vocab::CHANGE_ACTOR, :L, :R)
+    @control_help_window.add_control(Vocab::EQUIP,        Input::Keys::A) 
+    @control_help_window.add_control(Vocab::BACK,         Input::Keys::B)
+    @control_help_window.add_control(Vocab::OPTIMIZE,     Input::Keys::X)
+    @control_help_window.add_control(Vocab::CHANGE_ACTOR, Input::Keys::L, Input::Keys::R)
   end
   #--------------------------------------------------------------------------
   # * New Method
   # * Set Controls For Slots Window 
   #--------------------------------------------------------------------------
   def set_slots_controls
-    @control_help_window.add_control(Vocab::CONFIRM,      :A) 
-    @control_help_window.add_control(Vocab::BACK,         :B)
-    @control_help_window.add_control(Vocab::REMOVE,       :X)
-    @control_help_window.add_control(Vocab::CHANGE_ACTOR, :L, :R)
+    @control_help_window.add_control(Vocab::CONFIRM,      Input::Keys::A) 
+    @control_help_window.add_control(Vocab::BACK,         Input::Keys::B)
+    @control_help_window.add_control(Vocab::REMOVE,       Input::Keys::X)
+    @control_help_window.add_control(Vocab::CHANGE_ACTOR, Input::Keys::L, Input::Keys::R)
   end
   #--------------------------------------------------------------------------
   # * New Method
   # * Set Controls For Item Window 
   #--------------------------------------------------------------------------
   def set_item_controls
-    @control_help_window.add_control(Vocab::CONFIRM, :A) 
-    @control_help_window.add_control(Vocab::BACK,    :B)
+    @control_help_window.add_control(Vocab::CONFIRM, Input::Keys::A) 
+    @control_help_window.add_control(Vocab::BACK,    Input::Keys::B)
   end
 end

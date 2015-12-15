@@ -295,10 +295,10 @@ class Window_Selectable < Window_Base
   def process_cursor_move
     return unless cursor_movable?
     last_index = @index
-    cursor_down(Input.trigger?(:DOWN))  if Input.repeat?(:DOWN)
-    cursor_up(Input.trigger?(:UP))      if Input.repeat?(:UP)
-    cursor_right(Input.trigger?(:RIGHT))if Input.repeat?(:RIGHT)
-    cursor_left(Input.trigger?(:LEFT))  if Input.repeat?(:LEFT)
+    cursor_down(Input.trigger?(Input::Keys::DOWN))  if Input.repeat?(Input::Keys::DOWN)
+    cursor_up(Input.trigger?(Input::Keys::UP))      if Input.repeat?(Input::Keys::UP)
+    cursor_right(Input.trigger?(Input::Keys::RIGHT))if Input.repeat?(Input::Keys::RIGHT)
+    cursor_left(Input.trigger?(Input::Keys::LEFT))  if Input.repeat?(Input::Keys::LEFT)
     Sound.play_cursor if @index != last_index
   end
   #--------------------------------------------------------------------------
@@ -307,14 +307,14 @@ class Window_Selectable < Window_Base
   #--------------------------------------------------------------------------
   def process_handling
     return unless open? && active
-    return process_ok       if ok_enabled?        && Input.trigger?(:A)
-    return process_cancel   if cancel_enabled?    && Input.trigger?(:B)
-    return process_x        if x_enabled?         && Input.trigger?(:X)
-    return process_y        if y_enabled?         && Input.trigger?(:Y)
-    return process_start    if start_enabled?     && Input.trigger?(:C) 
-    return process_select   if select_enabled?    && Input.trigger?(:Z)
-    return process_pagedown if handle?(:pagedown) && Input.trigger?(:R)
-    return process_pageup   if handle?(:pageup)   && Input.trigger?(:L)
+    return process_ok       if ok_enabled?        && Input.trigger?(Input::Keys::A)
+    return process_cancel   if cancel_enabled?    && Input.trigger?(Input::Keys::B)
+    return process_x        if x_enabled?         && Input.trigger?(Input::Keys::X)
+    return process_y        if y_enabled?         && Input.trigger?(Input::Keys::Y)
+    return process_start    if start_enabled?     && Input.trigger?(Input::Keys::START) 
+    return process_select   if select_enabled?    && Input.trigger?(Input::Keys::SELECT)
+    return process_pagedown if handle?(:pagedown) && Input.trigger?(Input::Keys::R)
+    return process_pageup   if handle?(:pageup)   && Input.trigger?(Input::Keys::L)
   end
   #--------------------------------------------------------------------------
   # * Get Activation State of OK Processing

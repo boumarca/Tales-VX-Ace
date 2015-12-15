@@ -180,7 +180,7 @@ class Scene_Map < Scene_Base
     if $game_system.menu_disabled || $game_map.interpreter.running?
       @menu_calling = false
     else
-      @menu_calling ||= Input.trigger?(:Y)
+      @menu_calling ||= Input.trigger?(Input::Keys::Y)
       call_menu if @menu_calling && !$game_player.moving?
     end
   end

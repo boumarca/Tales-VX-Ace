@@ -26,7 +26,7 @@ class Scene_Gameover < Scene_Base
   #--------------------------------------------------------------------------
   def update
     super
-    goto_title if Input.trigger?(:C)
+    goto_title if Input.trigger?(Input::Keys::START)
   end
   #--------------------------------------------------------------------------
   # * Execute Transition

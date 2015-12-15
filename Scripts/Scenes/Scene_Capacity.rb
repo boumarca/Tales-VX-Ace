@@ -173,17 +173,17 @@ end
   # * Set Controls For Status Window 
   #--------------------------------------------------------------------------
   def set_status_controls
-    @control_help_window.add_control(Vocab::CAPACITIES,   :A) 
-    @control_help_window.add_control(Vocab::BACK,         :B)
-    @control_help_window.add_control(Vocab::REMOVE_ALL,   :X)
-    @control_help_window.add_control(Vocab::CHANGE_ACTOR, :L, :R)
+    @control_help_window.add_control(Vocab::CAPACITIES,   Input::Keys::A) 
+    @control_help_window.add_control(Vocab::BACK,         Input::Keys::B)
+    @control_help_window.add_control(Vocab::REMOVE_ALL,   Input::Keys::X)
+    @control_help_window.add_control(Vocab::CHANGE_ACTOR, Input::Keys::L, Input::Keys::R)
   end
   #--------------------------------------------------------------------------
   # * Set Controls For Capacities Window 
   #--------------------------------------------------------------------------
   def set_capacities_controls
-    @control_help_window.add_control(Vocab::TOGGLE,           :A) 
-    @control_help_window.add_control(Vocab::BACK,             :B)
-    @control_help_window.add_control(Vocab::CHANGE_CATEGORY,  :L, :R)
+    @control_help_window.add_control(Vocab::TOGGLE,           Input::Keys::A) 
+    @control_help_window.add_control(Vocab::BACK,             Input::Keys::B)
+    @control_help_window.add_control(Vocab::CHANGE_CATEGORY,  Input::Keys::L, Input::Keys::R)
   end
 end

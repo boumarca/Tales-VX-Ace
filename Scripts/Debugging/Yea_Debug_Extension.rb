@@ -141,8 +141,8 @@ module Input
   #--------------------------------------------------------------------------
   # constants - Created by OriginalWij and Yanfly
   #--------------------------------------------------------------------------
-  DEFAULT = [:DOWN, :LEFT, :RIGHT, :UP, :A, :B, :C, :X, :Y, :Z, :L, :R,
-    :SHIFT, :CTRL, :ALT, :F5, :F6, :F7, :F8, :F9]
+  DEFAULT = [Input::Keys::DOWN, Input::Keys::LEFT, Input::Keys::RIGHT, Input::Keys::UP, Input::Keys::A, Input::Keys::B, Input::Keys::START, Input::Keys::X, Input::Keys::Y, Input::Keys::SELECT, Input::Keys::L, Input::Keys::R,
+    Input::Keys::SHIFT, Input::Keys::CTRL, Input::Keys::ALT, :F5, :F6, :F7, :F8, :F9]
   
   LETTERS = {}
   LETTERS['A'] = 65; LETTERS['B'] = 66; LETTERS['C'] = 67; LETTERS['D'] = 68
@@ -487,19 +487,19 @@ class Scene_Map < Scene_Base
   alias scene_map_update_call_debug_debug update_call_debug
   def update_call_debug
     return unless $TEST
-    if Input.press?(:ALT)
+    if Input.press?(Input::Keys::ALT)
       for key in YEA::DEBUG::ALT
         next unless Input.trigger?(key[0])
         next if key[1] <= 0
         $game_temp.reserve_common_event(key[1])
       end
-    elsif Input.press?(:CTRL)
+    elsif Input.press?(Input::Keys::CTRL)
       for key in YEA::DEBUG::CTRL
         next unless Input.trigger?(key[0])
         next if key[1] <= 0
         $game_temp.reserve_common_event(key[1])
       end
-    elsif Input.press?(:SHIFT)
+    elsif Input.press?(Input::Keys::SHIFT)
       for key in YEA::DEBUG::SHIFT
         next unless Input.trigger?(key[0])
         next if key[1] <= 0
@@ -1085,10 +1085,10 @@ class Window_DebugShownMap < Window_Selectable
   #--------------------------------------------------------------------------
   def cursor_down(wrap = false)
     Sound.play_cursor
-    @tilemap.oy += Input.press?(:SHIFT) ? 320 : 32
-    @tilemap.oy += Input.press?(:CTRL) ? 1568 : 0
-    @map_y += Input.press?(:SHIFT) ? 10 : 1
-    @map_y += Input.press?(:CTRL) ? 49 : 0
+    @tilemap.oy += Input.press?(Input::Keys::SHIFT) ? 320 : 32
+    @tilemap.oy += Input.press?(Input::Keys::CTRL) ? 1568 : 0
+    @map_y += Input.press?(Input::Keys::SHIFT) ? 10 : 1
+    @map_y += Input.press?(Input::Keys::CTRL) ? 49 : 0
   end
   
   #--------------------------------------------------------------------------
@@ -1096,10 +1096,10 @@ class Window_DebugShownMap < Window_Selectable
   #--------------------------------------------------------------------------
   def cursor_up(wrap = false)
     Sound.play_cursor
-    @tilemap.oy -= Input.press?(:SHIFT) ? 320 : 32
-    @tilemap.oy -= Input.press?(:CTRL) ? 1568 : 0
-    @map_y -= Input.press?(:SHIFT) ? 10 : 1
-    @map_y -= Input.press?(:CTRL) ? 49 : 0
+    @tilemap.oy -= Input.press?(Input::Keys::SHIFT) ? 320 : 32
+    @tilemap.oy -= Input.press?(Input::Keys::CTRL) ? 1568 : 0
+    @map_y -= Input.press?(Input::Keys::SHIFT) ? 10 : 1
+    @map_y -= Input.press?(Input::Keys::CTRL) ? 49 : 0
   end
   
   #--------------------------------------------------------------------------
@@ -1107,10 +1107,10 @@ class Window_DebugShownMap < Window_Selectable
   #--------------------------------------------------------------------------
   def cursor_right(wrap = false)
     Sound.play_cursor
-    @tilemap.ox += Input.press?(:SHIFT) ? 320 : 32
-    @tilemap.ox += Input.press?(:CTRL) ? 1568 : 0
-    @map_x += Input.press?(:SHIFT) ? 10 : 1
-    @map_x += Input.press?(:CTRL) ? 49 : 0
+    @tilemap.ox += Input.press?(Input::Keys::SHIFT) ? 320 : 32
+    @tilemap.ox += Input.press?(Input::Keys::CTRL) ? 1568 : 0
+    @map_x += Input.press?(Input::Keys::SHIFT) ? 10 : 1
+    @map_x += Input.press?(Input::Keys::CTRL) ? 49 : 0
   end
   
   #--------------------------------------------------------------------------
@@ -1118,10 +1118,10 @@ class Window_DebugShownMap < Window_Selectable
   #--------------------------------------------------------------------------
   def cursor_left(wrap = false)
     Sound.play_cursor
-    @tilemap.ox -= Input.press?(:SHIFT) ? 320 : 32
-    @tilemap.ox -= Input.press?(:CTRL) ? 1568 : 0
-    @map_x -= Input.press?(:SHIFT) ? 10 : 1
-    @map_x -= Input.press?(:CTRL) ? 49 : 0
+    @tilemap.ox -= Input.press?(Input::Keys::SHIFT) ? 320 : 32
+    @tilemap.ox -= Input.press?(Input::Keys::CTRL) ? 1568 : 0
+    @map_x -= Input.press?(Input::Keys::SHIFT) ? 10 : 1
+    @map_x -= Input.press?(Input::Keys::CTRL) ? 49 : 0
   end
   
   #--------------------------------------------------------------------------
@@ -1358,8 +1358,8 @@ class Window_DebugItem < Window_Debug
   #--------------------------------------------------------------------------
   def cursor_right(wrap = false)
     Sound.play_cursor
-    $game_party.gain_item(current_ext, Input.press?(:SHIFT) ? 10 : 1)
-    $game_party.gain_item(current_ext, Input.press?(:CTRL) ? 99 : 0)
+    $game_party.gain_item(current_ext, Input.press?(Input::Keys::SHIFT) ? 10 : 1)
+    $game_party.gain_item(current_ext, Input.press?(Input::Keys::CTRL) ? 99 : 0)
     draw_item(index)
   end
   
@@ -1368,8 +1368,8 @@ class Window_DebugItem < Window_Debug
   #--------------------------------------------------------------------------
   def cursor_left(wrap = false)
     Sound.play_cursor
-    $game_party.lose_item(current_ext, Input.press?(:SHIFT) ? 10 : 1)
-    $game_party.lose_item(current_ext, Input.press?(:CTRL) ? 99 : 0)
+    $game_party.lose_item(current_ext, Input.press?(Input::Keys::SHIFT) ? 10 : 1)
+    $game_party.lose_item(current_ext, Input.press?(Input::Keys::CTRL) ? 99 : 0)
     draw_item(index)
   end
   

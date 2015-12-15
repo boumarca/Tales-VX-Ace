@@ -76,7 +76,7 @@ class Scene_Battle < Scene_Base
   # * Determine if Fast Forward
   #--------------------------------------------------------------------------
   def show_fast?
-    Input.press?(:A) || Input.press?(:C)
+    Input.press?(Input::Keys::A) || Input.press?(Input::Keys::START)
   end
   #--------------------------------------------------------------------------
   # * Wait (No Fast Forward)

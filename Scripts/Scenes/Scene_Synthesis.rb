@@ -185,18 +185,18 @@ class Scene_Synthesis < Scene_ItemBase
   # * Set Controls For Category Window 
   #--------------------------------------------------------------------------
   def set_category_controls
-    @control_help_window.add_control(Vocab::ITEM,             :A) 
-    @control_help_window.add_control(Vocab::BACK,             :B)
-    @control_help_window.add_control(Vocab::CHANGE_CATEGORY,  :L, :R)
+    @control_help_window.add_control(Vocab::ITEM,             Input::Keys::A) 
+    @control_help_window.add_control(Vocab::BACK,             Input::Keys::B)
+    @control_help_window.add_control(Vocab::CHANGE_CATEGORY,  Input::Keys::L, Input::Keys::R)
   end
   #--------------------------------------------------------------------------
   # * New Method
   # * Set Controls For Item Window 
   #--------------------------------------------------------------------------
   def set_item_controls
-    @control_help_window.add_control(Vocab::CONFIRM,          :A) 
-    @control_help_window.add_control(Vocab::BACK,             :B)
-    @control_help_window.add_control(Vocab::CHANGE_CATEGORY,  :L, :R)
-    @control_help_window.add_control(Vocab::DESCRIPTION,      :C)
+    @control_help_window.add_control(Vocab::CONFIRM,          Input::Keys::A) 
+    @control_help_window.add_control(Vocab::BACK,             Input::Keys::B)
+    @control_help_window.add_control(Vocab::CHANGE_CATEGORY,  Input::Keys::L, Input::Keys::R)
+    @control_help_window.add_control(Vocab::DESCRIPTION,      Input::Keys::START)
   end
 end

@@ -117,10 +117,10 @@ class Window_ShopNumber < Window_Selectable
   # * Update Quantity
   #--------------------------------------------------------------------------
   def update_number
-    change_number(1)   if Input.repeat?(:RIGHT)
-    change_number(-1)  if Input.repeat?(:LEFT)
-    change_number(10)  if Input.repeat?(:UP)
-    change_number(-10) if Input.repeat?(:DOWN)
+    change_number(1)   if Input.repeat?(Input::Keys::RIGHT)
+    change_number(-1)  if Input.repeat?(Input::Keys::LEFT)
+    change_number(10)  if Input.repeat?(Input::Keys::UP)
+    change_number(-10) if Input.repeat?(Input::Keys::DOWN)
   end
   #--------------------------------------------------------------------------
   # * Change Quantity

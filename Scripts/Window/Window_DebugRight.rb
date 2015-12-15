@@ -94,7 +94,7 @@ class Window_DebugRight < Window_Selectable
   # * Update During Switch Mode
   #--------------------------------------------------------------------------
   def update_switch_mode
-    if Input.trigger?(:C)
+    if Input.trigger?(Input::Keys::START)
       Sound.play_ok
       $game_switches[current_id] = !$game_switches[current_id]
       redraw_current_item
@@ -106,10 +106,10 @@ class Window_DebugRight < Window_Selectable
   def update_variable_mode
     return unless $game_variables[current_id].is_a?(Numeric)
     value = $game_variables[current_id]
-    value += 1 if Input.repeat?(:RIGHT)
-    value -= 1 if Input.repeat?(:LEFT)
-    value += 10 if Input.repeat?(:R)
-    value -= 10 if Input.repeat?(:L)
+    value += 1 if Input.repeat?(Input::Keys::RIGHT)
+    value -= 1 if Input.repeat?(Input::Keys::LEFT)
+    value += 10 if Input.repeat?(Input::Keys::R)
+    value -= 10 if Input.repeat?(Input::Keys::L)
     if $game_variables[current_id] != value
       $game_variables[current_id] = value
       Sound.play_cursor

@@ -77,7 +77,7 @@ class Window_ScrollText < Window_Base
   # * Determine if Fast Forward
   #--------------------------------------------------------------------------
   def show_fast?
-    !$game_message.scroll_no_fast && (Input.press?(:A) || Input.press?(:C))
+    !$game_message.scroll_no_fast && (Input.press?(Input::Keys::A) || Input.press?(Input::Keys::START))
   end
   #--------------------------------------------------------------------------
   # * End Message

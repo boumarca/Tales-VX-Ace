@@ -195,9 +195,9 @@ class Window_NameInput < Window_Selectable
   #--------------------------------------------------------------------------
   def process_handling
     return unless open? && active
-    process_jump if Input.trigger?(:C)
-    process_back if Input.repeat?(:B)
-    process_ok   if Input.trigger?(:A)
+    process_jump if Input.trigger?(Input::Keys::START)
+    process_back if Input.repeat?(Input::Keys::B)
+    process_ok   if Input.trigger?(Input::Keys::A)
   end
   #--------------------------------------------------------------------------
   # * Jump to OK

@@ -78,8 +78,8 @@ class Window_NumberInput < Window_Base
   def process_cursor_move
     return unless active
     last_index = @index
-    cursor_right(Input.trigger?(:RIGHT)) if Input.repeat?(:RIGHT)
-    cursor_left (Input.trigger?(:LEFT))  if Input.repeat?(:LEFT)
+    cursor_right(Input.trigger?(Input::Keys::RIGHT)) if Input.repeat?(Input::Keys::RIGHT)
+    cursor_left (Input.trigger?(Input::Keys::LEFT))  if Input.repeat?(Input::Keys::LEFT)
     Sound.play_cursor if @index != last_index
   end
   #--------------------------------------------------------------------------
@@ -87,13 +87,13 @@ class Window_NumberInput < Window_Base
   #--------------------------------------------------------------------------
   def process_digit_change
     return unless active
-    if Input.repeat?(:UP) || Input.repeat?(:DOWN)
+    if Input.repeat?(Input::Keys::UP) || Input.repeat?(Input::Keys::DOWN)
       Sound.play_cursor
       place = 10 ** (@digits_max - 1 - @index)
       n = @number / place % 10
       @number -= n * place
-      n = (n + 1) % 10 if Input.repeat?(:UP)
-      n = (n + 9) % 10 if Input.repeat?(:DOWN)
+      n = (n + 1) % 10 if Input.repeat?(Input::Keys::UP)
+      n = (n + 9) % 10 if Input.repeat?(Input::Keys::DOWN)
       @number += n * place
       refresh
     end
@@ -103,8 +103,8 @@ class Window_NumberInput < Window_Base
   #--------------------------------------------------------------------------
   def process_handling
     return unless active
-    return process_ok     if Input.trigger?(:C)
-    return process_cancel if Input.trigger?(:B)
+    return process_ok     if Input.trigger?(Input::Keys::A)
+    return process_cancel if Input.trigger?(Input::Keys::B)
   end
   #--------------------------------------------------------------------------
   # * Processing When OK Button Is Pressed

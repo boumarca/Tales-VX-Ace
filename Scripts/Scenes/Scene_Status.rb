@@ -175,26 +175,26 @@ class Scene_Status < Scene_MenuBase
   # * Set Controls For Status Window 
   #--------------------------------------------------------------------------
   def set_status_controls
-    @control_help_window.add_control(Vocab::MODIFY,       :A) 
-    @control_help_window.add_control(Vocab::BACK,         :B)
-    @control_help_window.add_control(Vocab::CHANGE_ACTOR, :L, :R)
+    @control_help_window.add_control(Vocab::MODIFY,       Input::Keys::A) 
+    @control_help_window.add_control(Vocab::BACK,         Input::Keys::B)
+    @control_help_window.add_control(Vocab::CHANGE_ACTOR, Input::Keys::L, Input::Keys::R)
   end
   #--------------------------------------------------------------------------
   # * New Method
   # * Set Controls For Titles Window 
   #--------------------------------------------------------------------------
   def set_titles_controls
-    @control_help_window.add_control(Vocab::CONFIRM,      :A) 
-    @control_help_window.add_control(Vocab::BACK,         :B)
-    @control_help_window.add_control(Vocab::DESCRIPTION,  :C)
+    @control_help_window.add_control(Vocab::CONFIRM,      Input::Keys::A) 
+    @control_help_window.add_control(Vocab::BACK,         Input::Keys::B)
+    @control_help_window.add_control(Vocab::DESCRIPTION,  Input::Keys::START)
   end
     #--------------------------------------------------------------------------
   # * New Method
   # * Set Controls For Name Input Window 
   #--------------------------------------------------------------------------
   def set_input_controls
-    @control_help_window.add_control(Vocab::CONFIRM,  :A) 
-    @control_help_window.add_control(Vocab::ERASE,    :B)
-    @control_help_window.add_control(Vocab::DONE,     :C)
+    @control_help_window.add_control(Vocab::CONFIRM,  Input::Keys::A) 
+    @control_help_window.add_control(Vocab::ERASE,    Input::Keys::B)
+    @control_help_window.add_control(Vocab::DONE,     Input::Keys::START)
   end
 end

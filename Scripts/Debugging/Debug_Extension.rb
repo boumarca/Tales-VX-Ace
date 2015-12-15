@@ -209,8 +209,8 @@ class Window_DebugCooking < Window_DebugActor
   #--------------------------------------------------------------------------
   def cursor_right(wrap = false)
     Sound.play_cursor
-    delta = Input.press?(:SHIFT) ? 10 : 1
-    delta = Input.press?(:CTRL) ? 100 : delta
+    delta = Input.press?(Input::Keys::SHIFT) ? 10 : 1
+    delta = Input.press?(Input::Keys::CTRL) ? 100 : delta
     delta.times { @actor.use_recipe($data_recipes[@list[index][:ext]], true) }
     refresh
   end  
@@ -303,9 +303,9 @@ class Window_DebugParty < Window_Debug
   #--------------------------------------------------------------------------
   def cursor_right(wrap = false)
     Sound.play_cursor
-    delta = Input.press?(:SHIFT) ? 10 : 1
-    delta = Input.press?(:CTRL) ? 100 : delta
-    delta = Input.press?(:ALT) ? 1000 : delta
+    delta = Input.press?(Input::Keys::SHIFT) ? 10 : 1
+    delta = Input.press?(Input::Keys::CTRL) ? 100 : delta
+    delta = Input.press?(Input::Keys::ALT) ? 1000 : delta
     set_parameter(delta) unless current_symbol == :hunger || current_symbol == :member
     set_parameter(next_actor) if current_symbol == :member
     set_parameter(!$game_cooking.hungry) if current_symbol == :hunger
@@ -318,9 +318,9 @@ class Window_DebugParty < Window_Debug
   #--------------------------------------------------------------------------
   def cursor_left(wrap = false)
     Sound.play_cursor
-    delta = Input.press?(:SHIFT) ? -10 : -1
-    delta = Input.press?(:CTRL) ? -100 : delta
-    delta = Input.press?(:ALT) ? -1000 : delta
+    delta = Input.press?(Input::Keys::SHIFT) ? -10 : -1
+    delta = Input.press?(Input::Keys::CTRL) ? -100 : delta
+    delta = Input.press?(Input::Keys::ALT) ? -1000 : delta
     set_parameter(delta) unless current_symbol == :hunger || current_symbol == :member
     set_parameter(prev_actor) if current_symbol == :member
     set_parameter(!$game_cooking.hungry) if current_symbol == :hunger
@@ -477,8 +477,8 @@ class Window_DebugActorParams < Window_DebugActor
   #--------------------------------------------------------------------------
   def cursor_right(wrap = false)
     Sound.play_cursor
-    delta = Input.press?(:SHIFT) ? 10 : 1
-    delta = Input.press?(:CTRL) ? 100 : delta
+    delta = Input.press?(Input::Keys::SHIFT) ? 10 : 1
+    delta = Input.press?(Input::Keys::CTRL) ? 100 : delta
     set_parameter(delta)
     refresh
   end
@@ -488,8 +488,8 @@ class Window_DebugActorParams < Window_DebugActor
   #--------------------------------------------------------------------------
   def cursor_left(wrap = false)
     Sound.play_cursor
-    delta = Input.press?(:SHIFT) ? -10 : -1
-    delta = Input.press?(:CTRL) ? -100 : delta
+    delta = Input.press?(Input::Keys::SHIFT) ? -10 : -1
+    delta = Input.press?(Input::Keys::CTRL) ? -100 : delta
     set_parameter(delta)
     refresh
   end
@@ -547,9 +547,9 @@ class Window_DebugCrafting < Window_Debug
   #--------------------------------------------------------------------------
   def cursor_right(wrap = false)
     Sound.play_cursor
-    delta = Input.press?(:SHIFT) ? 10 : 1
-    delta = Input.press?(:CTRL) ? 100 : delta
-    delta = Input.press?(:ALT) ? 1000 : delta
+    delta = Input.press?(Input::Keys::SHIFT) ? 10 : 1
+    delta = Input.press?(Input::Keys::CTRL) ? 100 : delta
+    delta = Input.press?(Input::Keys::ALT) ? 1000 : delta
     set_parameter(delta) 
     draw_item(index)
     refresh

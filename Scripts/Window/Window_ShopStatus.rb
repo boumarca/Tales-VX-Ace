@@ -116,7 +116,7 @@ class Window_ShopStatus < Window_Base
   # * Update Page
   #--------------------------------------------------------------------------
   def update_page
-    if visible && Input.trigger?(:A) && page_max > 1
+    if visible && Input.trigger?(Input::Keys::A) && page_max > 1
       @page_index = (@page_index + 1) % page_max
       refresh
     end

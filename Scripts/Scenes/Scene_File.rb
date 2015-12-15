@@ -201,8 +201,8 @@ class Scene_File < Scene_MenuBase
   # * Update Save File Selection
   #--------------------------------------------------------------------------
   def update_savefile_selection
-    return on_savefile_ok     if Input.trigger?(:A)
-    return on_savefile_cancel if Input.trigger?(:B)
+    return on_savefile_ok     if Input.trigger?(Input::Keys::A)
+    return on_savefile_cancel if Input.trigger?(Input::Keys::B)
     update_cursor if @savefile_windows[@index].selected == true
   end
   #--------------------------------------------------------------------------
@@ -229,10 +229,10 @@ class Scene_File < Scene_MenuBase
   #--------------------------------------------------------------------------
   def update_cursor
     last_index = @index
-    cursor_down (Input.trigger?(:DOWN))  if Input.repeat?(:DOWN)
-    cursor_up   (Input.trigger?(:UP))    if Input.repeat?(:UP)
-    cursor_pagedown   if Input.trigger?(:R)
-    cursor_pageup     if Input.trigger?(:L)
+    cursor_down (Input.trigger?(Input::Keys::DOWN))  if Input.repeat?(Input::Keys::DOWN)
+    cursor_up   (Input.trigger?(Input::Keys::UP))    if Input.repeat?(Input::Keys::UP)
+    cursor_pagedown   if Input.trigger?(Input::Keys::R)
+    cursor_pageup     if Input.trigger?(Input::Keys::L)
     change_window(last_index) if @index != last_index
     update_scroll_arrows if @index != last_index
   end

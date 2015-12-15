@@ -73,7 +73,7 @@ class Window_Modal < Window_Base
   #--------------------------------------------------------------------------
   def process_handling
     return unless open? && active
-    return process_close    if Input.trigger?(:A) || Input.trigger?(:B)
+    return process_close    if Input.trigger?(Input::Keys::A) || Input.trigger?(Input::Keys::B)
   end
   #--------------------------------------------------------------------------
   # * Override

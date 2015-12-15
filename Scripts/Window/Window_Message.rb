@@ -268,7 +268,7 @@ class Window_Message < Window_Base
   # * Update Fast Forward Flag
   #--------------------------------------------------------------------------
   def update_show_fast
-    @show_fast = true if Input.trigger?(:A)
+    @show_fast = true if Input.trigger?(Input::Keys::A)
   end
   #--------------------------------------------------------------------------
   # * Wait After Output of One Character
@@ -368,7 +368,7 @@ class Window_Message < Window_Base
   def input_pause
     self.pause = true
     wait(10)
-    Fiber.yield until Input.trigger?(:B) || Input.trigger?(:A)
+    Fiber.yield until Input.trigger?(Input::Keys::B) || Input.trigger?(Input::Keys::A)
     Input.update
     self.pause = false
   end

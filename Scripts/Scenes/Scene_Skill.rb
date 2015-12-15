@@ -400,50 +400,50 @@ class Scene_Skill < Scene_ItemBase
   # * Set Controls For Command Window 
   #--------------------------------------------------------------------------
   def set_status_controls
-    @control_help_window.add_control(Vocab::SKILLS,               :A) 
-    @control_help_window.add_control(Vocab::BACK,                 :B)
-    @control_help_window.add_control(Vocab::CHANGE_ACTOR,         :L, :R)
-    @control_help_window.add_control(Vocab::CHANGE_CONTROL_MODE,  :Z)  unless @status_window.commands_disabled
+    @control_help_window.add_control(Vocab::SKILLS,               Input::Keys::A) 
+    @control_help_window.add_control(Vocab::BACK,                 Input::Keys::B)
+    @control_help_window.add_control(Vocab::CHANGE_ACTOR,         Input::Keys::L, Input::Keys::R)
+    @control_help_window.add_control(Vocab::CHANGE_CONTROL_MODE,  Input::Keys::SELECT)  unless @status_window.commands_disabled
   end
   #--------------------------------------------------------------------------
   # * New Method
   # * Set Controls For Auto Window 
   #--------------------------------------------------------------------------
   def set_auto_controls
-    @control_help_window.add_control(Vocab::TOGGLE,       :A, :X)
-    @control_help_window.add_control(Vocab::BACK,         :B)
-    @control_help_window.add_control(Vocab::USE,          :Y)
-    @control_help_window.add_control(Vocab::CHANGE_ACTOR, :L, :R)
-    @control_help_window.add_control(Vocab::DESCRIPTION,  :C)
+    @control_help_window.add_control(Vocab::TOGGLE,       Input::Keys::A, Input::Keys::X)
+    @control_help_window.add_control(Vocab::BACK,         Input::Keys::B)
+    @control_help_window.add_control(Vocab::USE,          Input::Keys::Y)
+    @control_help_window.add_control(Vocab::CHANGE_ACTOR, Input::Keys::L, Input::Keys::R)
+    @control_help_window.add_control(Vocab::DESCRIPTION,  Input::Keys::START)
   end
   #--------------------------------------------------------------------------
   # * New Method
   # * Set Controls For Manual Window 
   #--------------------------------------------------------------------------
   def set_manual_controls
-    @control_help_window.add_control(Vocab::CONFIRM,      :A)
-    @control_help_window.add_control(Vocab::BACK,         :B)
-    @control_help_window.add_control(Vocab::USE,          :Y) unless @manual_list_window.commands_disabled
-    @control_help_window.add_control(Vocab::DESCRIPTION,  :C)
+    @control_help_window.add_control(Vocab::CONFIRM,      Input::Keys::A)
+    @control_help_window.add_control(Vocab::BACK,         Input::Keys::B)
+    @control_help_window.add_control(Vocab::USE,          Input::Keys::Y) unless @manual_list_window.commands_disabled
+    @control_help_window.add_control(Vocab::DESCRIPTION,  Input::Keys::START)
   end
   #--------------------------------------------------------------------------
   # * New Method
   # * Set Controls For Slots Window 
   #--------------------------------------------------------------------------
   def set_slots_controls
-    @control_help_window.add_control(Vocab::SKILLS,       :A)
-    @control_help_window.add_control(Vocab::BACK,         :B)
-    @control_help_window.add_control(Vocab::REMOVE,       :X)
-    @control_help_window.add_control(Vocab::USE,          :Y) unless @slot_window.shortcut_tab?
-    @control_help_window.add_control(Vocab::DESCRIPTION,  :C)
-    @control_help_window.add_control(Vocab::CHANGE_ACTOR, :L, :R)
+    @control_help_window.add_control(Vocab::SKILLS,       Input::Keys::A)
+    @control_help_window.add_control(Vocab::BACK,         Input::Keys::B)
+    @control_help_window.add_control(Vocab::REMOVE,       Input::Keys::X)
+    @control_help_window.add_control(Vocab::USE,          Input::Keys::Y) unless @slot_window.shortcut_tab?
+    @control_help_window.add_control(Vocab::DESCRIPTION,  Input::Keys::START)
+    @control_help_window.add_control(Vocab::CHANGE_ACTOR, Input::Keys::L, Input::Keys::R)
   end
   #--------------------------------------------------------------------------
   # * New Method
   # * Set Controls For Actor Window 
   #--------------------------------------------------------------------------
   def set_actor_controls
-    @control_help_window.add_control(Vocab::CONFIRM, :A)
-    @control_help_window.add_control(Vocab::BACK,    :B)
+    @control_help_window.add_control(Vocab::CONFIRM, Input::Keys::A)
+    @control_help_window.add_control(Vocab::BACK,    Input::Keys::B)
   end
 end

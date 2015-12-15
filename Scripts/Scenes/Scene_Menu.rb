@@ -433,12 +433,12 @@ class Scene_Menu < Scene_MenuBase
   # * Update Actor Selection
   #--------------------------------------------------------------------------
   def update_actor_selection
-    return on_formation_ok     if Input.trigger?(:A) && @@editing_formation && @pending_index == -1
-    return on_formation_cancel if Input.trigger?(:B) && @@editing_formation
-    return on_formation_switch if Input.trigger?(:X) && @@editing_formation
-    return on_formation_leader if Input.trigger?(:Y) && @@editing_formation && @pending_index == -1
-    return on_personal_ok      if Input.trigger?(:A)
-    return on_personal_cancel  if Input.trigger?(:B)
+    return on_formation_ok     if Input.trigger?(Input::Keys::A) && @@editing_formation && @pending_index == -1
+    return on_formation_cancel if Input.trigger?(Input::Keys::B) && @@editing_formation
+    return on_formation_switch if Input.trigger?(Input::Keys::X) && @@editing_formation
+    return on_formation_leader if Input.trigger?(Input::Keys::Y) && @@editing_formation && @pending_index == -1
+    return on_personal_ok      if Input.trigger?(Input::Keys::A)
+    return on_personal_cancel  if Input.trigger?(Input::Keys::B)
     update_cursor if @actor_windows[@index].selected == true
   end
   #--------------------------------------------------------------------------
@@ -446,8 +446,8 @@ class Scene_Menu < Scene_MenuBase
   #--------------------------------------------------------------------------
   def update_cursor
     last_index = @index
-    cursor_down (Input.trigger?(:DOWN))  if Input.repeat?(:DOWN)
-    cursor_up   (Input.trigger?(:UP))    if Input.repeat?(:UP)
+    cursor_down (Input.trigger?(Input::Keys::DOWN))  if Input.repeat?(Input::Keys::DOWN)
+    cursor_up   (Input.trigger?(Input::Keys::UP))    if Input.repeat?(Input::Keys::UP)
     change_window(last_index) if @index != last_index
     update_scroll_arrows if @index != last_index
   end
@@ -526,17 +526,17 @@ class Scene_Menu < Scene_MenuBase
   # * Set Controls For Command Window 
   #--------------------------------------------------------------------------
   def set_command_controls
-    @control_help_window.add_control(Vocab::CONFIRM,  :A)
-    @control_help_window.add_control(Vocab::BACK,     :B)
+    @control_help_window.add_control(Vocab::CONFIRM,  Input::Keys::A)
+    @control_help_window.add_control(Vocab::BACK,     Input::Keys::B)
   end
   #--------------------------------------------------------------------------
   # * Override
   # * Set Formation Controls Help
   #--------------------------------------------------------------------------
   def set_formation_controls
-    @control_help_window.add_control(Vocab::STATUS,   :A) if @pending_index == -1
-    @control_help_window.add_control(Vocab::BACK,     :B)  
-    @control_help_window.add_control(Vocab::SWAP,     :X)
-    @control_help_window.add_control(Vocab::LEADER,   :Y) if @pending_index == -1
+    @control_help_window.add_control(Vocab::STATUS,   Input::Keys::A) if @pending_index == -1
+    @control_help_window.add_control(Vocab::BACK,     Input::Keys::B)  
+    @control_help_window.add_control(Vocab::SWAP,     Input::Keys::X)
+    @control_help_window.add_control(Vocab::LEADER,   Input::Keys::Y) if @pending_index == -1
   end
 end
