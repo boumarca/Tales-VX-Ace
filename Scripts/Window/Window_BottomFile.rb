@@ -99,7 +99,7 @@ class Window_BottomFile < Window_Base
   end
   #--------------------------------------------------------------------------
   # * New Method
-  # * Change File
+  # * Load File Header
   #--------------------------------------------------------------------------
   def load_header(index)
     @header = DataManager.load_header(index)

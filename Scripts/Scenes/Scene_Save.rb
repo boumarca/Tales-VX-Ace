@@ -32,10 +32,12 @@ class Scene_Save < Scene_File
     end
   end
   #--------------------------------------------------------------------------
+  # * Modified
   # * Processing When Save Is Successful
   #--------------------------------------------------------------------------
   def on_save_success
-    return_scene
+    @savefile_windows[@index].reload
+    reload_windows
   end
   #--------------------------------------------------------------------------
   # * New Method

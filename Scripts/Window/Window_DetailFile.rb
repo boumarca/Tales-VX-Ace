@@ -29,15 +29,6 @@ class Window_DetailFile < Window_Base
   end
   #--------------------------------------------------------------------------
   # * New Method
-  # * Set Actor
-  #     item : Actor to show in window
-  #--------------------------------------------------------------------------
-  def set_actor(actor)
-    @actor_data = actor
-    refresh
-  end
-  #--------------------------------------------------------------------------
-  # * New Method
   # * Refresh Window, Hide If No Actor
   #--------------------------------------------------------------------------
   def refresh
@@ -145,5 +136,14 @@ class Window_DetailFile < Window_Base
   def mp_color
     return crisis_color if @actor_data[6] < @actor_data[7] / 4
     return normal_color
+  end
+  #--------------------------------------------------------------------------
+  # * New Method
+  # * Load Header
+  #--------------------------------------------------------------------------
+  def load_header(index)
+    header = DataManager.load_header(index)
+    @actor_data = header.nil? ? nil : header[:characters][@index]
+    refresh 
   end
 end

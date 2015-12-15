@@ -104,9 +104,7 @@ class Scene_File < Scene_MenuBase
     end
     @detail_windows.each {|window| 
       window.viewport = @detail_viewport
-      header = DataManager.load_header(index)
-      actor = header.nil? ? nil : header[:characters][window.index]
-      window.set_actor(actor)
+      window.load_header(@index)
     }
   end
   #--------------------------------------------------------------------------
@@ -244,13 +242,15 @@ class Scene_File < Scene_MenuBase
   def change_window(last_index)
     Sound.play_cursor
     @savefile_windows[last_index].selected = false
+    reload_windows
+  end
+  #--------------------------------------------------------------------------
+  # * Reload Windows
+  #--------------------------------------------------------------------------
+  def reload_windows
     @savefile_windows[@index].selected = true
     @bottom_window.load_header(@index)
-    header = DataManager.load_header(index)
-    @detail_windows.each {|window| 
-      actor = header.nil? ? nil : header[:characters][window.index]
-      window.set_actor(actor) 
-    }
+    @detail_windows.each {|window| window.load_header(@index) }
   end
   #--------------------------------------------------------------------------
   # * Move Cursor Down
