@@ -1108,7 +1108,7 @@ class Game_Interpreter
       BattleManager.setup(troop_id, @params[2], @params[3])
       BattleManager.event_proc = Proc.new {|n| @branch[@indent] = n }
       $game_player.make_encounter_count
-      SceneManager.call(Scene_LMBS)
+      SceneManager.call(LMBS::LMBS_SceneBattle)
     end
     Fiber.yield
   end
