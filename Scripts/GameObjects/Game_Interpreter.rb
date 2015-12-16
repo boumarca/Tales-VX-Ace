@@ -1092,6 +1092,7 @@ class Game_Interpreter
     $game_variables[@params[0]] = value
   end
   #--------------------------------------------------------------------------
+  # * Modified
   # * Battle Processing
   #--------------------------------------------------------------------------
   def command_301
@@ -1107,7 +1108,7 @@ class Game_Interpreter
       BattleManager.setup(troop_id, @params[2], @params[3])
       BattleManager.event_proc = Proc.new {|n| @branch[@indent] = n }
       $game_player.make_encounter_count
-      SceneManager.call(Scene_Battle)
+      SceneManager.call(Scene_LMBS)
     end
     Fiber.yield
   end
