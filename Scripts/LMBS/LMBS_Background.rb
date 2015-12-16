@@ -1,25 +1,17 @@
 #==============================================================================
-# ** Spriteset_LMBS
+# ** LMBS_Background
 #------------------------------------------------------------------------------
-#  This class brings together battle screen sprites. It's used within the
-# Scene_LMBS class.
+#  This class handles the battle background
 #==============================================================================
 
 module LMBS
-  class LMBS_Spriteset
+  class LMBS_Background
     #--------------------------------------------------------------------------
     # * Object Initialization
     #--------------------------------------------------------------------------
-    def initialize
-      create_viewports
+    def initialize(viewport)
+      @viewport = viewport
       create_battleback
-      update
-    end
-    #--------------------------------------------------------------------------
-    # * Create Viewport
-    #--------------------------------------------------------------------------
-    def create_viewports
-      @viewport = Viewport.new
     end
     #--------------------------------------------------------------------------
     # * Create Battle Background Sprite
@@ -55,40 +47,8 @@ module LMBS
     # * Free
     #--------------------------------------------------------------------------
     def dispose
-      dispose_battleback
-      dispose_viewports
-    end
-    #--------------------------------------------------------------------------
-    # * Free Battle Background (Floor) Sprite
-    #--------------------------------------------------------------------------
-    def dispose_battleback
       @background.bitmap.dispose
       @background.dispose
-    end
-    #--------------------------------------------------------------------------
-    # * Free Viewport
-    #--------------------------------------------------------------------------
-    def dispose_viewports
-      @viewport.dispose
-    end
-    #--------------------------------------------------------------------------
-    # * Frame Update
-    #--------------------------------------------------------------------------
-    def update
-      update_battleback
-      update_viewports
-    end
-    #--------------------------------------------------------------------------
-    # * Update Battle Background Sprite
-    #--------------------------------------------------------------------------
-    def update_battleback
-      @background.update
-    end
-    #--------------------------------------------------------------------------
-    # * Update Viewport
-    #--------------------------------------------------------------------------
-    def update_viewports
-      @viewport.update
     end
   end
 end

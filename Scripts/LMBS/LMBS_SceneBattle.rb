@@ -11,7 +11,8 @@ module LMBS
     #--------------------------------------------------------------------------
     def start
       super
-      create_spriteset
+      create_viewport
+      create_background
     end
     #--------------------------------------------------------------------------
     # * Post-Start Processing
@@ -36,16 +37,22 @@ module LMBS
       RPG::ME.stop
     end
     #--------------------------------------------------------------------------
-    # * Create Sprite Set
+    # * Create Viewport
     #--------------------------------------------------------------------------
-    def create_spriteset
-      @spriteset = LMBS_Spriteset.new
+    def create_viewport
+      @viewport = Viewport.new
     end
     #--------------------------------------------------------------------------
-    # * Free Sprite Set
+    # * Create Background Sprite
     #--------------------------------------------------------------------------
-    def dispose_spriteset
-      @spriteset.dispose
+    def create_background
+      @background = LMBS_Background.new(@viewport)
+    end
+    #--------------------------------------------------------------------------
+    # * Free Sprites
+    #--------------------------------------------------------------------------
+    def dispose_sprites
+      @background.dispose
     end
   end
 end
