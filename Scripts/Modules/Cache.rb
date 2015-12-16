@@ -29,7 +29,7 @@ module Cache
   #--------------------------------------------------------------------------
   # * Get Battle Graphic
   #--------------------------------------------------------------------------
-  def self.battler(filename, hue)
+  def self.battler(filename, hue = 0)
     load_bitmap("Graphics/Battlers/", filename, hue)
   end
   #--------------------------------------------------------------------------

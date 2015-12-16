@@ -7,12 +7,17 @@
 module LMBS
   class LMBS_SceneBattle < Scene_Base
     #--------------------------------------------------------------------------
+    # * Constant
+    #--------------------------------------------------------------------------
+    GROUND = 340
+    #--------------------------------------------------------------------------
     # * Start Processing
     #--------------------------------------------------------------------------
     def start
       super
       create_viewport
       create_background
+      create_battlers
     end
     #--------------------------------------------------------------------------
     # * Post-Start Processing
@@ -49,10 +54,18 @@ module LMBS
       @background = LMBS_Background.new(@viewport)
     end
     #--------------------------------------------------------------------------
+    # * Create Battlers
+    #--------------------------------------------------------------------------
+    def create_battlers
+      @battlers = []
+      @battlers.push(LMBS_Battler.new(@viewport))
+    end
+    #--------------------------------------------------------------------------
     # * Free Sprites
     #--------------------------------------------------------------------------
     def dispose_sprites
       @background.dispose
+      @battlers.each |battler| battler.dispose
     end
   end
 end
