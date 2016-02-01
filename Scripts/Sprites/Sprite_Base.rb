@@ -45,7 +45,6 @@ class Sprite_Base < Sprite
   # * Start Animation
   #--------------------------------------------------------------------------
   def start_animation(animation, mirror = false, loop = false)
-    puts "Start Animation"
     dispose_animation
     @animation = animation
     if @animation
