@@ -13,11 +13,11 @@ module LMBS
       super(viewport) 
     end
     #--------------------------------------------------------------------------
-    # * Place sprite on ground
+    # * Move sprite
     #--------------------------------------------------------------------------
-    def ground
-      self.x = 100
-      self.y = LMBS_SceneBattle::GROUND
+    def move_sprite(x, y)
+      self.x = x
+      self.y = y
     end
   end
 end

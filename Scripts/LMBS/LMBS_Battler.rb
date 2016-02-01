@@ -11,16 +11,26 @@ module LMBS
     #--------------------------------------------------------------------------
     def initialize(viewport)
       @viewport = viewport
+      create_transform
       create_battler
       create_animator
+    end
+    #--------------------------------------------------------------------------
+    # * Create Transform Component
+    #--------------------------------------------------------------------------
+    def create_transform
+      @transform = LMBS_Transform.new
+      @transform.x = 100
+      @transform.y = LMBS_SceneBattle::GROUND
+      @transform.z = 0
     end
     #--------------------------------------------------------------------------
     # * Create Battle Background Sprite
     #--------------------------------------------------------------------------
     def create_battler
       @sprite = LMBS_SpriteBattler.new(@viewport)
-      @sprite.ground
-      @sprite.z = 0
+      @sprite.move_sprite(@transform.x,  @transform.y)
+      @sprite.z = @transform.z
     end
     #--------------------------------------------------------------------------
     # * Create Sprite Animator
