@@ -44,17 +44,25 @@ class Sprite_Base < Sprite
   #--------------------------------------------------------------------------
   # * Start Animation
   #--------------------------------------------------------------------------
-  def start_animation(animation, mirror = false)
+  def start_animation(animation, mirror = false, loop = false)
+    puts "Start Animation"
     dispose_animation
     @animation = animation
     if @animation
       @ani_mirror = mirror
+      @ani_loop = loop
       set_animation_rate
-      @ani_duration = @animation.frame_max * @ani_rate + 1
+      @ani_duration = animation_duration
       load_animation_bitmap
       make_animation_sprites
       set_animation_origin
     end
+  end
+  #--------------------------------------------------------------------------
+  # * Set Animation Duration
+  #--------------------------------------------------------------------------
+  def animation_duration
+    @animation.frame_max * @ani_rate + 1
   end
   #--------------------------------------------------------------------------
   # * Set Animation Speed
@@ -85,7 +93,7 @@ class Sprite_Base < Sprite
     Graphics.frame_reset
   end
   #--------------------------------------------------------------------------
-  # * Create Animation Spirtes
+  # * Create Animation Sprites
   #--------------------------------------------------------------------------
   def make_animation_sprites
     @ani_sprites = []
@@ -164,6 +172,8 @@ class Sprite_Base < Sprite
         @animation.timings.each do |timing|
           animation_process_timing(timing) if timing.frame == frame_index
         end
+      elsif @ani_loop
+        @ani_duration = animation_duration
       else
         end_animation
       end

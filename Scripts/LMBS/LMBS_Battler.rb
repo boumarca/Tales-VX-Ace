@@ -12,16 +12,22 @@ module LMBS
     def initialize(viewport)
       @viewport = viewport
       create_battler
+      create_animator
     end
     #--------------------------------------------------------------------------
     # * Create Battle Background Sprite
     #--------------------------------------------------------------------------
     def create_battler
       @sprite = LMBS_SpriteBattler.new(@viewport)
-      @sprite.bitmap = battler_bitmap
-      @sprite.set_pivot
       @sprite.ground
       @sprite.z = 0
+    end
+    #--------------------------------------------------------------------------
+    # * Create Sprite Animator
+    #--------------------------------------------------------------------------
+    def create_animator
+      @animator = LMBS_Animator.new
+      @animator.sprite = @sprite
     end
     #--------------------------------------------------------------------------
     # * Get Battle Background Bitmap
@@ -41,6 +47,12 @@ module LMBS
     def dispose
       @sprite.bitmap.dispose
       @sprite.dispose
+    end
+    #--------------------------------------------------------------------------
+    # * Update
+    #--------------------------------------------------------------------------
+    def update
+      @sprite.update
     end
   end
 end

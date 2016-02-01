@@ -1,30 +1,37 @@
 #==============================================================================
-# ** Sprite_Battler
+# ** LMBS_Animator
 #------------------------------------------------------------------------------
-#  This sprite is used to display battlers. 
+#  This class performs animation states processing.
 #==============================================================================
 
 module LMBS
-  class LMBS_SpriteBattler < Sprite_Base
+  class LMBS_Animation_State
+    attr_accessor :animation
+  end
+  
+  class LMBS_Animator
     #--------------------------------------------------------------------------
     # * Object Initialization
     #--------------------------------------------------------------------------
-    def initialize(viewport)
-      super(viewport) 
+    def initialize
+      @states = []
+      init_states
+      @current_state = @states[0] 
     end
     #--------------------------------------------------------------------------
-    # * Set Pivot at bottom center
+    # * Initialize State Machine
     #--------------------------------------------------------------------------
-    def set_pivot
-      self.ox = self.bitmap.width / 2
-      self.oy = self.bitmap.height
+    def init_states
+      state = LMBS_Animation_State.new
+      state.animation = 112
+      @states.push(state)
     end
     #--------------------------------------------------------------------------
-    # * Place sprite on ground
+    # * Set Sprite
     #--------------------------------------------------------------------------
-    def ground
-      self.x = 100
-      self.y = LMBS_SceneBattle::GROUND
-    end
+    def sprite=(sprite)
+      @sprite = sprite
+      @sprite.start_animation($data_animations[@current_state.animation], false, true)
+    end  
   end
 end

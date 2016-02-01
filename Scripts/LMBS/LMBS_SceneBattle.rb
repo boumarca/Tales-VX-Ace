@@ -65,7 +65,20 @@ module LMBS
     #--------------------------------------------------------------------------
     def dispose_sprites
       @background.dispose
-      @battlers.each |battler| battler.dispose
+      @battlers.each { |battler| battler.dispose }
+    end
+    #--------------------------------------------------------------------------
+    # * Update
+    #--------------------------------------------------------------------------
+    def update
+      super
+      update_battlers
+    end
+    #--------------------------------------------------------------------------
+    # * Update Battlers
+    #--------------------------------------------------------------------------
+    def update_battlers
+      @battlers.each { |battler| battler.update }
     end
   end
 end
