@@ -12,6 +12,7 @@ module LMBS
     def initialize(viewport)
       @viewport = viewport
       @current_state = nil
+      @facing_left = false
       create_transform
       create_battler
       create_input_controller
@@ -67,8 +68,8 @@ module LMBS
     #--------------------------------------------------------------------------
     # * Change State
     #--------------------------------------------------------------------------
-    def start_animation(animation, mirror)
-      @sprite.start_animation(animation, mirror, true)
+    def start_animation(animation)
+      @sprite.start_animation(animation, @facing_left, true)
     end
     #--------------------------------------------------------------------------
     # * Idle
@@ -80,7 +81,15 @@ module LMBS
     # * Walk Right
     #--------------------------------------------------------------------------
     def walk_right
-      change_state(LMBS_WalkingRightState.new) unless @current_state.is_a?(LMBS_WalkingRightState)
+      @facing_left = false
+      change_state(LMBS_WalkingState.new) unless @current_state.is_a?(LMBS_WalkingState)
+    end
+    #--------------------------------------------------------------------------
+    # * Walk Left
+    #--------------------------------------------------------------------------
+    def walk_left
+      @facing_left = true
+      change_state(LMBS_WalkingState.new) unless @current_state.is_a?(LMBS_WalkingState)
     end
   end
 end

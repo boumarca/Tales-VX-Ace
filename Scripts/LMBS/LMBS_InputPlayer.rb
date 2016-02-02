@@ -7,9 +7,8 @@
 module LMBS
   class LMBS_InputPlayer < LMBS_InputController
     def command
-      if Input.press?(Input::RIGHT)
-        return LMBS_WalkRightCommand.new
-      end      
+      return LMBS_WalkRightCommand.new if Input.press?(Input::RIGHT)
+      return LMBS_WalkLeftCommand.new if Input.press?(Input::LEFT)
       return LMBS_IdleCommand.new
     end
   end

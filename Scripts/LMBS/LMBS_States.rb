@@ -11,7 +11,7 @@ module LMBS
     # * Enter State
     #--------------------------------------------------------------------------
     def enter_state(battler)
-      battler.start_animation($data_animations[@animation], false)
+      battler.start_animation($data_animations[@animation])
     end
   end
   
@@ -24,7 +24,7 @@ module LMBS
     end
   end
   
-  class LMBS_WalkingRightState < LMBS_AnimationState
+  class LMBS_WalkingState < LMBS_AnimationState
       #--------------------------------------------------------------------------
       # * Object Initialization
       #--------------------------------------------------------------------------
