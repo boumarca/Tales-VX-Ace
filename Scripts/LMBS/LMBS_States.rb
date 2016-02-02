@@ -6,12 +6,17 @@
 
 module LMBS
   class LMBS_AnimationState
-    attr_accessor :animation
+    #--------------------------------------------------------------------------
+    # * Animation
+    #--------------------------------------------------------------------------
+    def animation
+      $data_animations[@animation]
+    end
     #--------------------------------------------------------------------------
     # * Enter State
     #--------------------------------------------------------------------------
     def enter_state(battler)
-      battler.start_animation($data_animations[@animation])
+      battler.start_animation(animation)
     end
   end
   

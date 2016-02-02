@@ -72,6 +72,14 @@ module LMBS
       @sprite.start_animation(animation, @facing_left, true)
     end
     #--------------------------------------------------------------------------
+    # * Update Facing
+    #--------------------------------------------------------------------------
+    def update_facing(facing_left)
+      return if @facing_left == facing_left
+      @facing_left = !@facing_left
+      start_animation(@current_state.animation)
+    end
+    #--------------------------------------------------------------------------
     # * Idle
     #--------------------------------------------------------------------------
     def idle
@@ -81,14 +89,14 @@ module LMBS
     # * Walk Right
     #--------------------------------------------------------------------------
     def walk_right
-      @facing_left = false
+      update_facing(false)
       change_state(LMBS_WalkingState.new) unless @current_state.is_a?(LMBS_WalkingState)
     end
     #--------------------------------------------------------------------------
     # * Walk Left
     #--------------------------------------------------------------------------
     def walk_left
-      @facing_left = true
+      update_facing(true)
       change_state(LMBS_WalkingState.new) unless @current_state.is_a?(LMBS_WalkingState)
     end
   end
