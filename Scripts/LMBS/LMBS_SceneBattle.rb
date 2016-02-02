@@ -38,7 +38,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def terminate
       super
-      dispose_spriteset
+      dispose_sprites
       RPG::ME.stop
     end
     #--------------------------------------------------------------------------
@@ -58,7 +58,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def create_battlers
       @battlers = []
-      @battlers.push(LMBS_Battler.new(@viewport))
+      @battlers.push(LMBS_Battler.new(@viewport))      
     end
     #--------------------------------------------------------------------------
     # * Free Sprites
