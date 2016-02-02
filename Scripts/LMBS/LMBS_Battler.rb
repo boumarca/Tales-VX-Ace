@@ -1,5 +1,5 @@
 #==============================================================================
-# ** Game_BattlerLMBS
+# ** LMBS_Battler
 #------------------------------------------------------------------------------
 #  This class handles battlers as a LMBS game object
 #==============================================================================
@@ -11,10 +11,11 @@ module LMBS
     #--------------------------------------------------------------------------
     def initialize(viewport)
       @viewport = viewport
+      @current_state = nil
       create_transform
       create_battler
-      create_animator
       create_input_controller
+      idle
     end
     #--------------------------------------------------------------------------
     # * Create Transform Component
@@ -32,13 +33,6 @@ module LMBS
       @sprite = LMBS_SpriteBattler.new(@viewport)
       @sprite.move_sprite(@transform.x,  @transform.y)
       @sprite.z = @transform.z
-    end
-    #--------------------------------------------------------------------------
-    # * Create Sprite Animator
-    #--------------------------------------------------------------------------
-    def create_animator
-      @animator = LMBS_Animator.new
-      @animator.sprite = @sprite
     end
     #--------------------------------------------------------------------------
     # * Create Input Controller
@@ -64,16 +58,29 @@ module LMBS
       @sprite.update
     end
     #--------------------------------------------------------------------------
+    # * Change State
+    #--------------------------------------------------------------------------
+    def change_state(state)
+      @current_state = state
+      @current_state.enter_state(self)
+    end
+    #--------------------------------------------------------------------------
+    # * Change State
+    #--------------------------------------------------------------------------
+    def start_animation(animation, mirror)
+      @sprite.start_animation(animation, mirror, true)
+    end
+    #--------------------------------------------------------------------------
     # * Idle
     #--------------------------------------------------------------------------
     def idle
-      @animator.change_state(@animator.states[:Idle])
+      change_state(LMBS_IdleState.new) unless @current_state.is_a?(LMBS_IdleState)
     end
     #--------------------------------------------------------------------------
     # * Walk Right
     #--------------------------------------------------------------------------
     def walk_right
-      @animator.change_state(@animator.states[:Walking])
+      change_state(LMBS_WalkingRightState.new) unless @current_state.is_a?(LMBS_WalkingRightState)
     end
   end
 end

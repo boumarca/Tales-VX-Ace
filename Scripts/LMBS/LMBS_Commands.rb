@@ -1,7 +1,7 @@
 #==============================================================================
 # ** LMBS_Command
 #------------------------------------------------------------------------------
-#  This script contains all of the input classes
+#  This script contains all of the Command classes
 #==============================================================================
 
 module LMBS
@@ -11,10 +11,10 @@ module LMBS
   end
   
   class LMBS_IdleCommand < LMBS_Command
-      def execute(actor)
-        actor.idle
-      end
+    def execute(actor)
+      actor.idle
     end
+  end
   
   class LMBS_WalkRightCommand < LMBS_Command
     def execute(actor)
