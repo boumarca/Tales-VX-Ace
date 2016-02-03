@@ -13,6 +13,7 @@ module LMBS
       @viewport = viewport
       @current_state = nil
       @facing_left = false
+      @walk_speed = 2
       create_transform
       create_battler
       create_input_controller
@@ -32,7 +33,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def create_battler
       @sprite = LMBS_SpriteBattler.new(@viewport)
-      @sprite.move_sprite(@transform.x,  @transform.y)
+      @sprite.move(@transform.x,  @transform.y)
       @sprite.z = @transform.z
     end
     #--------------------------------------------------------------------------
@@ -56,6 +57,13 @@ module LMBS
       if command
         command.execute(self)
       end
+      update_sprite
+    end
+    #--------------------------------------------------------------------------
+    # * Update sprite
+    #-------------------------------------------------------------------------- 
+    def update_sprite
+      @sprite.move(@transform.x, @transform.y)
       @sprite.update
     end
     #--------------------------------------------------------------------------
@@ -91,6 +99,7 @@ module LMBS
     def walk_right
       update_facing(false)
       change_state(LMBS_WalkingState.new) unless @current_state.is_a?(LMBS_WalkingState)
+      @transform.x += 2
     end
     #--------------------------------------------------------------------------
     # * Walk Left
@@ -98,6 +107,7 @@ module LMBS
     def walk_left
       update_facing(true)
       change_state(LMBS_WalkingState.new) unless @current_state.is_a?(LMBS_WalkingState)
+      @transform.x -= 2
     end
   end
 end

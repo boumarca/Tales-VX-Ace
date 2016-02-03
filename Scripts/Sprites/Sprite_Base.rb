@@ -167,6 +167,7 @@ class Sprite_Base < Sprite
       if @ani_duration > 0
         frame_index = @animation.frame_max
         frame_index -= (@ani_duration + @ani_rate - 1) / @ani_rate
+        set_animation_origin
         animation_set_sprites(@animation.frames[frame_index])
         @animation.timings.each do |timing|
           animation_process_timing(timing) if timing.frame == frame_index
