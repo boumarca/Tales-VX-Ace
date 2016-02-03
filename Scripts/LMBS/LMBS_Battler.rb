@@ -99,7 +99,7 @@ module LMBS
     def walk_right
       update_facing(false)
       change_state(LMBS_WalkingState.new) unless @current_state.is_a?(LMBS_WalkingState)
-      @transform.x += 2
+      @transform.x += @walk_speed
     end
     #--------------------------------------------------------------------------
     # * Walk Left
@@ -107,7 +107,7 @@ module LMBS
     def walk_left
       update_facing(true)
       change_state(LMBS_WalkingState.new) unless @current_state.is_a?(LMBS_WalkingState)
-      @transform.x -= 2
+      @transform.x -= @walk_speed
     end
     #--------------------------------------------------------------------------
     # * Guard
