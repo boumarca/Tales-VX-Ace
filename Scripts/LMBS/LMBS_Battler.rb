@@ -109,5 +109,11 @@ module LMBS
       change_state(LMBS_WalkingState.new) unless @current_state.is_a?(LMBS_WalkingState)
       @transform.x -= 2
     end
+    #--------------------------------------------------------------------------
+    # * Guard
+    #--------------------------------------------------------------------------
+    def guard
+      change_state(LMBS_GuardingState.new) unless @current_state.is_a?(LMBS_GuardingState)
+    end
   end
 end

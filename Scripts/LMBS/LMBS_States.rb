@@ -30,11 +30,20 @@ module LMBS
   end
   
   class LMBS_WalkingState < LMBS_AnimationState
-      #--------------------------------------------------------------------------
-      # * Object Initialization
-      #--------------------------------------------------------------------------
-      def initialize
-        @animation = 113
-      end
+    #--------------------------------------------------------------------------
+    # * Object Initialization
+    #--------------------------------------------------------------------------
+    def initialize
+      @animation = 113
     end
+  end
+  
+  class LMBS_GuardingState < LMBS_AnimationState
+    #--------------------------------------------------------------------------
+    # * Object Initialization
+    #--------------------------------------------------------------------------
+    def initialize
+      @animation = 114
+    end
+  end
 end

@@ -23,8 +23,14 @@ module LMBS
   end
   
   class LMBS_WalkLeftCommand < LMBS_Command
-      def execute(actor)
-        actor.walk_left
-      end
+    def execute(actor)
+      actor.walk_left
     end
+  end
+  
+  class LMBS_GuardCommand < LMBS_Command
+    def execute(actor)
+      actor.guard
+    end
+  end
 end
