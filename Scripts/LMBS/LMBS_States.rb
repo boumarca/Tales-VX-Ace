@@ -46,4 +46,13 @@ module LMBS
       @animation = 114
     end
   end
+
+  class LMBS_RunningState < LMBS_AnimationState
+    #--------------------------------------------------------------------------
+    # * Object Initialization
+    #--------------------------------------------------------------------------
+    def initialize
+      @animation = 115
+    end
+  end
 end

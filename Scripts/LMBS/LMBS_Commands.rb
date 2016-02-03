@@ -33,6 +33,16 @@ module LMBS
       battler.guard
     end
   end
+
+  class LMBS_RunRightCommand < LMBS_Command
+    def execute(battler)
+      battler.run_right
+    end
+  end
+  
+  class LMBS_RunLeftCommand < LMBS_Command
+    def execute(battler)
+      battler.run_left
     end
   end
 end

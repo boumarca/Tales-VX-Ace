@@ -110,6 +110,22 @@ module LMBS
       @transform.x -= @walk_speed
     end
     #--------------------------------------------------------------------------
+    # * Run Right
+    #--------------------------------------------------------------------------
+    def run_right
+      update_facing(false)
+      change_state(LMBS_RunningState.new) unless @current_state.is_a?(LMBS_RunningState)
+      @transform.x += @walk_speed * 2
+    end
+    #--------------------------------------------------------------------------
+    # * Run Left
+    #--------------------------------------------------------------------------
+    def run_left
+      update_facing(true)
+      change_state(LMBS_RunningState.new) unless @current_state.is_a?(LMBS_RunningState)
+      @transform.x -= @walk_speed * 2
+    end
+    #--------------------------------------------------------------------------
     # * Guard
     #--------------------------------------------------------------------------
     def guard
