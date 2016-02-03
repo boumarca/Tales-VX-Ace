@@ -6,31 +6,33 @@
 
 module LMBS
   class LMBS_Command
-    def execute(actor)
+    def execute(battler)
     end
   end
   
   class LMBS_IdleCommand < LMBS_Command
-    def execute(actor)
-      actor.idle
+    def execute(battler)
+      battler.idle
     end
   end
   
   class LMBS_WalkRightCommand < LMBS_Command
-    def execute(actor)
-      actor.walk_right
+    def execute(battler)
+      battler.walk_right
     end
   end
   
   class LMBS_WalkLeftCommand < LMBS_Command
-    def execute(actor)
-      actor.walk_left
+    def execute(battler)
+      battler.walk_left
     end
   end
   
   class LMBS_GuardCommand < LMBS_Command
-    def execute(actor)
-      actor.guard
+    def execute(battler)
+      battler.guard
+    end
+  end
     end
   end
 end
