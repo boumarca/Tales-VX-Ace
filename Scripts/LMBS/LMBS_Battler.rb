@@ -53,7 +53,7 @@ module LMBS
     # * Update
     #--------------------------------------------------------------------------
     def update
-      command = @controller.command
+      command = @controller.handle_input(@current_state.actions)
       if command
         command.execute(self)
       end

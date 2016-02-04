@@ -16,6 +16,12 @@ module LMBS
       $data_animations[@animation]
     end
     #--------------------------------------------------------------------------
+    # * Actions possible in state
+    #--------------------------------------------------------------------------
+    def actions
+      @actions
+    end
+    #--------------------------------------------------------------------------
     # * Enter State
     #--------------------------------------------------------------------------
     def enter_state(battler)
@@ -29,6 +35,7 @@ module LMBS
   class LMBS_IdleState < LMBS_AnimationState
     def initialize
       @animation = 112
+      @actions = [:Guarding, :Walking, :Running, :Idle]
     end
   end
   #==============================================================================
@@ -37,14 +44,16 @@ module LMBS
   class LMBS_WalkingState < LMBS_AnimationState
     def initialize
       @animation = 113
+      @actions = [:Guarding, :Running, :Walking, :Idle]
     end
   end
   #==============================================================================
   # * Guarding State
   #==============================================================================  
   class LMBS_GuardingState < LMBS_AnimationState
-     def initialize
+    def initialize
       @animation = 114
+      @actions = [:Guarding, :Idle]
     end
   end
   #==============================================================================
@@ -53,6 +62,7 @@ module LMBS
   class LMBS_RunningState < LMBS_AnimationState
     def initialize
       @animation = 115
+      @actions = [:Guarding, :Running, :Idle]
     end
   end
 end
