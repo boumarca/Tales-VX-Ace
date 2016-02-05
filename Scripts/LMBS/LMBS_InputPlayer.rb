@@ -6,13 +6,12 @@
 
 module LMBS
   class LMBS_InputPlayer < LMBS_InputController
-    BUTTON_COOLTIME = 0.5
+    TAP_COOLTIME = 0.5
     #--------------------------------------------------------------------------
     # * Object Initialization
     #--------------------------------------------------------------------------
     def initialize
-      @button_cooler = 0
-      @button_count = 0
+      reset_double_tap
       create_actions_mapping
     end
     #--------------------------------------------------------------------------
@@ -21,10 +20,51 @@ module LMBS
     def create_actions_mapping
       @actions = {}
       @actions[:Idle]     = method(:idle_action)
-      @actions[:Walking]  = method(:movement_action)
+      @actions[:Move]  	  = method(:movement_action)
       @actions[:Guarding] = method(:guarding_action)
-     # @actions[:Running]  = method(:running_action)
     end
+    #--------------------------------------------------------------------------
+    # * Update Tap cooldown every frame 
+    #--------------------------------------------------------------------------
+    def update_tap_cooldown
+      if @cooldown > 0
+        @cooldown -= Time.now - @last_time
+        @last_time = Time.now
+      else
+        reset_double_tap
+      end      
+    end
+    #--------------------------------------------------------------------------
+    # * Update Double Tap Status
+    #--------------------------------------------------------------------------
+    def update_double_tap(input)
+      if @last_input != input
+        if @first_input == input
+          if @cooldown > 0
+            @double_tap = true
+            @first_input = nil
+          else
+            reset_double_tap
+          end
+        else
+          @double_tap = false
+          @first_input = input
+        end
+      end
+      @last_input = input
+      @cooldown = TAP_COOLTIME
+      @last_time = Time.now
+    end
+    #--------------------------------------------------------------------------
+    # * Reset Double Tap Status
+    #--------------------------------------------------------------------------
+    def reset_double_tap
+      @double_tap = false
+      @first_input = nil
+      @last_input = nil
+      @last_time = Time.now
+      @cooldown = 0
+    end   
     #--------------------------------------------------------------------------
     # * Handle Player Input
     #--------------------------------------------------------------------------
@@ -37,65 +77,28 @@ module LMBS
       } 
     end
     #--------------------------------------------------------------------------
-    # * Update button tap cooldown
-    #--------------------------------------------------------------------------
-    def update_tap_cooldown
-      if @button_cooler > 0
-        @button_cooler -= Time.now - @last_time
-        @last_time = Time.now
-        #puts "Cooler = " + @button_cooler.to_s
-      else
-        @button_count = 0
-        #puts "Button count = 0"
-      end
-    end
-    #--------------------------------------------------------------------------
     # * Idle Action
     #--------------------------------------------------------------------------
     def idle_action
       return idle_command
     end
     #--------------------------------------------------------------------------
-    # * Walking Action
+    # * Movement Action
     #--------------------------------------------------------------------------
     def movement_action
-      if Input.repeat?(Input::Keys::RIGHT) || Input.repeat?(Input::Keys::LEFT)
-        if @button_cooler > 0 && @button_count == 1
-          puts "Double Tap " + @button_cooler.to_s + " " + @button_count.to_s
-        else
-          @button_cooler = BUTTON_COOLTIME
-          @button_count += 1
-          @last_time = Time.now
-        end        
-      end      
-      return walk_right_command  if Input.press?(Input::Keys::RIGHT)
-      return walk_left_command   if Input.press?(Input::Keys::LEFT)
+      if Input.press?(Input::Keys::RIGHT)
+        update_double_tap(Input::Keys::RIGHT)
+        return run_right_command if @double_tap
+        return walk_right_command
+      elsif Input.press?(Input::Keys::LEFT)
+        update_double_tap(Input::Keys::LEFT)
+        return run_left_command if @double_tap
+        return walk_left_command
+      end        
+      @last_input = nil     
+      reset_double_tap if @double_tap 
+      return nil
     end
-
-#  var ButtonCooler : float = 0.5 ; // Half a second before reset
-#   var ButtonCount : int = 0;
-#   function Update ( )
-#   {
-#      if ( Input.anyKeyDown ( ) ){
-#   
-#         if ( ButtonCooler > 0 && ButtonCount == 1/*Number of Taps you want Minus One*/){
-#            //Has double tapped
-#         }else{
-#           ButtonCooler = 0.5 ; 
-#           ButtonCount += 1 ;
-#         }
-#      }
-#   
-#      if ( ButtonCooler > 0 )
-#      {
-#   
-#         ButtonCooler -= 1 * Time.deltaTime ;
-#   
-#      }else{
-#         ButtonCount = 0 ;
-#      }
-#   }
-#        
     #--------------------------------------------------------------------------
     # * Guarding Action
     #--------------------------------------------------------------------------

@@ -35,7 +35,7 @@ module LMBS
   class LMBS_IdleState < LMBS_AnimationState
     def initialize
       @animation = 112
-      @actions = [:Guarding, :Walking, :Running, :Idle]
+      @actions = [:Guarding, :Move, :Idle]
     end
   end
   #==============================================================================
@@ -44,7 +44,7 @@ module LMBS
   class LMBS_WalkingState < LMBS_AnimationState
     def initialize
       @animation = 113
-      @actions = [:Guarding, :Running, :Walking, :Idle]
+      @actions = [:Guarding, :Move, :Idle]
     end
   end
   #==============================================================================
@@ -62,7 +62,7 @@ module LMBS
   class LMBS_RunningState < LMBS_AnimationState
     def initialize
       @animation = 115
-      @actions = [:Guarding, :Running, :Idle]
+      @actions = [:Guarding, :Move, :Idle]
     end
   end
 end
