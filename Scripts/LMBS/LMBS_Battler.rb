@@ -15,7 +15,7 @@ module LMBS
       @facing_left = false
       @walk_speed = 2
       create_transform
-      create_battler
+      create_battler_sprite
       create_input_controller
       idle
     end
@@ -29,9 +29,9 @@ module LMBS
       @transform.z = 0
     end
     #--------------------------------------------------------------------------
-    # * Create Battle Background Sprite
+    # * Create Battler Sprite
     #--------------------------------------------------------------------------
-    def create_battler
+    def create_battler_sprite
       @sprite = LMBS_SpriteBattler.new(@viewport)
       @sprite.move(@transform.x,  @transform.y)
       @sprite.z = @transform.z
