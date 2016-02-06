@@ -14,7 +14,7 @@ module LMBS
       @actor = actor
       @current_state = nil
       @facing_left = false
-      @walk_speed = @actor.actor.walk_speed
+      @walk_speed = @actor.class.walk_speed
       create_transform
       create_battler_sprite
       create_input_controller

@@ -9,6 +9,7 @@ class RPG::Class < RPG::BaseItem
   attr_accessor :growth_rate
   attr_accessor :msp
   attr_accessor :capacities
+  attr_accessor :walk_speed
   #--------------------------------------------------------------------------
   # * Modified
   # * Initialize a New Base Item
@@ -26,6 +27,7 @@ class RPG::Class < RPG::BaseItem
     @growth_rate = [0.0] * 8
     @msp = 0
     @capacities = []
+    @walk_speed = 0
   end
   #--------------------------------------------------------------------------
   # * New Method
@@ -62,6 +64,8 @@ class RPG::Class < RPG::BaseItem
         $1.scan(/\d+/).each { |num| 
           @capacities.push(num.to_i) if num.to_i > 0 
         }
+      when /<walk_speed:\s*(\d+\.?\d*)\s*>/i
+        @walk_speed = $1.to_f
       end
     }
   end

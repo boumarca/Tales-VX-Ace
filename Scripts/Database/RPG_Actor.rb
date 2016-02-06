@@ -8,7 +8,6 @@ class RPG::Actor < RPG::BaseItem
   #--------------------------------------------------------------------------
   attr_accessor :default_title_id
   attr_accessor :titles
-  attr_accessor :walk_speed
   #--------------------------------------------------------------------------
   # * Modified
   # * Initialize a New Actor
@@ -25,7 +24,6 @@ class RPG::Actor < RPG::BaseItem
   def init_custom_fields
     @default_title_id = 1
     @titles = []
-    @walk_speed = 0
   end
   #--------------------------------------------------------------------------
   # * New Method
@@ -46,8 +44,6 @@ class RPG::Actor < RPG::BaseItem
         @icon_index = $1.to_i
       when /<max_level:\s*(\d*)\s*>/i
         @max_level = $1.to_i
-      when /<walk_speed:\s*(\d+\.?\d*)\s*>/i
-        @walk_speed = $1.to_f
       end
     }
   end
