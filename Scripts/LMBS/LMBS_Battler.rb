@@ -9,8 +9,9 @@ module LMBS
     #--------------------------------------------------------------------------
     # * Object Initialization
     #--------------------------------------------------------------------------
-    def initialize(viewport)
+    def initialize(viewport, actor)
       @viewport = viewport
+      @actor = actor
       @current_state = nil
       @facing_left = false
       @walk_speed = 2

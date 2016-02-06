@@ -58,7 +58,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def create_battlers
       @battlers = []
-      @battlers.push(LMBS_Battler.new(@viewport))      
+      @battlers.push(LMBS_Battler.new(@viewport, $game_actors[1]))      
     end
     #--------------------------------------------------------------------------
     # * Free Sprites
