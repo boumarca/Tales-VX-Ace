@@ -15,10 +15,21 @@ module LMBS
       @current_state = nil
       @facing_left = false
       @walk_speed = @actor.class.walk_speed
+      create_states
       create_transform
       create_battler_sprite
       create_input_controller
       idle
+    end
+    #--------------------------------------------------------------------------
+    # * Create States
+    #--------------------------------------------------------------------------
+    def create_states
+      @states = {}
+      @states[:Idle] = LMBS_IdleState.new(@actor.class.battle_animations[:Idle])
+      @states[:Walking] = LMBS_WalkingState.new(@actor.class.battle_animations[:Walking])
+      @states[:Guarding] = LMBS_GuardingState.new(@actor.class.battle_animations[:Guarding])
+      @states[:Running] = LMBS_RunningState.new(@actor.class.battle_animations[:Running])
     end
     #--------------------------------------------------------------------------
     # * Create Transform Component
@@ -92,14 +103,14 @@ module LMBS
     # * Idle
     #--------------------------------------------------------------------------
     def idle
-      change_state(LMBS_IdleState.new) unless @current_state.is_a?(LMBS_IdleState)
+      change_state(@states[:Idle]) unless @current_state == @states[:Idle]
     end
     #--------------------------------------------------------------------------
     # * Walk Right
     #--------------------------------------------------------------------------
     def walk_right
       update_facing(false)
-      change_state(LMBS_WalkingState.new) unless @current_state.is_a?(LMBS_WalkingState)
+      change_state(@states[:Walking]) unless @current_state == @states[:Walking]
       @transform.x += @walk_speed
     end
     #--------------------------------------------------------------------------
@@ -107,7 +118,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def walk_left
       update_facing(true)
-      change_state(LMBS_WalkingState.new) unless @current_state.is_a?(LMBS_WalkingState)
+      change_state(@states[:Walking]) unless @current_state == @states[:Walking]
       @transform.x -= @walk_speed
     end
     #--------------------------------------------------------------------------
@@ -115,7 +126,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def run_right
       update_facing(false)
-      change_state(LMBS_RunningState.new) unless @current_state.is_a?(LMBS_RunningState)
+      change_state(@states[:Running]) unless @current_state == @states[:Running]
       @transform.x += @walk_speed * 2
     end
     #--------------------------------------------------------------------------
@@ -123,14 +134,14 @@ module LMBS
     #--------------------------------------------------------------------------
     def run_left
       update_facing(true)
-      change_state(LMBS_RunningState.new) unless @current_state.is_a?(LMBS_RunningState)
+      change_state(@states[:Running]) unless @current_state == @states[:Running]
       @transform.x -= @walk_speed * 2
     end
     #--------------------------------------------------------------------------
     # * Guard
     #--------------------------------------------------------------------------
     def guard
-      change_state(LMBS_GuardingState.new) unless @current_state.is_a?(LMBS_GuardingState)
+      change_state(@states[:Guarding]) unless @current_state == @states[:Guarding]
     end
   end
 end

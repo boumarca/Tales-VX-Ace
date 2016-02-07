@@ -10,6 +10,12 @@ module LMBS
   #==============================================================================
   class LMBS_AnimationState
     #--------------------------------------------------------------------------
+    # * Object Initialization
+    #--------------------------------------------------------------------------
+    def initialize(animation_id)
+      @animation = animation_id
+    end
+    #--------------------------------------------------------------------------
     # * Animation
     #--------------------------------------------------------------------------
     def animation
@@ -33,8 +39,8 @@ module LMBS
   # * Idle State
   #============================================================================== 
   class LMBS_IdleState < LMBS_AnimationState
-    def initialize
-      @animation = 112
+    def initialize(animation_id)
+      super(animation_id)
       @actions = [:Guarding, :Move, :Idle]
     end
   end
@@ -42,8 +48,8 @@ module LMBS
   # * Walking State
   #============================================================================== 
   class LMBS_WalkingState < LMBS_AnimationState
-    def initialize
-      @animation = 113
+    def initialize(animation_id)
+      super(animation_id)
       @actions = [:Guarding, :Move, :Idle]
     end
   end
@@ -51,8 +57,8 @@ module LMBS
   # * Guarding State
   #==============================================================================  
   class LMBS_GuardingState < LMBS_AnimationState
-    def initialize
-      @animation = 114
+    def initialize(animation_id)
+      super(animation_id)
       @actions = [:Guarding, :Idle]
     end
   end
@@ -60,8 +66,8 @@ module LMBS
   # * Running State
   #============================================================================== 
   class LMBS_RunningState < LMBS_AnimationState
-    def initialize
-      @animation = 115
+    def initialize(animation_id)
+      super(animation_id)
       @actions = [:Guarding, :Move, :Idle]
     end
   end
