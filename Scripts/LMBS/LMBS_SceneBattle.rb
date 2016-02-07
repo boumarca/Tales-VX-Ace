@@ -58,7 +58,20 @@ module LMBS
     #--------------------------------------------------------------------------
     def create_battlers
       @battlers = []
-      @battlers.push(LMBS_Battler.new(@viewport, $game_actors[1]))      
+      create_actors
+      create_enemies           
+    end
+    #--------------------------------------------------------------------------
+    # * Create Actors
+    #--------------------------------------------------------------------------
+    def create_actors
+      @battlers.push(LMBS_Battler.new(@viewport, $game_actors[1])) 
+    end
+    #--------------------------------------------------------------------------
+    # * Create Enemies
+    #--------------------------------------------------------------------------
+    def create_enemies 
+      @battlers.push(LMBS_Battler.new(@viewport, Game_Enemy.new(0, 31)))
     end
     #--------------------------------------------------------------------------
     # * Free Sprites

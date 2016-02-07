@@ -6,7 +6,7 @@
 
 module LMBS
   class LMBS_InputController
-    def command
+    def handle_input(actions)
     end
   end
 end

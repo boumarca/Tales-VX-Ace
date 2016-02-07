@@ -821,4 +821,14 @@ class Game_Battler < Game_BattlerBase
     remove_states_by_damage
     charge_tp_by_damage(value.to_f / mhp)
   end
+  #--------------------------------------------------------------------------
+  # * Returns battle animation 
+  #--------------------------------------------------------------------------
+  def battle_animations
+  end
+  #--------------------------------------------------------------------------
+  # * Returns the battler's walking speed
+  #--------------------------------------------------------------------------
+  def walk_speed
+  end
 end

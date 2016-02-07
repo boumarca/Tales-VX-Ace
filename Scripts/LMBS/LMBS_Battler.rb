@@ -9,12 +9,12 @@ module LMBS
     #--------------------------------------------------------------------------
     # * Object Initialization
     #--------------------------------------------------------------------------
-    def initialize(viewport, actor)
+    def initialize(viewport, game_battler)
       @viewport = viewport
-      @actor = actor
+      @game_battler = game_battler
       @current_state = nil
       @facing_left = false
-      @walk_speed = @actor.class.walk_speed
+      @walk_speed = @game_battler.walk_speed
       create_states
       create_transform
       create_battler_sprite
@@ -26,17 +26,17 @@ module LMBS
     #--------------------------------------------------------------------------
     def create_states
       @states = {}
-      @states[:Idle] = LMBS_IdleState.new(@actor.class.battle_animations[:Idle])
-      @states[:Walking] = LMBS_WalkingState.new(@actor.class.battle_animations[:Walking])
-      @states[:Guarding] = LMBS_GuardingState.new(@actor.class.battle_animations[:Guarding])
-      @states[:Running] = LMBS_RunningState.new(@actor.class.battle_animations[:Running])
+      @states[:Idle] = LMBS_IdleState.new(@game_battler.battle_animations[:Idle])
+      @states[:Walking] = LMBS_WalkingState.new(@game_battler.battle_animations[:Walking])
+      @states[:Guarding] = LMBS_GuardingState.new(@game_battler.battle_animations[:Guarding])
+      @states[:Running] = LMBS_RunningState.new(@game_battler.battle_animations[:Running])
     end
     #--------------------------------------------------------------------------
     # * Create Transform Component
     #--------------------------------------------------------------------------
     def create_transform
       @transform = LMBS_Transform.new
-      @transform.x = 100
+      @transform.x = rand(500) + 50
       @transform.y = LMBS_SceneBattle::GROUND
       @transform.z = 0
     end
@@ -52,7 +52,11 @@ module LMBS
     # * Create Input Controller
     #--------------------------------------------------------------------------
     def create_input_controller
-      @controller = LMBS_InputPlayer.new
+      if @game_battler.is_a?(Game_Actor)
+        @controller = LMBS_InputPlayer.new 
+      elsif @game_battler.is_a?(Game_Enemy)
+        @controller = LMBS_InputController.new
+      end
     end
     #--------------------------------------------------------------------------
     # * Free

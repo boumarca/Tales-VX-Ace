@@ -261,4 +261,15 @@ class Game_Enemy < Game_Battler
       action.set_enemy_action(select_enemy_action(action_list, rating_zero))
     end
   end
+  #--------------------------------------------------------------------------
+  # * Returns battle animation 
+  #--------------------------------------------------------------------------
+  def battle_animations
+    enemy.battle_animations
+  end
+  #--------------------------------------------------------------------------
+  # * Returns the battler's walking speed
+  #--------------------------------------------------------------------------
+  def walk_speed
+  end
 end

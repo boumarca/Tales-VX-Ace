@@ -1087,4 +1087,16 @@ class Game_Actor < Game_Battler
   def debug_recipe_usage(recipe)
     @recipe_usage[recipe.id]
   end
+  #--------------------------------------------------------------------------
+  # * Returns battle animation 
+  #--------------------------------------------------------------------------
+  def battle_animations
+    self.class.battle_animations
+  end
+  #--------------------------------------------------------------------------
+  # * Returns the battler's walking speed
+  #--------------------------------------------------------------------------
+  def walk_speed
+    self.class.walk_speed
+  end
 end
