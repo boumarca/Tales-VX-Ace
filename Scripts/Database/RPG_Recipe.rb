@@ -131,28 +131,28 @@ class RPG::Recipe < RPG::UsableItem
       @type = 0
     end
     #--------------------------------------------------------------------------
-    # * Determines whether the effectr type is [Base Effect]. 
+    # * Determines whether the effect type is [Base Effect]. 
     # * Returns true if the value of type is 0.
     #--------------------------------------------------------------------------
     def base?
       @type == 0
     end
     #--------------------------------------------------------------------------
-    # * Determines whether the effectr type is [Mastery Effect]. 
+    # * Determines whether the effect type is [Mastery Effect]. 
     # * Returns true if the value of type is 0.
     #--------------------------------------------------------------------------
     def mastery?
       @type == 1
     end
     #--------------------------------------------------------------------------
-    # * Determines whether the effectr type is [Ingredient Effect]. 
+    # * Determines whether the effect type is [Ingredient Effect]. 
     # * Returns true if the value of type is 0.
     #--------------------------------------------------------------------------
     def ingredient?
       @type == 2
     end
     #--------------------------------------------------------------------------
-    # * Determines whether the effectr type is [Actor Effect]. 
+    # * Determines whether the effect type is [Actor Effect]. 
     # * Returns true if the value of type is 0.
     #--------------------------------------------------------------------------
     def actor?

@@ -37,36 +37,10 @@ class RPG::Class < RPG::BaseItem
   def load_notetags
     super
     init_custom_fields
-    self.note.split(/[\r\n]+/).each { |line|
-      case line
-      when /<(.*) growth:\s*(\d+\.?\d*)>/i
-        case $1.upcase
-        when "HP"
-          @growth_rate[0] = $2.to_f
-        when "MP", "TP"
-          @growth_rate[1] = $2.to_f
-        when "P.ATK"
-          @growth_rate[2] = $2.to_f
-        when "P.DEF"
-          @growth_rate[3] = $2.to_f
-        when "M.ATK"
-          @growth_rate[4] = $2.to_f
-        when "M.DEF"
-          @growth_rate[5] = $2.to_f
-        when "AGI"
-          @growth_rate[6] = $2.to_f
-        when "LCK", "LUCK"
-          @growth_rate[7] = $2.to_f
-        end
-      when /<max sp:\s*(\d+\.?\d*)>/i
-          @msp = $1.to_i
-      when /<capacities:[ ](\d+(?:\s*,\s*\d+)*)>/i
-        $1.scan(/\d+/).each { |num| 
-          @capacities.push(num.to_i) if num.to_i > 0 
-        }
-      when /<walk_speed:\s*(\d+\.?\d*)\s*>/i
-        @walk_speed = $1.to_f
-      end
-    }
+    return unless @data
+    @growth_rate = @data["growth_rate"] if @data.include?("growth_rate")
+    @msp = @data["max_sp"] if @data.include?("max_sp")
+    @capacities = @data["capacities"] if @data.include?("capacities")
+    @walk_speed = @data["walk_speed"] if @data.include?("walk_speed")
   end
 end

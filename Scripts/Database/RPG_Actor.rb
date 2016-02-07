@@ -32,21 +32,11 @@ class RPG::Actor < RPG::BaseItem
   def load_notetags
     super
     init_custom_fields
-    self.note.split(/[\r\n]+/).each { |line|
-      case line
-      when /<default title:\s*(\d*)\s*>/i
-        @default_title_id = $1.to_i
-      when /<titles:[ ](\d+(?:\s*,\s*\d+)*)>/i
-        $1.scan(/\d+/).each { |num| 
-          @titles.push(num.to_i) if num.to_i > 0 
-        }
-      when /<icon_index:\s*(\d*)\s*>/i
-        @icon_index = $1.to_i
-      when /<max_level:\s*(\d*)\s*>/i
-        @max_level = $1.to_i
-      end
-    }
+    return unless @data
+    @default_title_id = @data["default_title_id"] if @data.include?("default_title_id")
+    @titles = @data["titles"] if @data.include?("titles")
+    @icon_index = @data["icon_index"] if @data.include?("icon_index")
+    @max_level = @data["max_level"] if @data.include?("max_level")  
   end
 end
-
 

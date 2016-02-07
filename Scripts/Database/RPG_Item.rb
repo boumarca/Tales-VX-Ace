@@ -23,16 +23,14 @@ class RPG::Item < RPG::UsableItem
   #--------------------------------------------------------------------------
   def load_notetags
     super
-    self.note.split(/[\r\n]+/).each { |line|
-      case line
-      when /<itype_id:\s*(\d+)\s*>/i
-        @itype_id = $1.to_i
-      when /<synthesis_level:\s*(\d*)\s*>/i
-        @synthesis_level = $1.to_i
-      when /<synthesis_material:\s*(\d*)\s*,\s*(\d*)\s*,\s*(\d*)\s*>/i
-        @synthesis_materials.push(RPG::Material.new($1.to_i, $2.to_i, $3.to_i))
-      end
-    }
+    return unless @data
+    @itype_id = @data["itype_id"] if @data.include?("itype_id")
+    @synthesis_level = @data["synthesis_level"] if @data.include?("synthesis_level")
+    if @data.include?("synthesis_materials")
+      @data["synthesis_materials"].each { |material|
+        @synthesis_materials.push(RPG::Material.new(material["type_id"], material["item_id"], material["quantity"]))
+      }
+    end
   end
   #--------------------------------------------------------------------------
   # * New Method

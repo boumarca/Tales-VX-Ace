@@ -31,13 +31,9 @@ class RPG::BaseItem
   #--------------------------------------------------------------------------
   def load_notetags
     init_custom_fields
-    self.note.split(/[\r\n]+/).each { |line|
-      case line
-      when /<image:\s*"(.*)"\s*>/i
-        @image = $1
-      when /<subtype_id:\s*(\d*)\s*>/i
-        @subtype_id = $1.to_i
-      end
-    }
+    @data = JSON.decode(self.note)
+    return unless @data
+    @image = @data["image"] if @data.include?("image")
+    @subtype_id = @data["subtype_id"] if @data.include?("subtype_id")
   end  
 end
