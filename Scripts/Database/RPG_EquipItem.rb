@@ -24,7 +24,6 @@ class RPG::EquipItem < RPG::BaseItem
   def load_notetags
     super
     return unless @data
-    p @data
     @synthesis_level = @data["synthesis_level"] if @data.include?("synthesis_level")
     if @data.include?("synthesis_materials")
       @data["synthesis_materials"].each { |material|
