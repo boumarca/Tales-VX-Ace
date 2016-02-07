@@ -109,33 +109,43 @@ module LMBS
     # * Walk Right
     #--------------------------------------------------------------------------
     def walk_right
-      update_facing(false)
-      change_state(@states[:Walking]) unless @current_state == @states[:Walking]
-      @transform.x += @walk_speed
+      walk(false)
     end
     #--------------------------------------------------------------------------
     # * Walk Left
     #--------------------------------------------------------------------------
     def walk_left
-      update_facing(true)
+      walk(true)
+    end
+    #--------------------------------------------------------------------------
+    # * Walk
+    #--------------------------------------------------------------------------
+    def walk(facing_left)
+      update_facing(facing_left)
       change_state(@states[:Walking]) unless @current_state == @states[:Walking]
-      @transform.x -= @walk_speed
+      modifier = facing_left ? -1 : 1
+      @transform.x += @walk_speed * modifier
     end
     #--------------------------------------------------------------------------
     # * Run Right
     #--------------------------------------------------------------------------
     def run_right
-      update_facing(false)
-      change_state(@states[:Running]) unless @current_state == @states[:Running]
-      @transform.x += @walk_speed * 2
+      run(false)
     end
     #--------------------------------------------------------------------------
     # * Run Left
     #--------------------------------------------------------------------------
     def run_left
-      update_facing(true)
+      run(true)
+    end
+    #--------------------------------------------------------------------------
+    # * Run
+    #--------------------------------------------------------------------------
+    def run(facing_left)
+      update_facing(facing_left)
       change_state(@states[:Running]) unless @current_state == @states[:Running]
-      @transform.x -= @walk_speed * 2
+      modifier = facing_left ? -1 : 1
+      @transform.x += @walk_speed * 2 * modifier
     end
     #--------------------------------------------------------------------------
     # * Guard
