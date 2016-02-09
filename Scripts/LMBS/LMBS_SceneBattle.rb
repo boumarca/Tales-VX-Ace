@@ -104,7 +104,7 @@ module LMBS
       @battlers.each { |battler| 
         @battlers.each { |other| 
           next if battler == other
-          collision = Physics_AABB.collision(battler.rigidbody.aabb, other.rigidbody.aabb)
+          collision = Physics_RigidBody.collision_detection(battler.rigidbody, other.rigidbody)
           if collision
             Physics_RigidBody.resolve_collision(collision)
             Physics_RigidBody.positional_correction(collision)

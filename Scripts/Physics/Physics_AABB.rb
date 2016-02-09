@@ -33,8 +33,8 @@ class Physics_AABB
     return true
   end
   #--------------------------------------------------------------------------
-  # * Determines if two AABB collides. 
-  # * Return a collision object including the collision details 
+  # * Determines if two AABB collides.
+  # * Return a collision object including the collision details
   # * Returns nil if no collision.
   #--------------------------------------------------------------------------
   def self.collision(a, b)
@@ -47,7 +47,7 @@ class Physics_AABB
       b_extent_y = (b.max.y - b.min.y) / 2
       y_overlap = a_extent_y + b_extent_y - (n.y).abs
       if(y_overlap > 0)
-        if(x_overlap > y_overlap)
+        if(x_overlap < y_overlap)
           normal = n.x < 0 ? Vector2.new(1,0) * -1 : Vector2.new(1,0)
           return Physics_Collision.new(a, b, x_overlap, normal)
         else
@@ -60,8 +60,8 @@ class Physics_AABB
     return nil
   end
   #--------------------------------------------------------------------------
-  # * Determines if an AABB collides with a circle. 
-  # * Return a collision object including the collision details 
+  # * Determines if an AABB collides with a circle.
+  # * Return a collision object including the collision details
   # * Returns nil if no collision.
   #--------------------------------------------------------------------------
   def self.collision_circle(box, circle)
@@ -72,7 +72,7 @@ class Physics_AABB
     closest.x = closest.x.clamp(-x_extent, x_extent)
     closest.y = closest.y.clamp(-y_extent, y_extent)
     inside = false
-    
+
     if n == closest
       inside = true
        if n.x.abs > n.y.abs
@@ -80,14 +80,14 @@ class Physics_AABB
        else
          closest.y = closest.y > 0 ? y_extent : -y_extent
        end
-    end 
-       
+    end
+
     normal = n - closest
     distance = normal.squared_length
-    radius = circle.radius    
-    return nil if distance > radius*radius && !inside    
+    radius = circle.radius
+    return nil if distance > radius*radius && !inside
     distance = Math.sqrt(distance)
-    penetration = radius - distance    
+    penetration = radius - distance
     return new Physics_Collision.new(box, circle, penetration, -n) if inside
     return new Physics_Collision.new(box, circle, penetration, n)
   end
