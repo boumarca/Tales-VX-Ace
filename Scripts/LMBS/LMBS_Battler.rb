@@ -6,6 +6,8 @@
 
 module LMBS
   class LMBS_Battler
+    attr_reader :rigidbody
+    attr_reader :transform
     #--------------------------------------------------------------------------
     # * Object Initialization
     #--------------------------------------------------------------------------
@@ -17,6 +19,7 @@ module LMBS
       @walk_speed = @game_battler.walk_speed
       create_states
       create_transform
+      create_rigidbody
       create_battler_sprite
       create_input_controller
       idle
@@ -59,6 +62,29 @@ module LMBS
       end
     end
     #--------------------------------------------------------------------------
+    # * Create AABB
+    #--------------------------------------------------------------------------
+    def create_rigidbody
+      @rigidbody = Physics_RigidBody.new
+      @rigidbody.aabb = Physics_AABB.new(aabb_rect)
+      @rigidbody.position = Vector2.new(@transform.x, @transform.y)
+    end
+    #--------------------------------------------------------------------------
+    # * Get AABB rect
+    #--------------------------------------------------------------------------
+    def aabb_rect
+      rect = @game_battler.aabb
+      rect.x = @transform.x - rect.width*0.5
+      rect.y = @transform.y - rect.height
+      rect
+    end
+    #--------------------------------------------------------------------------
+    # * Update AABB
+    #--------------------------------------------------------------------------
+    def update_aabb
+      @rigidbody.move(aabb_rect)
+    end
+    #--------------------------------------------------------------------------
     # * Free
     #--------------------------------------------------------------------------
     def dispose
@@ -73,7 +99,6 @@ module LMBS
       if command
         command.execute(self)
       end
-      update_sprite
     end
     #--------------------------------------------------------------------------
     # * Update sprite
@@ -128,7 +153,7 @@ module LMBS
       update_facing(facing_left)
       change_state(@states[:Walking]) unless @current_state == @states[:Walking]
       modifier = facing_left ? -1 : 1
-      @transform.x += @walk_speed * modifier
+      @rigidbody.velocity.x = @walk_speed * modifier
     end
     #--------------------------------------------------------------------------
     # * Run Right
@@ -149,7 +174,7 @@ module LMBS
       update_facing(facing_left)
       change_state(@states[:Running]) unless @current_state == @states[:Running]
       modifier = facing_left ? -1 : 1
-      @transform.x += @walk_speed * 2 * modifier
+      @rigidbody.velocity.x = @walk_speed * 2 * modifier
     end
     #--------------------------------------------------------------------------
     # * Guard

@@ -11,4 +11,11 @@ class Numeric
   def group
     self.to_s.gsub(/(\d)(?=\d{3}+(?:\.|$))(\d{3}\..*)?/,'\1,\2')
   end
+  #--------------------------------------------------------------------------
+  # * New Method
+  # * Clamp self between min and max
+  #--------------------------------------------------------------------------
+  def clamp(min, max)
+    [[self, max].min, min].max
+  end
 end 

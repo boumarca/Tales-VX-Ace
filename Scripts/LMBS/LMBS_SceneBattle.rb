@@ -86,12 +86,45 @@ module LMBS
     def update
       super
       update_battlers
+      update_physics
+      update_sprites
     end
     #--------------------------------------------------------------------------
     # * Update Battlers
     #--------------------------------------------------------------------------
     def update_battlers
-      @battlers.each { |battler| battler.update }
+      @battlers.each { |battler| 
+        battler.update        
+      }
+    end
+    #--------------------------------------------------------------------------
+    # * Update Physics
+    #--------------------------------------------------------------------------
+    def update_physics 
+      @battlers.each { |battler| 
+        @battlers.each { |other| 
+          next if battler == other
+          collision = Physics_AABB.collision(battler.rigidbody.aabb, other.rigidbody.aabb)
+          if collision
+            Physics_RigidBody.resolve_collision(collision)
+            Physics_RigidBody.positional_correction(collision)
+          end
+        }
+      }
+      @battlers.each { |battler|
+        position = battler.rigidbody.position
+        battler.rigidbody.position = Vector2.new(position.x + battler.rigidbody.velocity.x, position.y + battler.rigidbody.velocity.y)
+        battler.transform.x = battler.rigidbody.position.x
+        battler.transform.y = battler.rigidbody.position.y
+      }      
+    end
+    #--------------------------------------------------------------------------
+    # * Update Sprites
+    #--------------------------------------------------------------------------
+    def update_sprites
+      @battlers.each { |battler| 
+        battler.update_sprite        
+      }
     end
   end
 end

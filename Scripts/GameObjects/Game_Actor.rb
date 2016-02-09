@@ -1099,4 +1099,10 @@ class Game_Actor < Game_Battler
   def walk_speed
     self.class.walk_speed
   end
+  #--------------------------------------------------------------------------
+  # * Returns the battler's axis-aligned bounding box
+  #--------------------------------------------------------------------------
+  def aabb
+    self.class.aabb
+  end
 end
