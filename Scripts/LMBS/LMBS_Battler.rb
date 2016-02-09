@@ -133,6 +133,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def idle
       change_state(@states[:Idle]) unless @current_state == @states[:Idle]
+      @rigidbody.velocity.x = 0
     end
     #--------------------------------------------------------------------------
     # * Walk Right
