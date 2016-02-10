@@ -15,7 +15,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def start
       super
-      @last_time = Time.now
+      PhysicsManager.setup
       create_viewport
       create_background
       create_battlers
@@ -40,6 +40,7 @@ module LMBS
     def terminate
       super
       dispose_sprites
+      PhysicsManager.stop
       RPG::ME.stop
     end
     #--------------------------------------------------------------------------
@@ -86,17 +87,9 @@ module LMBS
     #--------------------------------------------------------------------------
     def update
       super
-      update_delta_time
       update_battlers
-      update_physics
+      PhysicsManager.run_physics      
       update_sprites
-    end
-    #--------------------------------------------------------------------------
-    # * Update Delta Time
-    #--------------------------------------------------------------------------
-    def update_delta_time
-      @delta_time = Time.now - @last_time
-      @last_time = Time.now
     end
     #--------------------------------------------------------------------------
     # * Update Battlers
@@ -105,42 +98,6 @@ module LMBS
       @battlers.each { |battler|
         battler.update
       }
-    end
-    #--------------------------------------------------------------------------
-    # * Update Physics
-    #--------------------------------------------------------------------------
-    def update_physics
-      @battlers.each { |battler|
-        @battlers.each { |other|
-          next if battler == other
-          collision = Physics_RigidBody.collision_detection(battler.rigidbody, other.rigidbody)
-          if collision && collision.velocity_along_normal <= 0
-            collision.object_hit = other
-            battler.on_collision(collision)
-            Physics_RigidBody.resolve_collision(collision)
-            Physics_RigidBody.positional_correction(collision)
-          end
-        }
-      }
-      @battlers.each { |battler|
-        update_position(battler.rigidbody)
-        update_transform(battler.transform, battler.rigidbody)
-      }
-    end
-    #--------------------------------------------------------------------------
-    # * Update Rigidbody positions
-    #--------------------------------------------------------------------------
-    def update_position(body)
-      delta_acceleration = body.force * body.inverse_mass * @delta_time
-      body.position += (body.velocity + delta_acceleration / 2) * @delta_time
-      body.velocity += delta_acceleration
-    end
-    #--------------------------------------------------------------------------
-    # * Update Transforms
-    #--------------------------------------------------------------------------
-    def update_transform(transform, body)
-      transform.x = body.position.x
-      transform.y = body.position.y
     end
     #--------------------------------------------------------------------------
     # * Update Sprites

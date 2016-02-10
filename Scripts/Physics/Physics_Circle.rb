@@ -15,7 +15,7 @@ class Physics_Circle
     @radius = radius
   end
   #--------------------------------------------------------------------------
-  # * Determines if two circles collides. 
+  # * Determines if two circles collides.
   #--------------------------------------------------------------------------
   def self.simple_collision(a, b)
     x = a.x + b.x
@@ -24,8 +24,8 @@ class Physics_Circle
     r*r < x*x + y*y
   end
   #--------------------------------------------------------------------------
-  # * Determines if two circles collides. 
-  # * Return a collision object including the collision details 
+  # * Determines if two circles collides.
+  # * Return a collision object including the collision details
   # * Returns nil if no collision.
   #--------------------------------------------------------------------------
   def self.collision(a, b)
@@ -39,7 +39,7 @@ class Physics_Circle
       normal = Vector2.new(n.x / distance, n.y / distance)
       return Physics_Collision.new(a, b , penetration, normal)
     else
-      return Physics_Collision.new(a, b , a.radius, Vector2::UNIT_X)
+      return Physics_Collision.new(a, b , a.radius, Vector2.new(1, 0))
     end
   end
 end

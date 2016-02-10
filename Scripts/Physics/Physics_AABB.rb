@@ -39,12 +39,12 @@ class Physics_AABB
   #--------------------------------------------------------------------------
   def self.collision(a, b)
     n = b.position - a.position
-    a_extent_x = (a.max.x - a.min.x) / 2
-    b_extent_x = (b.max.x - b.min.x) / 2
+    a_extent_x = (a.max.x - a.min.x) / 2.0
+    b_extent_x = (b.max.x - b.min.x) / 2.0
     x_overlap = a_extent_x + b_extent_x - (n.x).abs
     if(x_overlap > 0)
-      a_extent_y = (a.max.y - a.min.y) / 2
-      b_extent_y = (b.max.y - b.min.y) / 2
+      a_extent_y = (a.max.y - a.min.y) / 2.0
+      b_extent_y = (b.max.y - b.min.y) / 2.0
       y_overlap = a_extent_y + b_extent_y - (n.y).abs
       if(y_overlap > 0)
         if(x_overlap < y_overlap)
@@ -67,8 +67,8 @@ class Physics_AABB
   def self.collision_circle(box, circle)
     n = circle.position - box.position
     closest = n
-    x_extent = (box.aabb.max.x - box.aabb.min.x) / 2
-    y_extent = (box.aabb.max.y - box.aabb.min.y) / 2
+    x_extent = (box.aabb.max.x - box.aabb.min.x) / 2.0
+    y_extent = (box.aabb.max.y - box.aabb.min.y) / 2.0
     closest.x = closest.x.clamp(-x_extent, x_extent)
     closest.y = closest.y.clamp(-y_extent, y_extent)
     inside = false

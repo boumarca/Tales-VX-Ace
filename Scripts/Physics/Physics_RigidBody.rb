@@ -16,6 +16,8 @@ class Physics_RigidBody
   attr_accessor :velocity
   attr_accessor :restitution
   attr_accessor :force
+  attr_accessor :parent
+  attr_accessor :transform
   attr_reader   :aabb
   attr_reader   :position
   attr_reader   :mass
@@ -23,12 +25,15 @@ class Physics_RigidBody
   #--------------------------------------------------------------------------
   # * Object Initialization
   #--------------------------------------------------------------------------
-  def initialize
+  def initialize(parent)
+    @parent = parent
+    @transform = @parent.transform
     self.mass = 1
     @velocity = Vector2.new(0, 0)
     @restitution = 0.1
     @position = Vector2.new(0, 0)
     @force = Vector2.new(0, 0)
+    PhysicsManager.add_rigidbody(self)
   end
   #--------------------------------------------------------------------------
   # * Set Bounding box
@@ -54,8 +59,14 @@ class Physics_RigidBody
     if mass == 0
       @inverse_mass = 0
     else
-      @inverse_mass = 1 / mass
+      @inverse_mass = 1.0 / mass
     end
+  end
+  #--------------------------------------------------------------------------
+  # * Dispose
+  #--------------------------------------------------------------------------
+  def dispose
+    PhysicsManager.remove_rigidbody(self)
   end
   #--------------------------------------------------------------------------
   # * Determines if body collides

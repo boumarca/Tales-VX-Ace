@@ -6,7 +6,6 @@
 
 module LMBS
   class LMBS_Battler
-    attr_reader :rigidbody
     attr_reader :transform
     #--------------------------------------------------------------------------
     # * Object Initialization
@@ -65,7 +64,7 @@ module LMBS
     # * Create AABB
     #--------------------------------------------------------------------------
     def create_rigidbody
-      @rigidbody = Physics_RigidBody.new
+      @rigidbody = Physics_RigidBody.new(self)
       @rigidbody.aabb = Physics_AABB.new(aabb_rect)
       @rigidbody.position = Vector2.new(@transform.x, @transform.y)
     end
@@ -96,6 +95,7 @@ module LMBS
     # * Free
     #--------------------------------------------------------------------------
     def dispose
+      @rigidbody.dispose
       @sprite.bitmap.dispose
       @sprite.dispose
     end
