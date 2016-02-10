@@ -19,7 +19,10 @@ class Physics_Collision
     @penetration = penetration
     @normal = normal
   end
-
+  #--------------------------------------------------------------------------
+  # * Returns the relative velocity along the collision normal
+  # * If equal or less than zero, objects are moving toward each other
+  #--------------------------------------------------------------------------
   def velocity_along_normal
     relative_velocity = @body_b.velocity - @body_a.velocity
     Vector2.dot_product(relative_velocity, @normal)

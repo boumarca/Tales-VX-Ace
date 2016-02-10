@@ -5,12 +5,18 @@
 #==============================================================================
 
 class Physics_RigidBody
+  #--------------------------------------------------------------------------
+  # * Constants
+  #--------------------------------------------------------------------------
   PENETRATION_CORRECTION_PERCENT = 0.2
   PENETRATION_SLOP = 0.01
+  #--------------------------------------------------------------------------
+  # * Public members
+  #--------------------------------------------------------------------------
   attr_accessor :velocity
-  attr_reader :aabb
   attr_accessor :restitution
-  attr_reader :position
+  attr_reader   :aabb
+  attr_reader   :position
   attr_reader   :mass
   attr_reader   :inverse_mass
   #--------------------------------------------------------------------------
@@ -22,23 +28,25 @@ class Physics_RigidBody
     @restitution = 0.1
     @position = Vector2.new(0, 0)
   end
-
-  def move(rect)
-    @aabb.move(rect)
-  end
-
+  #--------------------------------------------------------------------------
+  # * Set Bounding box
+  #--------------------------------------------------------------------------
   def aabb=(value)
     return if @aabb == value
     @aabb = value
     @aabb.position = @position
   end
-
+  #--------------------------------------------------------------------------
+  # * Set Position
+  #--------------------------------------------------------------------------
   def position=(value)
     return if @position == value
     @position = value
     @aabb.position = @position
   end
-
+  #--------------------------------------------------------------------------
+  # * Set Mass
+  #--------------------------------------------------------------------------
   def mass=(mass)
     @mass = mass
     if mass == 0
@@ -47,7 +55,10 @@ class Physics_RigidBody
       @inverse_mass = 1 / mass
     end
   end
-
+  #--------------------------------------------------------------------------
+  # * Determines if body collides
+  # * Returns a collision definition if hit, nil if not
+  #--------------------------------------------------------------------------
   def self.collision_detection(body_a, body_b)
     collision = nil
     if body_a.aabb.is_a?(Physics_AABB)
@@ -69,7 +80,9 @@ class Physics_RigidBody
     end
     return collision
   end
-
+  #--------------------------------------------------------------------------
+  # * Resolves the collision by applying impulses
+  #--------------------------------------------------------------------------
   def self.resolve_collision(collision)
     a = collision.body_a
     b = collision.body_b
@@ -85,7 +98,9 @@ class Physics_RigidBody
     ratio = b.mass / mass_sum
     b.velocity += impulse * ratio
   end
-
+  #--------------------------------------------------------------------------
+  # * Correct interpenetration between bodies
+  #--------------------------------------------------------------------------
   def self.positional_correction(collision)
     a = collision.body_a
     b = collision.body_b
