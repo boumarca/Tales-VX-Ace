@@ -6,16 +6,14 @@
 
 module LMBS
   class LMBS_Transform
-    attr_accessor :x
-    attr_accessor :y
-    attr_accessor :z
+    attr_accessor :position
+    attr_accessor :depth
     #--------------------------------------------------------------------------
     # * Object Initialization
-    #--------------------------------------------------------------------------    
-    def initialize
-      @x = 0
-      @y = 0
-      @z = 0
-    end        
+    #--------------------------------------------------------------------------
+    def initialize(position)
+      @position = position
+      @depth = 0
+    end
   end
 end

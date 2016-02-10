@@ -37,18 +37,15 @@ module LMBS
     # * Create Transform Component
     #--------------------------------------------------------------------------
     def create_transform
-      @transform = LMBS_Transform.new
-      @transform.x = rand(500) + 50
-      @transform.y = LMBS_SceneBattle::GROUND
-      @transform.z = 0
+      @transform = LMBS_Transform.new(Vector2.new(rand(500) + 50, LMBS_SceneBattle::GROUND))
     end
     #--------------------------------------------------------------------------
     # * Create Battler Sprite
     #--------------------------------------------------------------------------
     def create_battler_sprite
       @sprite = LMBS_SpriteBattler.new(@viewport)
-      @sprite.move(@transform.x,  @transform.y)
-      @sprite.z = @transform.z
+      @sprite.move(@transform.position.x,  @transform.position.y)
+      @sprite.z = @transform.depth
     end
     #--------------------------------------------------------------------------
     # * Create Input Controller
@@ -66,15 +63,15 @@ module LMBS
     def create_rigidbody
       @rigidbody = Physics_RigidBody.new(self)
       @rigidbody.aabb = Physics_AABB.new(aabb_rect)
-      @rigidbody.position = Vector2.new(@transform.x, @transform.y)
+      @rigidbody.position = Vector2.new(@transform.position.x, @transform.position.y)
     end
     #--------------------------------------------------------------------------
     # * Get AABB rect
     #--------------------------------------------------------------------------
     def aabb_rect
       rect = @game_battler.aabb
-      rect.x = @transform.x - rect.width*0.5
-      rect.y = @transform.y - rect.height
+      rect.x = @transform.position.x - rect.width*0.5
+      rect.y = @transform.position.y - rect.height
       rect
     end
     #--------------------------------------------------------------------------
@@ -112,7 +109,7 @@ module LMBS
     # * Update sprite
     #--------------------------------------------------------------------------
     def update_sprite
-      @sprite.move(@transform.x, @transform.y)
+      @sprite.move(@transform.position.x, @transform.position.y)
       @sprite.update
     end
     #--------------------------------------------------------------------------

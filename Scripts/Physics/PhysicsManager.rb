@@ -5,8 +5,8 @@
 #==============================================================================
 
 module PhysicsManager
-  FPS = 60.0
-  DELTA_TIME = 1 / FPS
+  FPS = Graphics.frame_rate
+  DELTA_TIME = 1.0 / FPS
   ACCUMULATOR_MAX = 0.2
   #--------------------------------------------------------------------------
   # * Setup
@@ -57,6 +57,7 @@ module PhysicsManager
         update_physics
         @accumulator -= DELTA_TIME
       end
+      interpolate_transforms(@accumulator / DELTA_TIME)
     end
   end
   #--------------------------------------------------------------------------
@@ -77,7 +78,6 @@ module PhysicsManager
     }
     @rigidbodies.each { |rigidbody|
       update_position(rigidbody)
-      update_transform(rigidbody.transform, rigidbody)
     }
   end
   #--------------------------------------------------------------------------
@@ -89,10 +89,12 @@ module PhysicsManager
     rigidbody.velocity += delta_acceleration
   end
   #--------------------------------------------------------------------------
-  # * Update Transforms
+  # * Interpolate Transforms
   #--------------------------------------------------------------------------
-  def self.update_transform(transform, rigidbody)
-    transform.x = rigidbody.position.x
-    transform.y = rigidbody.position.y
+  def self.interpolate_transforms(ratio)
+    @rigidbodies.each { |rigidbody|
+      #rigidbody.transform.position = rigidbody.transform.position * ratio + rigidbody.position * (1 - ratio)
+      rigidbody.transform.position = rigidbody.position
+    }
   end
 end
