@@ -15,6 +15,7 @@ class Physics_RigidBody
   #--------------------------------------------------------------------------
   attr_accessor :velocity
   attr_accessor :restitution
+  attr_accessor :force
   attr_reader   :aabb
   attr_reader   :position
   attr_reader   :mass
@@ -27,6 +28,7 @@ class Physics_RigidBody
     @velocity = Vector2.new(0, 0)
     @restitution = 0.1
     @position = Vector2.new(0, 0)
+    @force = Vector2.new(0, 0)
   end
   #--------------------------------------------------------------------------
   # * Set Bounding box

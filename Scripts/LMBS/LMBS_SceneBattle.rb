@@ -15,6 +15,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def start
       super
+      @last_time = Time.now
       create_viewport
       create_background
       create_battlers
@@ -85,9 +86,17 @@ module LMBS
     #--------------------------------------------------------------------------
     def update
       super
+      update_delta_time
       update_battlers
       update_physics
       update_sprites
+    end
+    #--------------------------------------------------------------------------
+    # * Update Delta Time
+    #--------------------------------------------------------------------------
+    def update_delta_time
+      @delta_time = Time.now - @last_time
+      @last_time = Time.now
     end
     #--------------------------------------------------------------------------
     # * Update Battlers
@@ -114,11 +123,24 @@ module LMBS
         }
       }
       @battlers.each { |battler|
-        position = battler.rigidbody.position
-        battler.rigidbody.position = Vector2.new(position.x + battler.rigidbody.velocity.x, position.y + battler.rigidbody.velocity.y)
-        battler.transform.x = battler.rigidbody.position.x
-        battler.transform.y = battler.rigidbody.position.y
+        update_position(battler.rigidbody)
+        update_transform(battler.transform, battler.rigidbody)
       }
+    end
+    #--------------------------------------------------------------------------
+    # * Update Rigidbody positions
+    #--------------------------------------------------------------------------
+    def update_position(body)
+      delta_acceleration = body.force * body.inverse_mass * @delta_time
+      body.position += (body.velocity + delta_acceleration / 2) * @delta_time
+      body.velocity += delta_acceleration
+    end
+    #--------------------------------------------------------------------------
+    # * Update Transforms
+    #--------------------------------------------------------------------------
+    def update_transform(transform, body)
+      transform.x = body.position.x
+      transform.y = body.position.y
     end
     #--------------------------------------------------------------------------
     # * Update Sprites
