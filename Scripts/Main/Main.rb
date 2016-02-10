@@ -4,7 +4,6 @@
 #  This processing is executed after module and class definition is finished.
 #==============================================================================
 #rgss_main { SceneManager.run }
-Vector2.unit_tests
 begin
 rgss_main do
     begin

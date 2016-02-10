@@ -71,13 +71,9 @@ class Physics_RigidBody
   end
 
   def self.resolve_collision(collision)
-    p collision
     a = collision.body_a
     b = collision.body_b
-    relative_velocity = b.velocity - a.velocity
-    velocity_along_normal = Vector2.dot_product(relative_velocity, collision.normal)
-    return if velocity_along_normal > 0
-
+    velocity_along_normal = collision.velocity_along_normal
     e = [a.restitution, b.restitution].min
     j = -(1 + e) * velocity_along_normal
     j /= a.inverse_mass + b.inverse_mass

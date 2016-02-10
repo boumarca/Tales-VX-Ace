@@ -56,7 +56,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def create_input_controller
       if @game_battler.is_a?(Game_Actor)
-        @controller = LMBS_InputPlayer.new 
+        @controller = LMBS_InputPlayer.new
       elsif @game_battler.is_a?(Game_Enemy)
         @controller = LMBS_InputController.new
       end
@@ -85,6 +85,14 @@ module LMBS
       @rigidbody.move(aabb_rect)
     end
     #--------------------------------------------------------------------------
+    # * Called when this object collides
+    #--------------------------------------------------------------------------
+    def on_collision(collision)
+      if collision.object_hit.is_a?(LMBS_Battler)
+        @rigidbody.velocity.x = 0;
+      end
+    end
+    #--------------------------------------------------------------------------
     # * Free
     #--------------------------------------------------------------------------
     def dispose
@@ -102,7 +110,7 @@ module LMBS
     end
     #--------------------------------------------------------------------------
     # * Update sprite
-    #-------------------------------------------------------------------------- 
+    #--------------------------------------------------------------------------
     def update_sprite
       @sprite.move(@transform.x, @transform.y)
       @sprite.update
