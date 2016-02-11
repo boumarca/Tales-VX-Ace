@@ -5,6 +5,9 @@
 #==============================================================================
 
 module PhysicsManager
+  #--------------------------------------------------------------------------
+  # * Collision Bitmasks
+  #--------------------------------------------------------------------------
   FPS = Graphics.frame_rate
   DELTA_TIME = 1.0 / FPS
   ACCUMULATOR_MAX = 0.2
@@ -66,10 +69,13 @@ module PhysicsManager
   def self.update_physics
     (0...@rigidbodies.size).each { |i|
       ((i + 1)...@rigidbodies.size).each { |j|
-        collision = Physics_RigidBody.collision_detection(@rigidbodies[i], @rigidbodies[j])
+        body_a = @rigidbodies[i]
+        body_b = @rigidbodies[j]
+        next unless colliding_layers(body_a, body_b)
+        collision = Physics_RigidBody.collision_detection(body_a, body_b)
         if collision && collision.velocity_along_normal <= 0
-          collision.object_hit = @rigidbodies[j].parent
-          @rigidbodies[i].parent.on_collision(collision)
+          collision.object_hit = body_b.parent
+          body_a.parent.on_collision(collision)
           Physics_RigidBody.resolve_collision(collision)
           Physics_RigidBody.positional_correction(collision)
         end
@@ -97,5 +103,11 @@ module PhysicsManager
       #rigidbody.transform.position = rigidbody.transform.position * ratio + rigidbody.position * (1 - ratio)
       rigidbody.parent.transform.position = rigidbody.position
     }
+  end
+  #--------------------------------------------------------------------------
+  # * Check if colliding layers
+  #--------------------------------------------------------------------------
+  def self.colliding_layers(a, b)
+      return (a.collision_mask & b.layer) != 0
   end
 end

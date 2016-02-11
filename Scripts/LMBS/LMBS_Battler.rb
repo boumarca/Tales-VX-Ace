@@ -64,6 +64,14 @@ module LMBS
       @rigidbody = Physics_RigidBody.new(self)
       @rigidbody.aabb = Physics_AABB.new(aabb_rect)
       @rigidbody.position = Vector2.new(@transform.position.x, @transform.position.y)
+
+      if @game_battler.is_a?(Game_Actor)
+        @rigidbody.layer = Physics_RigidBody::LAYER_ALLY
+        @rigidbody.collision_mask = Physics_RigidBody::COLLISIONS_ALLY
+      elsif @game_battler.is_a?(Game_Enemy)
+        @rigidbody.layer = Physics_RigidBody::LAYER_ENEMY
+        @rigidbody.collision_mask = Physics_RigidBody::COLLISIONS_ENEMY
+      end
     end
     #--------------------------------------------------------------------------
     # * Get AABB rect

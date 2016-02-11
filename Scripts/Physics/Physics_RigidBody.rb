@@ -11,12 +11,25 @@ class Physics_RigidBody
   PENETRATION_CORRECTION_PERCENT = 0.2
   PENETRATION_SLOP = 0.01
   #--------------------------------------------------------------------------
+  # * Collision Layers
+  #--------------------------------------------------------------------------
+  LAYER_ALLY    = 1
+  LAYER_ENEMY   = 2
+  LAYER_RUNNING = 4
+  #--------------------------------------------------------------------------
+  # * Collision Bitmasks
+  #--------------------------------------------------------------------------
+  COLLISIONS_ALLY   = LAYER_ENEMY
+  COLLISIONS_ENEMY  = LAYER_ALLY
+  #--------------------------------------------------------------------------
   # * Public members
   #--------------------------------------------------------------------------
   attr_accessor :velocity
   attr_accessor :restitution
   attr_accessor :force
   attr_accessor :parent
+  attr_accessor :layer
+  attr_accessor :collision_mask
   attr_reader   :aabb
   attr_reader   :position
   attr_reader   :mass
@@ -31,6 +44,7 @@ class Physics_RigidBody
     @restitution = 0.1
     @position = Vector2.zero
     @force = Vector2.zero
+    @layer = 0
     PhysicsManager.add_rigidbody(self)
   end
   #--------------------------------------------------------------------------
