@@ -13,7 +13,6 @@ module LMBS
     def initialize(viewport, game_battler)
       @viewport = viewport
       @game_battler = game_battler
-      @current_state = nil
       @facing_left = false
       @walk_speed = @game_battler.walk_speed
       create_states
@@ -21,7 +20,8 @@ module LMBS
       create_rigidbody
       create_battler_sprite
       create_input_controller
-      idle
+      @current_state = @states[:Idle]
+      @current_state.enter_state(self)
     end
     #--------------------------------------------------------------------------
     # * Create States
@@ -69,14 +69,7 @@ module LMBS
       @rigidbody = Physics_RigidBody.new(self)
       @rigidbody.aabb = Physics_AABB.new(aabb_rect)
       @rigidbody.position = Vector2.new(@transform.position.x, @transform.position.y)
-
-      if @game_battler.is_a?(Game_Actor)
-        @rigidbody.layer = Physics_RigidBody::LAYER_ALLY
-        @rigidbody.collision_mask = Physics_RigidBody::COLLISIONS_ALLY
-      elsif @game_battler.is_a?(Game_Enemy)
-        @rigidbody.layer = Physics_RigidBody::LAYER_ENEMY
-        @rigidbody.collision_mask = Physics_RigidBody::COLLISIONS_ENEMY
-      end
+      reset_layer      
     end
     #--------------------------------------------------------------------------
     # * Get AABB rect
@@ -129,14 +122,28 @@ module LMBS
     # * Change State
     #--------------------------------------------------------------------------
     def change_state(state)
+      return if state.nil? || @current_state == state
+      @current_state.exit_state(self)
       @current_state = state
       @current_state.enter_state(self)
     end
     #--------------------------------------------------------------------------
-    # * Change State
+    # * Start animation
     #--------------------------------------------------------------------------
     def start_animation(animation)
       @sprite.start_animation(animation, @facing_left, true)
+    end
+    #--------------------------------------------------------------------------
+    # * Reset Collision Layer
+    #--------------------------------------------------------------------------
+    def reset_layer
+      if @game_battler.is_a?(Game_Actor)
+        @rigidbody.layer = Physics_RigidBody::LAYER_ALLY
+        @rigidbody.collision_mask = Physics_RigidBody::COLLISIONS_ALLY
+      elsif @game_battler.is_a?(Game_Enemy)
+        @rigidbody.layer = Physics_RigidBody::LAYER_ENEMY
+        @rigidbody.collision_mask = Physics_RigidBody::COLLISIONS_ENEMY
+      end
     end
     #--------------------------------------------------------------------------
     # * Update Facing
@@ -194,6 +201,8 @@ module LMBS
       change_state(@states[:Running]) unless @current_state == @states[:Running]
       modifier = facing_left ? -1 : 1
       @rigidbody.velocity.x = @walk_speed * 2 * modifier
+      @rigidbody.layer = Physics_RigidBody::LAYER_RUNNING
+      @rigidbody.collision_mask = Physics_RigidBody::COLLISION_RUNNING
     end
     #--------------------------------------------------------------------------
     # * Guard
