@@ -67,7 +67,8 @@ module LMBS
     # * Create Actors
     #--------------------------------------------------------------------------
     def create_actors
-      @battlers.push(LMBS_Battler.new(@viewport, $game_actors[1]))
+      @battlers.push(LMBS_Battler.new(@viewport, $game_party.members[0]))
+      @battlers.push(LMBS_Battler.new(@viewport, $game_party.members[1]))
     end
     #--------------------------------------------------------------------------
     # * Create Enemies
@@ -88,7 +89,7 @@ module LMBS
     def update
       super
       update_battlers
-      PhysicsManager.run_physics      
+      PhysicsManager.run_physics
       update_sprites
     end
     #--------------------------------------------------------------------------

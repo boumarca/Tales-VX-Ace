@@ -28,6 +28,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def create_states
       @states = {}
+      p @game_battler.battle_animations
       @states[:Idle] = LMBS_IdleState.new(@game_battler.battle_animations[:Idle])
       @states[:Walking] = LMBS_WalkingState.new(@game_battler.battle_animations[:Walking])
       @states[:Guarding] = LMBS_GuardingState.new(@game_battler.battle_animations[:Guarding])
@@ -52,7 +53,11 @@ module LMBS
     #--------------------------------------------------------------------------
     def create_input_controller
       if @game_battler.is_a?(Game_Actor)
-        @controller = LMBS_InputPlayer.new
+        if @game_battler.battle_control == :manual
+          @controller = LMBS_InputPlayer.new
+        elsif @game_battler.battle_control == :auto
+          @controller = LMBS_InputController.new
+        end
       elsif @game_battler.is_a?(Game_Enemy)
         @controller = LMBS_InputController.new
       end
