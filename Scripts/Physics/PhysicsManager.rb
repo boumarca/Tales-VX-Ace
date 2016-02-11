@@ -95,7 +95,7 @@ module PhysicsManager
   def self.interpolate_transforms(ratio)
     @rigidbodies.each { |rigidbody|
       #rigidbody.transform.position = rigidbody.transform.position * ratio + rigidbody.position * (1 - ratio)
-      rigidbody.transform.position = rigidbody.position
+      rigidbody.parent.transform.position = rigidbody.position
     }
   end
 end

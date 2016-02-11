@@ -17,7 +17,6 @@ class Physics_RigidBody
   attr_accessor :restitution
   attr_accessor :force
   attr_accessor :parent
-  attr_accessor :transform
   attr_reader   :aabb
   attr_reader   :position
   attr_reader   :mass
@@ -27,7 +26,6 @@ class Physics_RigidBody
   #--------------------------------------------------------------------------
   def initialize(parent)
     @parent = parent
-    @transform = @parent.transform
     self.mass = 1
     @velocity = Vector2.new(0, 0)
     @restitution = 0.1
