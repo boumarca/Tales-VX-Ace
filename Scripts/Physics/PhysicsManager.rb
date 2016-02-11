@@ -87,6 +87,7 @@ module PhysicsManager
     delta_acceleration = rigidbody.force * rigidbody.inverse_mass * DELTA_TIME
     rigidbody.position += (rigidbody.velocity + delta_acceleration / 2.0) * DELTA_TIME
     rigidbody.velocity += delta_acceleration
+    rigidbody.force = Vector2.zero
   end
   #--------------------------------------------------------------------------
   # * Interpolate Transforms
