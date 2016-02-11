@@ -64,18 +64,19 @@ module PhysicsManager
   # * Update Physics
   #--------------------------------------------------------------------------
   def self.update_physics
-    @rigidbodies.each { |rigidbody|
-      @rigidbodies.each { |other|
-        next if rigidbody == other
-        collision = Physics_RigidBody.collision_detection(rigidbody, other)
+    (0...@rigidbodies.size).each { |i|
+      ((i + 1)...@rigidbodies.size).each { |j|
+        next if i == j
+        collision = Physics_RigidBody.collision_detection(@rigidbodies[i], @rigidbodies[j])
         if collision && collision.velocity_along_normal <= 0
-          collision.object_hit = other.parent
-          rigidbody.parent.on_collision(collision)
+          collision.object_hit = @rigidbodies[j].parent
+          @rigidbodies[i].parent.on_collision(collision)
           Physics_RigidBody.resolve_collision(collision)
           Physics_RigidBody.positional_correction(collision)
         end
       }
     }
+
     @rigidbodies.each { |rigidbody|
       update_position(rigidbody)
     }
