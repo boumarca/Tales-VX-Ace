@@ -48,10 +48,10 @@ class Physics_AABB
       y_overlap = a_extent_y + b_extent_y - (n.y).abs
       if(y_overlap > 0)
         if(x_overlap < y_overlap)
-          normal = n.x < 0 ? Vector2.new(1,0) * -1 : Vector2.new(1,0)
+          normal = n.x < 0 ? Vector2.unit_x * -1 : Vector2.unit_x
           return Physics_Collision.new(a, b, x_overlap, normal)
         else
-          normal = n.y < 0 ? Vector2.new(0,1) * -1 : Vector2.new(0,1)
+          normal = n.y < 0 ? Vector2.unit_y * -1 : Vector2.unit_y
           return Physics_Collision.new(a, b, y_overlap, normal)
         end
       end

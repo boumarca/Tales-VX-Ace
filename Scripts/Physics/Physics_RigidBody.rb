@@ -27,10 +27,10 @@ class Physics_RigidBody
   def initialize(parent)
     @parent = parent
     self.mass = 1
-    @velocity = Vector2.new(0, 0)
+    @velocity = Vector2.zero
     @restitution = 0.1
-    @position = Vector2.new(0, 0)
-    @force = Vector2.new(0, 0)
+    @position = Vector2.zero
+    @force = Vector2.zero
     PhysicsManager.add_rigidbody(self)
   end
   #--------------------------------------------------------------------------

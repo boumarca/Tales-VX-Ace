@@ -6,6 +6,22 @@
 
 class Vector2
   #--------------------------------------------------------------------------
+  # * Singleton Vectors
+  #--------------------------------------------------------------------------
+  def self.one;    @@one;    end
+  def self.unit_x; @@unit_x; end
+  def self.unit_y; @@unit_y; end
+  def self.zero;   @@zero;   end
+  #--------------------------------------------------------------------------
+  # * Init Singleton Vectors
+  #--------------------------------------------------------------------------
+  def self.init_class_vectors
+    @@one =     Vector2.new(1, 1)
+    @@unit_x =  Vector2.new(1, 0)
+    @@unit_y =  Vector2.new(0, 1)
+    @@zero =    Vector2.new(0, 0)
+  end
+  #--------------------------------------------------------------------------
   # * Public Members
   #--------------------------------------------------------------------------
   attr_accessor :x
@@ -109,12 +125,14 @@ class Vector2
     puts sqlen == 25
     d = Vector2.new(2, 0)
     norm = d.normalize
-    puts norm == Vector2.new(1, 0)
-    i = Vector2.new(1, 0)
-    j = Vector2.new(0, 1)
+    puts norm == Vector2.unit_x
+    i = Vector2.unit_x
+    j = Vector2.unit_y
     angle = Math.acos(Vector2.dot_product(i,j))
     puts angle * Math::RADIANS_TO_DEGREES == 90.0
     mul = a * 2
     puts mul == Vector2.new(4, 8)
+    puts Vector2.zero
+    puts Vector2.one
   end
 end

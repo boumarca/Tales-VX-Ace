@@ -39,7 +39,7 @@ class Physics_Circle
       normal = Vector2.new(n.x / distance, n.y / distance)
       return Physics_Collision.new(a, b , penetration, normal)
     else
-      return Physics_Collision.new(a, b , a.radius, Vector2.new(1, 0))
+      return Physics_Collision.new(a, b , a.radius, Vector2.unit_x)
     end
   end
 end
