@@ -97,6 +97,7 @@ class Vector2
       @x = @x / len
       @y = @y / len
     end
+    self
   end
   #--------------------------------------------------------------------------
   # * Returns the dot product between the two vectors
