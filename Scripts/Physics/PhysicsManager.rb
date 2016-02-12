@@ -73,10 +73,12 @@ module PhysicsManager
         body_b = @rigidbodies[j]
         next unless colliding_layers(body_a, body_b)
         collision = Physics_RigidBody.collision_detection(body_a, body_b)
-        
+
         if collision && collision.velocity_along_normal <= 0
           collision.object_hit = body_b.parent
           body_a.parent.on_collision(collision)
+          collision.object_hit = body_a.parent
+          body_b.parent.on_collision(collision)
           Physics_RigidBody.resolve_collision(collision)
           Physics_RigidBody.positional_correction(collision)
         end

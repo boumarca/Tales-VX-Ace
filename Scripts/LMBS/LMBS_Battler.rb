@@ -69,7 +69,7 @@ module LMBS
       @rigidbody = Physics_RigidBody.new(self)
       @rigidbody.aabb = Physics_AABB.new(aabb_rect)
       @rigidbody.position = Vector2.new(@transform.position.x, @transform.position.y)
-      reset_layer      
+      reset_layer
     end
     #--------------------------------------------------------------------------
     # * Get AABB rect

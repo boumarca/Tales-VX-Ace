@@ -61,7 +61,7 @@ class Vector2
   # * Scalar Division
   #--------------------------------------------------------------------------
   def /(number)
-    Vector2.new(@x / number, @y / number)
+    Vector2.new(@x / number.to_f, @y / number.to_f)
   end
   #--------------------------------------------------------------------------
   # * Vector Equality
@@ -73,7 +73,8 @@ class Vector2
   # * Returns the length of the vector
   #--------------------------------------------------------------------------
   def length
-    Math.sqrt(@x*@x + @y*@y)
+    return 0 if @x == 0 && @y == 0
+    Math.hypot(@x, @y)
   end
   #--------------------------------------------------------------------------
   # * Returns the magnitude of the vector. Same as length
@@ -94,11 +95,17 @@ class Vector2
     squared_length
   end
   #--------------------------------------------------------------------------
-  # * Returns the normalized vector
+  # * Normalizes the vector
   #--------------------------------------------------------------------------
   def normalize
-    len = length
-    Vector2.new(@x / len, @y / len)
+    len = length.to_f
+    if len ==0
+      @x = 0
+      @y = 0
+    else
+      @x = @x / len
+      @y = @y / len
+    end
   end
   #--------------------------------------------------------------------------
   # * Returns the dot product between the two vectors
@@ -124,8 +131,7 @@ class Vector2
     sqlen = c.squared_length
     puts sqlen == 25
     d = Vector2.new(2, 0)
-    norm = d.normalize
-    puts norm == Vector2.unit_x
+    puts d.normalize == Vector2.unit_x
     i = Vector2.unit_x
     j = Vector2.unit_y
     angle = Math.acos(Vector2.dot_product(i,j))

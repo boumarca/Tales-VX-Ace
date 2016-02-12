@@ -20,11 +20,24 @@ class Physics_Collision
     @normal = normal
   end
   #--------------------------------------------------------------------------
+  # * Returns the relative velocity
+  #--------------------------------------------------------------------------
+  def relative_velocity
+    @body_b.velocity - @body_a.velocity
+  end
+  #--------------------------------------------------------------------------
   # * Returns the relative velocity along the collision normal
   # * If equal or less than zero, objects are moving toward each other
   #--------------------------------------------------------------------------
   def velocity_along_normal
-    relative_velocity = @body_b.velocity - @body_a.velocity
     Vector2.dot_product(relative_velocity, @normal)
+  end
+  #--------------------------------------------------------------------------
+  # * Returns the impulse magnitude
+  #--------------------------------------------------------------------------
+  def impulse_magnitude
+    e = [@body_a.restitution, @body_b.restitution].min
+    j = -(1 + e) * velocity_along_normal
+    j /= @body_a.inverse_mass + @body_b.inverse_mass
   end
 end
