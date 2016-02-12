@@ -54,6 +54,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def create_background
       @background = LMBS_Background.new(@viewport)
+
     end
     #--------------------------------------------------------------------------
     # * Create Battlers

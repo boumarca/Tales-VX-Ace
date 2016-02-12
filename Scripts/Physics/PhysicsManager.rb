@@ -32,6 +32,7 @@ module PhysicsManager
     @last_time = Time.now
     @active = true
     @rigidbodies = []
+    @gravity = Vector2.new(0, 9.71)
   end
   #--------------------------------------------------------------------------
   # * Add a Rigid Body
@@ -74,13 +75,17 @@ module PhysicsManager
         next unless colliding_layers(body_a, body_b)
         collision = Physics_RigidBody.collision_detection(body_a, body_b)
 
-        if collision && collision.velocity_along_normal <= 0
+        if collision #&& collision.velocity_along_normal <= 0
+          p collision
+          if collision.velocity_along_normal
           collision.object_hit = body_b.parent
           body_a.parent.on_collision(collision)
           collision.object_hit = body_a.parent
           body_b.parent.on_collision(collision)
+          p collision
           Physics_RigidBody.resolve_collision(collision)
           Physics_RigidBody.positional_correction(collision)
+        end
         end
       }
     }
@@ -93,7 +98,8 @@ module PhysicsManager
   # * Update Rigidbody positions
   #--------------------------------------------------------------------------
   def self.update_position(rigidbody)
-    delta_acceleration = rigidbody.force * rigidbody.inverse_mass * DELTA_TIME
+    gravity = rigidbody.use_gravity  ? @gravity : 0
+    delta_acceleration = (rigidbody.force * rigidbody.inverse_mass + gravity)* DELTA_TIME
     rigidbody.position += (rigidbody.velocity + delta_acceleration / 2.0) * DELTA_TIME
     rigidbody.velocity += delta_acceleration
     rigidbody.force = Vector2.zero

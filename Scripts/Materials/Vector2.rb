@@ -90,7 +90,7 @@ class Vector2
   #--------------------------------------------------------------------------
   def normalize
     len = length.to_f
-    if len ==0
+    if len == 0
       @x = 0
       @y = 0
     else

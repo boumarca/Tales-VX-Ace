@@ -16,12 +16,13 @@ class Physics_RigidBody
   LAYER_ALLY    = 1
   LAYER_ENEMY   = 2
   LAYER_RUNNING = 4
+  LAYER_GROUND  = 8
   #--------------------------------------------------------------------------
   # * Collision Bitmasks
   #--------------------------------------------------------------------------
-  COLLISIONS_ALLY   = LAYER_ENEMY
-  COLLISIONS_ENEMY  = LAYER_ALLY
-  COLLISION_RUNNING = 0
+  COLLISIONS_ALLY   = LAYER_ENEMY + LAYER_GROUND
+  COLLISIONS_ENEMY  = LAYER_ALLY + LAYER_GROUND
+  COLLISION_RUNNING = LAYER_GROUND
   #--------------------------------------------------------------------------
   # * Public members
   #--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ class Physics_RigidBody
   attr_accessor :collision_mask
   attr_accessor :static_friction
   attr_accessor :dynamic_friction
+  attr_accessor :use_gravity
   attr_reader   :aabb
   attr_reader   :position
   attr_reader   :mass
@@ -50,6 +52,7 @@ class Physics_RigidBody
     @layer = 0
     @static_friction = 0.5
     @dynamic_friction = 0.3
+    @use_gravity = true
     PhysicsManager.add_rigidbody(self)
   end
   #--------------------------------------------------------------------------

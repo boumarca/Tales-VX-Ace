@@ -6,12 +6,18 @@
 
 module LMBS
   class LMBS_Background
+    attr_accessor :transform
     #--------------------------------------------------------------------------
     # * Object Initialization
     #--------------------------------------------------------------------------
     def initialize(viewport)
       @viewport = viewport
       create_battleback
+      @groundbody = Physics_RigidBody.new(self)
+      @groundbody.aabb = Physics_AABB.new(Rect.new(0, 340, 640, 100))
+      @groundbody.mass = 0
+      @groundbody.use_gravity = false
+      @transform = LMBS_Transform.new(Vector2.new(320, 390))
     end
     #--------------------------------------------------------------------------
     # * Create Battle Background Sprite
