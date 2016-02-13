@@ -28,7 +28,9 @@ class Physics_Circle
   # * Return a collision object including the collision details
   # * Returns nil if no collision.
   #--------------------------------------------------------------------------
-  def self.collision(a, b)
+  def self.collision(body_a, body_b)
+    a = body_a.aabb
+    b = body_b.aabb
     n = b.position - a.position
     radii = a.radius + b.radius
     radii *= radii
@@ -37,9 +39,9 @@ class Physics_Circle
     if distance != 0
       penetration = radii - distance
       normal = Vector2.new(n.x / distance, n.y / distance)
-      return Physics_Collision.new(a, b , penetration, normal)
+      return Physics_Collision.new(body_a, body_b , penetration, normal)
     else
-      return Physics_Collision.new(a, b , a.radius, Vector2.unit_x)
+      return Physics_Collision.new(body_a, body_b , a.radius, Vector2.unit_x)
     end
   end
 end

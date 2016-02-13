@@ -93,20 +93,16 @@ class Physics_RigidBody
     collision = nil
     if body_a.aabb.is_a?(Physics_AABB)
       if body_b.aabb.is_a?(Physics_AABB)
-        collision = Physics_AABB.collision(body_a.aabb, body_b.aabb)
+        collision = Physics_AABB.collision(body_a, body_b)
       elsif body_b.aabb.is_a?(Physics_Circle)
-        collision = Physics_AABB.collision_circle(body_a.aabb, body_b.aabb)
+        collision = Physics_AABB.collision_circle(body_a, body_b)
       end
     elsif body_a.aabb.is_a(Physics_Circle)
       if body_b.aabb.is_a?(Physics_AABB)
-        collision = Physics_AABB.collision_circle(body_b.aabb, body_a.aabb)
+        collision = Physics_AABB.collision_circle(body_b, body_a)
       elsif body_b.aabb.is_a?(Physics_Circle)
-        collision = Physics_Circle.collision(body_a.aabb, body_b.aabb)
+        collision = Physics_Circle.collision(body_a, body_b)
       end
-    end
-    if !collision.nil?
-      collision.body_a = body_a
-      collision.body_b = body_b
     end
     return collision
   end
