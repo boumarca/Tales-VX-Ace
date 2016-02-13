@@ -19,12 +19,12 @@ module LMBS
     #--------------------------------------------------------------------------
     def create_actions_mapping
       @actions = {}
-      @actions[:Idle]     = method(:idle_action)
-      @actions[:Move]  	  = method(:movement_action)
-      @actions[:Guarding] = method(:guarding_action)
+      @actions[:idle]     = method(:idle_action)
+      @actions[:move]  	  = method(:movement_action)
+      @actions[:guarding] = method(:guarding_action)
     end
     #--------------------------------------------------------------------------
-    # * Update Tap cooldown every frame 
+    # * Update Tap cooldown every frame
     #--------------------------------------------------------------------------
     def update_tap_cooldown
       if @cooldown > 0
@@ -32,7 +32,7 @@ module LMBS
         @last_time = Time.now
       else
         reset_double_tap
-      end      
+      end
     end
     #--------------------------------------------------------------------------
     # * Update Double Tap Status
@@ -64,7 +64,7 @@ module LMBS
       @last_input = nil
       @last_time = Time.now
       @cooldown = 0
-    end   
+    end
     #--------------------------------------------------------------------------
     # * Handle Player Input
     #--------------------------------------------------------------------------
@@ -74,7 +74,7 @@ module LMBS
         next unless @actions.include?(action)
         command = @actions[action].call
         return command if command
-      } 
+      }
     end
     #--------------------------------------------------------------------------
     # * Idle Action
@@ -94,9 +94,9 @@ module LMBS
         update_double_tap(Input::Keys::LEFT)
         return run_left_command if @double_tap
         return walk_left_command
-      end        
-      @last_input = nil     
-      reset_double_tap if @double_tap 
+      end
+      @last_input = nil
+      reset_double_tap if @double_tap
       return nil
     end
     #--------------------------------------------------------------------------

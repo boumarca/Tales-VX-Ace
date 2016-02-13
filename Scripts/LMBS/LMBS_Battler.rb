@@ -23,7 +23,7 @@ module LMBS
       create_rigidbody
       create_battler_sprite
       create_input_controller
-      @current_state = @states[:Idle]
+      @current_state = @states[:idle]
       @current_state.enter_state(self)
     end
     #--------------------------------------------------------------------------
@@ -31,11 +31,10 @@ module LMBS
     #--------------------------------------------------------------------------
     def create_states
       @states = {}
-      p @game_battler.battle_animations
-      @states[:Idle] = LMBS_IdleState.new(@game_battler.battle_animations[:Idle])
-      @states[:Walking] = LMBS_WalkingState.new(@game_battler.battle_animations[:Walking])
-      @states[:Guarding] = LMBS_GuardingState.new(@game_battler.battle_animations[:Guarding])
-      @states[:Running] = LMBS_RunningState.new(@game_battler.battle_animations[:Running])
+      @states[:idle] = LMBS_IdleState.new(@game_battler.battle_animations[:idle])
+      @states[:walking] = LMBS_WalkingState.new(@game_battler.battle_animations[:walking])
+      @states[:guarding] = LMBS_GuardingState.new(@game_battler.battle_animations[:guarding])
+      @states[:running] = LMBS_RunningState.new(@game_battler.battle_animations[:running])
     end
     #--------------------------------------------------------------------------
     # * Create Transform Component
@@ -160,7 +159,7 @@ module LMBS
     # * Idle
     #--------------------------------------------------------------------------
     def idle
-      change_state(@states[:Idle]) unless @current_state == @states[:Idle]
+      change_state(@states[:idle]) unless @current_state == @states[:idle]
       @rigidbody.velocity.x = 0
     end
     #--------------------------------------------------------------------------
@@ -180,7 +179,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def walk(facing_left)
       update_facing(facing_left)
-      change_state(@states[:Walking]) unless @current_state == @states[:Walking]
+      change_state(@states[:walking]) unless @current_state == @states[:walking]
       modifier = facing_left ? -1 : 1
       @rigidbody.velocity.x = @walk_speed * modifier
     end
@@ -201,7 +200,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def run(facing_left)
       update_facing(facing_left)
-      change_state(@states[:Running]) unless @current_state == @states[:Running]
+      change_state(@states[:running]) unless @current_state == @states[:running]
       modifier = facing_left ? -1 : 1
       @rigidbody.velocity.x = @walk_speed * 2 * modifier
       @rigidbody.layer = Physics_RigidBody::LAYER_RUNNING
@@ -211,7 +210,7 @@ module LMBS
     # * Guard
     #--------------------------------------------------------------------------
     def guard
-      change_state(@states[:Guarding]) unless @current_state == @states[:Guarding]
+      change_state(@states[:guarding]) unless @current_state == @states[:guarding]
     end
   end
 end
