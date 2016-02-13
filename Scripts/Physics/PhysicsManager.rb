@@ -23,6 +23,7 @@ module PhysicsManager
   def self.stop
     @active = false
     @rigidbodies = []
+    @collisions = []
   end
   #--------------------------------------------------------------------------
   # * Initialize Member Variables
@@ -32,7 +33,8 @@ module PhysicsManager
     @last_time = Time.now
     @active = true
     @rigidbodies = []
-    @gravity = Vector2.new(0, 9.71)
+    @collisions = []
+    @gravity = Vector2.new(0, 9.71*10)
   end
   #--------------------------------------------------------------------------
   # * Add a Rigid Body
@@ -68,39 +70,54 @@ module PhysicsManager
   # * Update Physics
   #--------------------------------------------------------------------------
   def self.update_physics
+    @rigidbodies.each { |rigidbody|
+      update_forces(rigidbody)
+    }
+
     (0...@rigidbodies.size).each { |i|
       ((i + 1)...@rigidbodies.size).each { |j|
-        body_a = @rigidbodies[i]
-        body_b = @rigidbodies[j]
-        next unless colliding_layers(body_a, body_b)
-        collision = Physics_RigidBody.collision_detection(body_a, body_b)
-
-        if collision #&& collision.velocity_along_normal <= 0
-          if collision.velocity_along_normal <= 0
-          collision.object_hit = body_b.parent
-          body_a.parent.on_collision(collision)
-          collision.object_hit = body_a.parent
-          body_b.parent.on_collision(collision)
-          p collision
-          Physics_RigidBody.resolve_collision(collision)
-          Physics_RigidBody.positional_correction(collision)
-        end
-        end
+        update_collisions(@rigidbodies[i], @rigidbodies[j])
       }
     }
 
     @rigidbodies.each { |rigidbody|
       update_position(rigidbody)
     }
+
+    @collisions.each { |collision|
+      Physics_RigidBody.positional_correction(collision)
+    }
+
+    @collisions.clear
+  end
+  #--------------------------------------------------------------------------
+  # * Update Forces
+  #--------------------------------------------------------------------------
+  def self.update_forces(rigidbody)
+    gravity = rigidbody.use_gravity ? @gravity : Vector2.zero
+    rigidbody.velocity += (rigidbody.force * rigidbody.inverse_mass + gravity) * (DELTA_TIME/2.0)
+  end
+  #--------------------------------------------------------------------------
+  # * Update Collisions
+  #--------------------------------------------------------------------------
+  def self.update_collisions(body_a, body_b)
+    return unless colliding_layers(body_a, body_b)
+    collision = Physics_RigidBody.collision_detection(body_a, body_b)
+    if collision && collision.velocity_along_normal <= 0
+      @collisions.push(collision)
+          collision.object_hit = body_b.parent
+          body_a.parent.on_collision(collision)
+          collision.object_hit = body_a.parent
+          body_b.parent.on_collision(collision)
+          Physics_RigidBody.resolve_collision(collision)
+        end
   end
   #--------------------------------------------------------------------------
   # * Update Rigidbody positions
   #--------------------------------------------------------------------------
   def self.update_position(rigidbody)
-    gravity = rigidbody.use_gravity  ? @gravity : 0
-    delta_acceleration = (rigidbody.force * rigidbody.inverse_mass + gravity)* DELTA_TIME
-    rigidbody.position += (rigidbody.velocity + delta_acceleration / 2.0) * DELTA_TIME
-    rigidbody.velocity += delta_acceleration
+    rigidbody.position += rigidbody.velocity * DELTA_TIME
+    update_forces(rigidbody)
     rigidbody.force = Vector2.zero
   end
   #--------------------------------------------------------------------------
@@ -108,7 +125,7 @@ module PhysicsManager
   #--------------------------------------------------------------------------
   def self.interpolate_transforms(ratio)
     @rigidbodies.each { |rigidbody|
-      #rigidbody.transform.position = rigidbody.transform.position * ratio + rigidbody.position * (1 - ratio)
+      #rigidbody.position = rigidbody.position * ratio + rigidbody.position * (1 - ratio)
       rigidbody.parent.transform.position = rigidbody.position
     }
   end

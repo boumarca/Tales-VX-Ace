@@ -42,7 +42,7 @@ class Physics_AABB
           normal = n.x < 0 ? Vector2.unit_x * -1 : Vector2.unit_x
           return Physics_Collision.new(a, b, x_overlap, normal)
         else
-          normal = n.y < 0 ? Vector2.unit_y : Vector2.unit_y * -1
+          normal = n.y < 0 ? Vector2.unit_y * -1 : Vector2.unit_y * 1
           return Physics_Collision.new(a, b, y_overlap, normal)
         end
       end

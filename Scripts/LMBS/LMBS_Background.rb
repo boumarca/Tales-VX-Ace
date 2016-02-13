@@ -24,7 +24,7 @@ module LMBS
       @viewport = viewport
       create_battleback
       create_transform
-
+      create_rigidbody
     end
     #--------------------------------------------------------------------------
     # * Create Transform
@@ -37,7 +37,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def create_rigidbody
       @groundbody = Physics_RigidBody.new(self)
-      @groundbody.aabb = Physics_AABB.new(aabb)
+      @groundbody.aabb = Physics_AABB.new(aabb_rect)
       @groundbody.mass = 0
       @groundbody.use_gravity = false
       @groundbody.position = Vector2.new(@transform.position.x, @transform.position.y)
