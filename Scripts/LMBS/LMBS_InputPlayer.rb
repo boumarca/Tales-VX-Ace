@@ -76,6 +76,7 @@ module LMBS
         command = @actions[action].call
         return command if command
       }
+      return nil
     end
     #--------------------------------------------------------------------------
     # * Idle Action

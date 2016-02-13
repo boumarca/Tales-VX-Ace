@@ -78,9 +78,18 @@ module LMBS
     end
   end
   #==============================================================================
-  # * Jump State
+  # * Jump Up State
   #==============================================================================
-  class LMBS_JumpingState < LMBS_AnimationState
+  class LMBS_JumpingUpState < LMBS_AnimationState
+    def initialize(animation_id)
+      super(animation_id)
+      @actions = []
+    end
+  end
+  #==============================================================================
+  # * Jump Down State
+  #==============================================================================
+  class LMBS_JumpingDownState < LMBS_AnimationState
     def initialize(animation_id)
       super(animation_id)
       @actions = []

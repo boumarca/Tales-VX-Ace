@@ -23,6 +23,7 @@ module LMBS
       @facing_left = false
       @walk_speed = @game_battler.walk_speed
       @jumping = false
+      @grounded = false
       create_states
       create_transform
       create_rigidbody
@@ -40,7 +41,8 @@ module LMBS
       @states[:walking] = LMBS_WalkingState.new(@game_battler.battle_animations[:walking])
       @states[:guarding] = LMBS_GuardingState.new(@game_battler.battle_animations[:guarding])
       @states[:running] = LMBS_RunningState.new(@game_battler.battle_animations[:running])
-      @states[:jumping] = LMBS_JumpingState.new(@game_battler.battle_animations[:idle])
+      @states[:jump_up] = LMBS_JumpingUpState.new(@game_battler.battle_animations[:jump_up])
+      @states[:jump_down] = LMBS_JumpingDownState.new(@game_battler.battle_animations[:jump_down])
     end
     #--------------------------------------------------------------------------
     # * Create Transform Component
@@ -103,7 +105,7 @@ module LMBS
         @rigidbody.velocity.x = 0;
       elsif hit.is_a?(LMBS_Background)
         @rigidbody.velocity.y = 0;
-        @jumping = false
+        @grounded = true
       end
     end
     #--------------------------------------------------------------------------
@@ -121,6 +123,19 @@ module LMBS
       command = @controller.handle_input(@current_state.actions)
       if command
         command.execute(self)
+      end
+    end
+    #--------------------------------------------------------------------------
+    # * Update movement
+    #--------------------------------------------------------------------------
+    def update_movement
+      if @jumping
+        if @grounded
+          change_state(@states[:idle])
+          @jumping = false
+        elsif @rigidbody.velocity.y > 0
+          change_state(@states[:jump_down]) unless @current_state == @states[:jump_down]
+        end
       end
     end
     #--------------------------------------------------------------------------
@@ -226,11 +241,12 @@ module LMBS
     # * Jump
     #--------------------------------------------------------------------------
     def jump
-      if !@jumping
+      if !@jumping && @grounded
         @jumping = true
+        @grounded = false
         @rigidbody.velocity.y += JUMP_FORCE
+        change_state(@states[:jump_up])
       end
-      #change_state(@states[:guarding]) unless @current_state == @states[:guarding]
     end
   end
 end

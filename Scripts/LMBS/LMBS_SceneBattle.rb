@@ -106,6 +106,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def update_sprites
       @battlers.each { |battler|
+        battler.update_movement
         battler.update_sprite
       }
     end
