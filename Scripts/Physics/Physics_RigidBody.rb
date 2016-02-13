@@ -6,11 +6,6 @@
 
 class Physics_RigidBody
   #--------------------------------------------------------------------------
-  # * Constants
-  #--------------------------------------------------------------------------
-  PENETRATION_CORRECTION_PERCENT = 0.2
-  PENETRATION_SLOP = 0.01
-  #--------------------------------------------------------------------------
   # * Collision Layers
   #--------------------------------------------------------------------------
   LAYER_ALLY    = 1
@@ -114,51 +109,5 @@ class Physics_RigidBody
       collision.body_b = body_b
     end
     return collision
-  end
-  #--------------------------------------------------------------------------
-  # * Resolves the collision by applying impulses
-  #--------------------------------------------------------------------------
-  def self.resolve_collision(collision)
-    j = collision.impulse_magnitude
-    impulse = collision.normal * j
-    apply_impulse(collision.body_a, collision.body_b, impulse)
-
-#friction
-    tangent = collision.relative_velocity - collision.normal * collision.velocity_along_normal
-    tangent.normalize
-    jt = -Vector2.dot_product(collision.relative_velocity, tangent)
-    jt = jt / (collision.body_a.inverse_mass + collision.body_b.inverse_mass).to_f
-    mu = Math.hypot(collision.body_a.static_friction, collision.body_a.static_friction)
-    friction_impulse = Vector2.zero
-    if jt.abs < j * mu
-      friction_impulse = tangent * jt
-    else
-      dynamic_friction = Math.hypot(collision.body_a.dynamic_friction, collision.body_a.dynamic_friction)
-      friction_impulse = tangent * j * dynamic_friction
-    end
-    collision.body_a.velocity -= friction_impulse * collision.body_a.inverse_mass
-    collision.body_b.velocity += friction_impulse * collision.body_b.inverse_mass
-  end
-  #--------------------------------------------------------------------------
-  # * Apply impulse
-  #--------------------------------------------------------------------------
-  def self.apply_impulse(body_a, body_b, impulse)
-    mass_sum = body_a.mass + body_b.mass
-    ratio = body_a.mass / mass_sum.to_f
-    body_a.velocity -= impulse * ratio
-    ratio = body_b.mass / mass_sum.to_f
-    body_b.velocity += impulse * ratio
-  end
-  #--------------------------------------------------------------------------
-  # * Correct interpenetration between bodies
-  #--------------------------------------------------------------------------
-  def self.positional_correction(collision)
-    a = collision.body_a
-    b = collision.body_b
-    slop = [collision.penetration - PENETRATION_SLOP, 0].max
-    linear_proj = slop / (a.inverse_mass + b.inverse_mass).to_f
-    correction =  collision.normal * (linear_proj * PENETRATION_CORRECTION_PERCENT)
-    a.position -= correction * a.inverse_mass
-    b.position += correction * b.inverse_mass
   end
 end

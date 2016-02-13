@@ -85,7 +85,7 @@ module PhysicsManager
     }
 
     @collisions.each { |collision|
-      Physics_RigidBody.positional_correction(collision)
+      collision.positional_correction
     }
 
     @collisions.clear
@@ -106,7 +106,7 @@ module PhysicsManager
     if collision && collision.velocity_along_normal <= 0
       @collisions.push(collision)
       collision.on_collision_trigger
-      Physics_RigidBody.resolve_collision(collision)
+      collision.resolve
     end
   end
   #--------------------------------------------------------------------------
