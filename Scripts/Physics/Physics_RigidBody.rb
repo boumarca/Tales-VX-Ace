@@ -23,14 +23,14 @@ class Physics_RigidBody
   # * Public members
   #--------------------------------------------------------------------------
   attr_accessor :velocity
-  attr_accessor :restitution
   attr_accessor :force
+  attr_accessor :use_gravity
   attr_accessor :parent
   attr_accessor :layer
   attr_accessor :collision_mask
-  attr_accessor :static_friction
-  attr_accessor :dynamic_friction
-  attr_accessor :use_gravity
+  attr_reader   :static_friction
+  attr_reader   :dynamic_friction
+  attr_reader   :restitution
   attr_reader   :aabb
   attr_reader   :position
   attr_reader   :mass
