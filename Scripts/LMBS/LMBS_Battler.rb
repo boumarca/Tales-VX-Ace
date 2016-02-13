@@ -38,7 +38,7 @@ module LMBS
     # * Create Transform Component
     #--------------------------------------------------------------------------
     def create_transform
-      @transform = LMBS_Transform.new(Vector2.new(rand(500) + 50, LMBS_SceneBattle::GROUND))
+      @transform = LMBS_Transform.new(Vector2.new(rand(500) + 50, LMBS_SceneBattle::GROUND - @game_battler.aabb.height/2.0))
     end
     #--------------------------------------------------------------------------
     # * Create Battler Sprite
@@ -115,7 +115,7 @@ module LMBS
     # * Update sprite
     #--------------------------------------------------------------------------
     def update_sprite
-      @sprite.move(@transform.position.x, @transform.position.y)
+      @sprite.move(@transform.position.x, @transform.position.y + @game_battler.aabb.height/2.0)
       @sprite.update
     end
     #--------------------------------------------------------------------------
@@ -202,7 +202,7 @@ module LMBS
       modifier = facing_left ? -1 : 1
       @rigidbody.velocity.x = @walk_speed * 2 * modifier
       @rigidbody.layer = Physics_RigidBody::LAYER_RUNNING
-      @rigidbody.collision_mask = Physics_RigidBody::COLLISION_RUNNING
+      @rigidbody.collision_mask = Physics_RigidBody::COLLISIONS_RUNNING
     end
     #--------------------------------------------------------------------------
     # * Guard

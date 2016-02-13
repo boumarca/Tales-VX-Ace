@@ -12,17 +12,8 @@ class Physics_AABB
   # * Object Initialization
   #--------------------------------------------------------------------------
   def initialize(rect)
-    @min = Vector2.new(rect.x, rect.y)
-    @max = Vector2.new(rect.x + rect.width, rect.y + rect.height)
-  end
-  #--------------------------------------------------------------------------
-  # * Move
-  #--------------------------------------------------------------------------
-  def move(rect)
-    @min.x = rect.x
-    @min.y = rect.y
-    @max.x = rect.x + rect.width
-    @max.y = rect.y + rect.height
+    @min = Vector2.new(0, 0)
+    @max = Vector2.new(rect.width, rect.height)
   end
   #--------------------------------------------------------------------------
   # * Determines if two AABB collides with each other using SAT
@@ -51,7 +42,7 @@ class Physics_AABB
           normal = n.x < 0 ? Vector2.unit_x * -1 : Vector2.unit_x
           return Physics_Collision.new(a, b, x_overlap, normal)
         else
-          normal = n.y < 0 ? Vector2.unit_y * -1 : Vector2.unit_y
+          normal = n.y < 0 ? Vector2.unit_y : Vector2.unit_y * -1
           return Physics_Collision.new(a, b, y_overlap, normal)
         end
       end

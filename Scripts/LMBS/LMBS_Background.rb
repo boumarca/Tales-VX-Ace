@@ -6,6 +6,16 @@
 
 module LMBS
   class LMBS_Background
+    #--------------------------------------------------------------------------
+    # * Constants
+    #--------------------------------------------------------------------------
+    GROUND_X      = 320
+    GROUND_Y      = 490
+    GROUND_WIDTH  = 1280
+    GROUND_HEIGHT = 300
+    #--------------------------------------------------------------------------
+    # * Public Members
+    #--------------------------------------------------------------------------
     attr_accessor :transform
     #--------------------------------------------------------------------------
     # * Object Initialization
@@ -13,11 +23,32 @@ module LMBS
     def initialize(viewport)
       @viewport = viewport
       create_battleback
+      create_transform
+
+    end
+    #--------------------------------------------------------------------------
+    # * Create Transform
+    #--------------------------------------------------------------------------
+    def create_transform
+      @transform = LMBS_Transform.new(Vector2.new(GROUND_X, GROUND_Y))
+    end
+    #--------------------------------------------------------------------------
+    # * Create Rigidbody
+    #--------------------------------------------------------------------------
+    def create_rigidbody
       @groundbody = Physics_RigidBody.new(self)
-      @groundbody.aabb = Physics_AABB.new(Rect.new(0, 340, 640, 100))
+      @groundbody.aabb = Physics_AABB.new(aabb)
       @groundbody.mass = 0
       @groundbody.use_gravity = false
-      @transform = LMBS_Transform.new(Vector2.new(320, 390))
+      @groundbody.position = Vector2.new(@transform.position.x, @transform.position.y)
+      @groundbody.layer = Physics_RigidBody::LAYER_GROUND
+      @groundbody.collision_mask = Physics_RigidBody::COLLISIONS_GROUND
+    end
+    #--------------------------------------------------------------------------
+    # * AABB Rect
+    #--------------------------------------------------------------------------
+    def aabb_rect
+      Rect.new(0 ,0 , GROUND_WIDTH, GROUND_HEIGHT)
     end
     #--------------------------------------------------------------------------
     # * Create Battle Background Sprite
@@ -48,6 +79,11 @@ module LMBS
     #--------------------------------------------------------------------------
     def battleback_name
       return "BG1"
+    end
+    #--------------------------------------------------------------------------
+    # * On Collsion
+    #--------------------------------------------------------------------------
+    def on_collision(collision)
     end
     #--------------------------------------------------------------------------
     # * Free

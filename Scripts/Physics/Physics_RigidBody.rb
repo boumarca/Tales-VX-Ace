@@ -22,7 +22,8 @@ class Physics_RigidBody
   #--------------------------------------------------------------------------
   COLLISIONS_ALLY   = LAYER_ENEMY + LAYER_GROUND
   COLLISIONS_ENEMY  = LAYER_ALLY + LAYER_GROUND
-  COLLISION_RUNNING = LAYER_GROUND
+  COLLISIONS_RUNNING = LAYER_GROUND
+  COLLISIONS_GROUND = LAYER_ENEMY + LAYER_ALLY + LAYER_RUNNING
   #--------------------------------------------------------------------------
   # * Public members
   #--------------------------------------------------------------------------
@@ -46,10 +47,11 @@ class Physics_RigidBody
     @parent = parent
     self.mass = 1
     @velocity = Vector2.zero
-    @restitution = 0.2
+    @restitution = 0.0
     @position = Vector2.zero
     @force = Vector2.zero
     @layer = 0
+    @collision_mask = 0
     @static_friction = 0.5
     @dynamic_friction = 0.3
     @use_gravity = true
@@ -76,7 +78,7 @@ class Physics_RigidBody
   #--------------------------------------------------------------------------
   def mass=(mass)
     @mass = mass
-    if mass == 0
+    if mass == 0.0
       @inverse_mass = 0
     else
       @inverse_mass = 1.0 / mass
@@ -141,7 +143,7 @@ class Physics_RigidBody
   # * Apply impulse
   #--------------------------------------------------------------------------
   def self.apply_impulse(body_a, body_b, impulse)
-    mass_sum = body_a.mass + body_a.mass
+    mass_sum = body_a.mass + body_b.mass
     ratio = body_a.mass / mass_sum.to_f
     body_a.velocity -= impulse * ratio
     ratio = body_b.mass / mass_sum.to_f
