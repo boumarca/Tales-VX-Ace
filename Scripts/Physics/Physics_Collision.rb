@@ -41,14 +41,6 @@ class Physics_Collision
     Vector2.dot_product(relative_velocity, @normal)
   end
   #--------------------------------------------------------------------------
-  # * Returns the impulse magnitude
-  #--------------------------------------------------------------------------
-  def impulse_magnitude
-    e = [@body_a.restitution, @body_b.restitution].min
-    j = -(1 + e) * velocity_along_normal
-    j /= @body_a.inverse_mass + @body_b.inverse_mass
-  end
-  #--------------------------------------------------------------------------
   # * On Collision Triggers
   #--------------------------------------------------------------------------
   def on_collision_trigger
@@ -61,7 +53,9 @@ class Physics_Collision
   # * Resolves the collision by applying impulses
   #--------------------------------------------------------------------------
   def resolve
-    j = impulse_magnitude
+    e = [@body_a.restitution, @body_b.restitution].min
+    j = -(1 + e) * velocity_along_normal
+    j /= @body_a.inverse_mass + @body_b.inverse_mass
     impulse = @normal * j
     apply_impulse(impulse)
 
