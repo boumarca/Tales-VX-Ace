@@ -72,8 +72,7 @@ class Physics_Collision
       dynamic_friction = Math.hypot(@body_a.dynamic_friction, @body_a.dynamic_friction)
       friction_impulse = tangent * j * dynamic_friction
     end
-    @body_a.velocity -= friction_impulse * @body_a.inverse_mass
-    @body_b.velocity += friction_impulse * @body_b.inverse_mass
+    apply_friction_impulse(friction_impulse)
   end
   #--------------------------------------------------------------------------
   # * Apply impulse
@@ -84,6 +83,13 @@ class Physics_Collision
     @body_a.velocity -= impulse * ratio
     ratio = @body_b.mass / mass_sum.to_f
     @body_b.velocity += impulse * ratio
+  end
+  #--------------------------------------------------------------------------
+  # * Apply friction
+  #--------------------------------------------------------------------------
+  def apply_friction_impulse(friction_impulse)
+    @body_a.velocity -= friction_impulse * @body_a.inverse_mass
+    @body_b.velocity += friction_impulse * @body_b.inverse_mass
   end
   #--------------------------------------------------------------------------
   # * Correct interpenetration between bodies
