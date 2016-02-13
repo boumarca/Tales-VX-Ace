@@ -13,10 +13,6 @@ class Physics_Collision
   #--------------------------------------------------------------------------
   # * Public Members
   #--------------------------------------------------------------------------
-  attr_accessor :body_a
-  attr_accessor :body_b
-  attr_accessor :penetration
-  attr_accessor :normal
   attr_accessor :object_hit
   #--------------------------------------------------------------------------
   # * Object Initialization
