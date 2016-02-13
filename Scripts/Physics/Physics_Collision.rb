@@ -54,23 +54,23 @@ class Physics_Collision
   #--------------------------------------------------------------------------
   def resolve
     e = [@body_a.restitution, @body_b.restitution].min
-    j = -(1 + e) * velocity_along_normal
-    j /= @body_a.inverse_mass + @body_b.inverse_mass
-    impulse = @normal * j
+    impulse_magnitude = -(1 + e) * velocity_along_normal
+    impulse_magnitude /= @body_a.inverse_mass + @body_b.inverse_mass
+    impulse = @normal * impulse_magnitude
     apply_impulse(impulse)
 
 #friction
     tangent = relative_velocity - @normal * velocity_along_normal
     tangent.normalize
-    jt = -Vector2.dot_product(relative_velocity, tangent)
-    jt = jt / (@body_a.inverse_mass + @body_b.inverse_mass).to_f
+    tangent_magnitude = -Vector2.dot_product(relative_velocity, tangent)
+    tangent_magnitude = tangent_magnitude / (@body_a.inverse_mass + @body_b.inverse_mass).to_f
     mu = Math.hypot(@body_a.static_friction, @body_a.static_friction)
     friction_impulse = Vector2.zero
-    if jt.abs < j * mu
-      friction_impulse = tangent * jt
+    if tangent_magnitude.abs < impulse_magnitude * mu
+      friction_impulse = tangent * tangent_magnitude
     else
       dynamic_friction = Math.hypot(@body_a.dynamic_friction, @body_a.dynamic_friction)
-      friction_impulse = tangent * j * dynamic_friction
+      friction_impulse = tangent * (impulse_magnitude * mu) * dynamic_friction
     end
     apply_friction_impulse(friction_impulse)
   end
