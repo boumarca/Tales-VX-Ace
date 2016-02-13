@@ -105,12 +105,9 @@ module PhysicsManager
     collision = Physics_RigidBody.collision_detection(body_a, body_b)
     if collision && collision.velocity_along_normal <= 0
       @collisions.push(collision)
-          collision.object_hit = body_b.parent
-          body_a.parent.on_collision(collision)
-          collision.object_hit = body_a.parent
-          body_b.parent.on_collision(collision)
-          Physics_RigidBody.resolve_collision(collision)
-        end
+      collision.on_collision_trigger
+      Physics_RigidBody.resolve_collision(collision)
+    end
   end
   #--------------------------------------------------------------------------
   # * Update Rigidbody positions

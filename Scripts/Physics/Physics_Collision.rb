@@ -40,4 +40,13 @@ class Physics_Collision
     j = -(1 + e) * velocity_along_normal
     j /= @body_a.inverse_mass + @body_b.inverse_mass
   end
+  #--------------------------------------------------------------------------
+  # * On Collision Triggers
+  #--------------------------------------------------------------------------
+  def on_collision_trigger
+    @object_hit = @body_b.parent
+    @body_a.parent.on_collision(self)
+    @object_hit = @body_a.parent
+    @body_b.parent.on_collision(self)
+  end
 end
