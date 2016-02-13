@@ -7,6 +7,10 @@
 module LMBS
   class LMBS_Battler
     #--------------------------------------------------------------------------
+    # * Constants
+    #--------------------------------------------------------------------------
+    JUMP_FORCE = -280
+    #--------------------------------------------------------------------------
     # * Public Members
     #--------------------------------------------------------------------------
     attr_reader :transform
@@ -18,6 +22,7 @@ module LMBS
       @game_battler = game_battler
       @facing_left = false
       @walk_speed = @game_battler.walk_speed
+      @jumping = false
       create_states
       create_transform
       create_rigidbody
@@ -35,6 +40,7 @@ module LMBS
       @states[:walking] = LMBS_WalkingState.new(@game_battler.battle_animations[:walking])
       @states[:guarding] = LMBS_GuardingState.new(@game_battler.battle_animations[:guarding])
       @states[:running] = LMBS_RunningState.new(@game_battler.battle_animations[:running])
+      @states[:jumping] = LMBS_JumpingState.new(@game_battler.battle_animations[:idle])
     end
     #--------------------------------------------------------------------------
     # * Create Transform Component
@@ -92,8 +98,12 @@ module LMBS
     # * Called when this object collides
     #--------------------------------------------------------------------------
     def on_collision(collision)
-      if collision.object_hit.is_a?(LMBS_Battler)
+      hit = collision.object_hit
+      if hit.is_a?(LMBS_Battler)
         @rigidbody.velocity.x = 0;
+      elsif hit.is_a?(LMBS_Background)
+        @rigidbody.velocity.y = 0;
+        @jumping = false
       end
     end
     #--------------------------------------------------------------------------
@@ -107,7 +117,7 @@ module LMBS
     #--------------------------------------------------------------------------
     # * Update
     #--------------------------------------------------------------------------
-    def update
+    def update_command
       command = @controller.handle_input(@current_state.actions)
       if command
         command.execute(self)
@@ -211,6 +221,16 @@ module LMBS
     #--------------------------------------------------------------------------
     def guard
       change_state(@states[:guarding]) unless @current_state == @states[:guarding]
+    end
+    #--------------------------------------------------------------------------
+    # * Jump
+    #--------------------------------------------------------------------------
+    def jump
+      if !@jumping
+        @jumping = true
+        @rigidbody.velocity.y += JUMP_FORCE
+      end
+      #change_state(@states[:guarding]) unless @current_state == @states[:guarding]
     end
   end
 end

@@ -89,16 +89,16 @@ module LMBS
     #--------------------------------------------------------------------------
     def update
       super
-      update_battlers
+      update_commands
       PhysicsManager.run_physics
       update_sprites
     end
     #--------------------------------------------------------------------------
     # * Update Battlers
     #--------------------------------------------------------------------------
-    def update_battlers
+    def update_commands
       @battlers.each { |battler|
-        battler.update
+        battler.update_command
       }
     end
     #--------------------------------------------------------------------------

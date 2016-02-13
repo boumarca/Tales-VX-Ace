@@ -11,6 +11,8 @@ module PhysicsManager
   FPS = Graphics.frame_rate
   DELTA_TIME = 1.0 / FPS
   ACCUMULATOR_MAX = 0.2
+  GRAVITY_SCALE = 80
+  GRAVITY = 9.81
   #--------------------------------------------------------------------------
   # * Setup
   #--------------------------------------------------------------------------
@@ -34,7 +36,7 @@ module PhysicsManager
     @active = true
     @rigidbodies = []
     @collisions = []
-    @gravity = Vector2.new(0, 9.71*10)
+    @gravity = Vector2.new(0, GRAVITY * GRAVITY_SCALE)
   end
   #--------------------------------------------------------------------------
   # * Add a Rigid Body
@@ -95,7 +97,7 @@ module PhysicsManager
   #--------------------------------------------------------------------------
   def self.update_forces(rigidbody)
     gravity = rigidbody.use_gravity ? @gravity : Vector2.zero
-    rigidbody.velocity += (rigidbody.force * rigidbody.inverse_mass + gravity) * (DELTA_TIME/2.0)
+    rigidbody.velocity += (rigidbody.forces * rigidbody.inverse_mass + gravity) * (DELTA_TIME/2.0)
   end
   #--------------------------------------------------------------------------
   # * Update Collisions
@@ -115,7 +117,7 @@ module PhysicsManager
   def self.update_position(rigidbody)
     rigidbody.position += rigidbody.velocity * DELTA_TIME
     update_forces(rigidbody)
-    rigidbody.force = Vector2.zero
+    rigidbody.reset_forces
   end
   #--------------------------------------------------------------------------
   # * Interpolate Transforms

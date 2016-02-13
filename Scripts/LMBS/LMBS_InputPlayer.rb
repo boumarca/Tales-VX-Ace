@@ -22,6 +22,7 @@ module LMBS
       @actions[:idle]     = method(:idle_action)
       @actions[:move]  	  = method(:movement_action)
       @actions[:guarding] = method(:guarding_action)
+      @actions[:jump]     = method(:jump_action)
     end
     #--------------------------------------------------------------------------
     # * Update Tap cooldown every frame
@@ -106,6 +107,12 @@ module LMBS
       return guard_command if Input.press?(Input::Keys::X)
     end
     #--------------------------------------------------------------------------
+    # * Jump Action
+    #--------------------------------------------------------------------------
+    def jump_action
+      return jump_command if Input.press?(Input::Keys::UP)
+    end
+    #--------------------------------------------------------------------------
     # * Idle Command Instance
     #--------------------------------------------------------------------------
     def idle_command
@@ -146,6 +153,13 @@ module LMBS
     def run_left_command
       return @run_left_command if @run_left_command
       @run_left_command = LMBS_RunLeftCommand.new
+    end
+    #--------------------------------------------------------------------------
+    # * Run Left Command Instance
+    #--------------------------------------------------------------------------
+    def jump_command
+      return @jump_command if @jump_command
+      @jump_command = LMBS_JumpCommand.new
     end
   end
 end

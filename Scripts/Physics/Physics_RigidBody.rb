@@ -23,7 +23,6 @@ class Physics_RigidBody
   # * Public members
   #--------------------------------------------------------------------------
   attr_accessor :velocity
-  attr_accessor :force
   attr_accessor :use_gravity
   attr_accessor :parent
   attr_accessor :layer
@@ -31,6 +30,7 @@ class Physics_RigidBody
   attr_reader   :static_friction
   attr_reader   :dynamic_friction
   attr_reader   :restitution
+  attr_reader   :forces
   attr_reader   :aabb
   attr_reader   :position
   attr_reader   :mass
@@ -44,7 +44,7 @@ class Physics_RigidBody
     @velocity = Vector2.zero
     @restitution = 0.0
     @position = Vector2.zero
-    @force = Vector2.zero
+    @forces = Vector2.zero
     @layer = 0
     @collision_mask = 0
     @static_friction = 0.5
@@ -78,6 +78,18 @@ class Physics_RigidBody
     else
       @inverse_mass = 1.0 / mass
     end
+  end
+  #--------------------------------------------------------------------------
+  # * Add Force
+  #--------------------------------------------------------------------------
+  def add_force(force)
+    @forces += force
+  end
+  #--------------------------------------------------------------------------
+  # * Reset Forces
+  #--------------------------------------------------------------------------
+  def reset_forces
+    @forces = Vector2.zero
   end
   #--------------------------------------------------------------------------
   # * Dispose
