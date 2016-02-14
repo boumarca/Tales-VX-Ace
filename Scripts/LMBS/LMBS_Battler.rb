@@ -14,7 +14,6 @@ module LMBS
     # * Public Members
     #--------------------------------------------------------------------------
     attr_reader :transform
-    attr_reader :rigidbody
     attr_reader :facing_left
     attr_reader :grounded
     attr_reader :walk_speed
@@ -188,12 +187,31 @@ module LMBS
       end
     end
     #--------------------------------------------------------------------------
-    # * Update Facing
+    # * Set Facing
     #--------------------------------------------------------------------------
     def facing_left=(facing_left)
       return if @facing_left == facing_left
       @facing_left = !@facing_left
       start_animation(@current_state.animation)
+    end
+    #--------------------------------------------------------------------------
+    # * Set Horizontal Velocity
+    #--------------------------------------------------------------------------
+    def horizontal_velocity=(value)
+      @rigidbody.velocity.x = value
+    end
+    #--------------------------------------------------------------------------
+    # * Set Vertical Velocity
+    #--------------------------------------------------------------------------
+    def vertical_velocity=(value)
+      @rigidbody.velocity.y = value
+    end
+    #--------------------------------------------------------------------------
+    # * Set the battler on the runnig collision layers
+    #--------------------------------------------------------------------------
+    def running_layer
+      @rigidbody.layer = Physics_RigidBody::LAYER_RUNNING
+      @rigidbody.collision_mask = Physics_RigidBody::COLLISIONS_RUNNING
     end
     #--------------------------------------------------------------------------
     # * Idle
@@ -204,20 +222,16 @@ module LMBS
     #--------------------------------------------------------------------------
     # * Walk
     #--------------------------------------------------------------------------
-    def walk(facing_left)
-      self.facing_left = facing_left
+    def walk(left)
+      self.facing_left = left
       change_state(@states[:walking]) unless @current_state == @states[:walking]
     end
     #--------------------------------------------------------------------------
     # * Run
     #--------------------------------------------------------------------------
-    def run(facing_left)
-      self.facing_left = facing_left
+    def run(left)
+      self.facing_left = left
       change_state(@states[:running]) unless @current_state == @states[:running]
-      modifier = facing_left ? -1 : 1
-      @rigidbody.velocity.x = @walk_speed * 2 * modifier
-      @rigidbody.layer = Physics_RigidBody::LAYER_RUNNING
-      @rigidbody.collision_mask = Physics_RigidBody::COLLISIONS_RUNNING
     end
     #--------------------------------------------------------------------------
     # * Guard
@@ -229,12 +243,9 @@ module LMBS
     # * Jump
     #--------------------------------------------------------------------------
     def jump
-      if !@jumping && @grounded
-        @jumping = true
-        @grounded = false
-        @rigidbody.velocity.y += JUMP_FORCE
-        change_state(@states[:jump_up])
-      end
+      @jumping = true
+      @grounded = false
+      change_state(@states[:jump_up])
     end
     #--------------------------------------------------------------------------
     # * Stop Running

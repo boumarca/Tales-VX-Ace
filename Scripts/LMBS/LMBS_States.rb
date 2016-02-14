@@ -66,7 +66,7 @@ module LMBS
     end
     def enter_state(battler)
       super
-      battler.rigidbody.velocity.x = 0
+      battler.horizontal_velocity = 0
     end
   end
   #==============================================================================
@@ -79,7 +79,24 @@ module LMBS
     end
     def update_command(battler)
       modifier = battler.facing_left ? -1 : 1
-      battler.rigidbody.velocity.x = battler.walk_speed * modifier
+      battler.horizontal_velocity = battler.walk_speed * modifier
+    end
+  end
+  #==============================================================================
+  # * Running State
+  #==============================================================================
+  class LMBS_RunningState < LMBS_AnimationState
+    def initialize(animation_id)
+      super(animation_id)
+      @actions = [:jump, :stop]
+    end
+    def enter_state(battler)
+      super
+      battler.running_layer
+    end
+    def update_command(battler)
+      modifier = battler.facing_left ? -1 : 1
+      battler.horizontal_velocity = battler.walk_speed * modifier * 2
     end
   end
   #==============================================================================
@@ -92,21 +109,16 @@ module LMBS
     end
   end
   #==============================================================================
-  # * Running State
-  #==============================================================================
-  class LMBS_RunningState < LMBS_AnimationState
-    def initialize(animation_id)
-      super(animation_id)
-      @actions = [:jump, :stop]
-    end
-  end
-  #==============================================================================
   # * Jump Up State
   #==============================================================================
   class LMBS_JumpingUpState < LMBS_AnimationState
     def initialize(animation_id)
       super(animation_id)
       @actions = []
+    end
+    def enter_state(battler)
+      super
+      battler.vertical_velocity = LMBS_Battler::JUMP_FORCE   
     end
   end
   #==============================================================================
