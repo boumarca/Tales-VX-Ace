@@ -175,7 +175,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def stop_run_command
       return @stop_run_command if @stop_run_command
-      @stop_run_command = LMBS_StopRunCommand.new
+      @stop_run_command = LMBS_StopCommand.new
     end
   end
 end

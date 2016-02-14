@@ -71,9 +71,9 @@ module LMBS
   #==============================================================================
   # * Stop Run Command
   #==============================================================================
-  class LMBS_StopRunCommand < LMBS_Command
+  class LMBS_StopCommand < LMBS_Command
     def execute(battler)
-      battler.stop_run
+      battler.stop
     end
   end
 end

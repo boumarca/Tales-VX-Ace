@@ -96,7 +96,7 @@ module LMBS
     end
     def update_collision(battler, hit)
       if hit.rigidbody.layer == Physics_RigidBody::LAYER_SIDES
-        battler.stop_run
+        battler.stop
       end
     end
     def update_command(battler)
@@ -138,13 +138,13 @@ module LMBS
       @actions = []
     end
     def update_movement(battler)
-      battler.idle if battler.grounded
+      battler.land if battler.grounded
     end
   end
   #==============================================================================
   # * Stop Run State
   #==============================================================================
-  class LMBS_StopRunState < LMBS_AnimationState
+  class LMBS_StoppingState < LMBS_AnimationState
     STOP_TIME = 0.3
     def initialize(animation_id)
       super(animation_id)
@@ -156,6 +156,25 @@ module LMBS
     end
     def update_movement(battler)
       if !battler.moving_horizontal? && Time.now - @start_time >= STOP_TIME
+        battler.idle
+      end
+    end
+  end
+  #==============================================================================
+  # * Landing State
+  #==============================================================================
+  class LMBS_LandingState < LMBS_AnimationState
+    LAND_TIME = 0.3
+    def initialize(animation_id)
+      super(animation_id)
+      @actions = []
+    end
+    def enter_state(battler)
+      super
+      @start_time = Time.now
+    end
+    def update_movement(battler)
+      if Time.now - @start_time >= LAND_TIME
         battler.idle
       end
     end

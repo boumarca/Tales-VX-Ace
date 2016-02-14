@@ -43,9 +43,10 @@ module LMBS
       @states[:walking] = LMBS_WalkingState.new(@game_battler.battle_animations[:walking])
       @states[:guarding] = LMBS_GuardingState.new(@game_battler.battle_animations[:guarding])
       @states[:running] = LMBS_RunningState.new(@game_battler.battle_animations[:running])
-      @states[:jump] = LMBS_JumpingState.new(@game_battler.battle_animations[:jump])
-      @states[:fall] = LMBS_FallingState.new(@game_battler.battle_animations[:fall])
-      @states[:stop_run] = LMBS_StopRunState.new(@game_battler.battle_animations[:stop_run])
+      @states[:jumping] = LMBS_JumpingState.new(@game_battler.battle_animations[:jumping])
+      @states[:falling] = LMBS_FallingState.new(@game_battler.battle_animations[:falling])
+      @states[:stopping] = LMBS_StoppingState.new(@game_battler.battle_animations[:stopping])
+      @states[:landing] = LMBS_LandingState.new(@game_battler.battle_animations[:landing])
     end
     #--------------------------------------------------------------------------
     # * Create Transform Component
@@ -241,19 +242,25 @@ module LMBS
     #--------------------------------------------------------------------------
     def jump
       @grounded = false
-      change_state(@states[:jump])
+      change_state(@states[:jumping])
     end
     #--------------------------------------------------------------------------
     # * Fall
     #--------------------------------------------------------------------------
     def fall
-      change_state(@states[:fall])
+      change_state(@states[:falling])
+    end
+    #--------------------------------------------------------------------------
+    # * Fall
+    #--------------------------------------------------------------------------
+    def land
+      change_state(@states[:landing])
     end
     #--------------------------------------------------------------------------
     # * Stop Running
     #--------------------------------------------------------------------------
-    def stop_run
-      change_state(@states[:stop_run]) unless @current_state == @states[:stop_run]
+    def stop
+      change_state(@states[:stopping]) unless @current_state == @states[:stopping]
     end
   end
 end
