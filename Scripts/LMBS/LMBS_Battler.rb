@@ -14,6 +14,10 @@ module LMBS
     # * Public Members
     #--------------------------------------------------------------------------
     attr_reader :transform
+    attr_reader :rigidbody
+    attr_reader :facing_left
+    attr_reader :grounded
+    attr_reader :walk_speed
     #--------------------------------------------------------------------------
     # * Object Initialization
     #--------------------------------------------------------------------------
@@ -127,6 +131,7 @@ module LMBS
       if command
         command.execute(self)
       end
+      @current_state.update_command(self)
     end
     #--------------------------------------------------------------------------
     # * Update movement
@@ -185,7 +190,7 @@ module LMBS
     #--------------------------------------------------------------------------
     # * Update Facing
     #--------------------------------------------------------------------------
-    def update_facing(facing_left)
+    def facing_left=(facing_left)
       return if @facing_left == facing_left
       @facing_left = !@facing_left
       start_animation(@current_state.animation)
@@ -195,22 +200,19 @@ module LMBS
     #--------------------------------------------------------------------------
     def idle
       change_state(@states[:idle]) unless @current_state == @states[:idle]
-      @rigidbody.velocity.x = 0
     end
     #--------------------------------------------------------------------------
     # * Walk
     #--------------------------------------------------------------------------
     def walk(facing_left)
-      update_facing(facing_left)
+      self.facing_left = facing_left
       change_state(@states[:walking]) unless @current_state == @states[:walking]
-      modifier = facing_left ? -1 : 1
-      @rigidbody.velocity.x = @walk_speed * modifier
     end
     #--------------------------------------------------------------------------
     # * Run
     #--------------------------------------------------------------------------
     def run(facing_left)
-      update_facing(facing_left)
+      self.facing_left = facing_left
       change_state(@states[:running]) unless @current_state == @states[:running]
       modifier = facing_left ? -1 : 1
       @rigidbody.velocity.x = @walk_speed * 2 * modifier

@@ -39,6 +39,21 @@ module LMBS
     def exit_state(battler)
       battler.reset_layer
     end
+    #--------------------------------------------------------------------------
+    # * Update On Command
+    #--------------------------------------------------------------------------
+    def update_command(battler)
+    end
+    #--------------------------------------------------------------------------
+    # * Update On Collision
+    #--------------------------------------------------------------------------
+    def update_collision(battler)
+    end
+    #--------------------------------------------------------------------------
+    # * Update On Movement
+    #--------------------------------------------------------------------------
+    def update_movement(battler)
+    end
   end
 
   #==============================================================================
@@ -49,6 +64,10 @@ module LMBS
       super(animation_id)
       @actions = [:jump, :guarding, :move, :idle]
     end
+    def enter_state(battler)
+      super
+      battler.rigidbody.velocity.x = 0
+    end
   end
   #==============================================================================
   # * Walking State
@@ -57,6 +76,10 @@ module LMBS
     def initialize(animation_id)
       super(animation_id)
       @actions = [:jump, :guarding, :move, :idle]
+    end
+    def update_command(battler)
+      modifier = battler.facing_left ? -1 : 1
+      battler.rigidbody.velocity.x = battler.walk_speed * modifier
     end
   end
   #==============================================================================
