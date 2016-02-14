@@ -47,7 +47,7 @@ module LMBS
     #--------------------------------------------------------------------------
     # * Update On Collision
     #--------------------------------------------------------------------------
-    def update_collision(battler)
+    def update_collision(battler, hit)
     end
     #--------------------------------------------------------------------------
     # * Update On Movement
@@ -94,6 +94,11 @@ module LMBS
       super
       battler.running_layer
     end
+    def update_collision(battler, hit)
+      if hit.rigidbody.layer == Physics_RigidBody::LAYER_SIDES
+        battler.stop_run
+      end
+    end
     def update_command(battler)
       modifier = battler.facing_left ? -1 : 1
       battler.horizontal_velocity = battler.walk_speed * modifier * 2
@@ -118,7 +123,7 @@ module LMBS
     end
     def enter_state(battler)
       super
-      battler.vertical_velocity = LMBS_Battler::JUMP_FORCE   
+      battler.vertical_velocity = LMBS_Battler::JUMP_FORCE
     end
     def update_movement(battler)
       battler.fall if battler.falling?

@@ -25,7 +25,6 @@ module LMBS
       @game_battler = game_battler
       @facing_left = false
       @walk_speed = @game_battler.walk_speed
-      @jumping = false
       @grounded = false
       create_states
       create_transform
@@ -110,9 +109,8 @@ module LMBS
       elsif hit.rigidbody.layer == Physics_RigidBody::LAYER_GROUND
         @rigidbody.velocity.y = 0;
         @grounded = true
-      else hit.rigidbody.layer == Physics_RigidBody::LAYER_SIDES && @current_state == @states[:running]
-        change_state(@states[:stop_run])
       end
+      @current_state.update_collision(self, hit)
     end
     #--------------------------------------------------------------------------
     # * Free
