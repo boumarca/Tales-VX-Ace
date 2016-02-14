@@ -20,9 +20,10 @@ module LMBS
     def create_actions_mapping
       @actions = {}
       @actions[:idle]     = method(:idle_action)
-      @actions[:move]  	  = method(:movement_action)
+      @actions[:move]  	  = method(:move_action)
       @actions[:guarding] = method(:guarding_action)
       @actions[:jump]     = method(:jump_action)
+      @actions[:stop]     = method(:stop_action)
     end
     #--------------------------------------------------------------------------
     # * Update Tap cooldown every frame
@@ -62,7 +63,6 @@ module LMBS
     def reset_double_tap
       @double_tap = false
       @first_input = nil
-      @last_input = nil
       @last_time = Time.now
       @cooldown = 0
     end
@@ -85,9 +85,9 @@ module LMBS
       return idle_command
     end
     #--------------------------------------------------------------------------
-    # * Movement Action
+    # * Move Action
     #--------------------------------------------------------------------------
-    def movement_action
+    def move_action
       if Input.press?(Input::Keys::RIGHT)
         update_double_tap(Input::Keys::RIGHT)
         return run_right_command if @double_tap
@@ -112,6 +112,14 @@ module LMBS
     #--------------------------------------------------------------------------
     def jump_action
       return jump_command if Input.press?(Input::Keys::UP)
+    end
+    #--------------------------------------------------------------------------
+    # * Stop Run Action
+    #--------------------------------------------------------------------------
+    def stop_action
+      if (@last_input == Input::Keys::RIGHT && Input.press?(Input::Keys::LEFT)) || (@last_input == Input::Keys::LEFT && Input.press?(Input::Keys::RIGHT))
+        return stop_run_command
+      end
     end
     #--------------------------------------------------------------------------
     # * Idle Command Instance
@@ -161,6 +169,13 @@ module LMBS
     def jump_command
       return @jump_command if @jump_command
       @jump_command = LMBS_JumpCommand.new
+    end
+    #--------------------------------------------------------------------------
+    # * Stop Run Command Instance
+    #--------------------------------------------------------------------------
+    def stop_run_command
+      return @stop_run_command if @stop_run_command
+      @stop_run_command = LMBS_StopRunCommand.new
     end
   end
 end

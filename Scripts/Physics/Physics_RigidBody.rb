@@ -29,8 +29,8 @@ class Physics_RigidBody
   attr_accessor :parent
   attr_accessor :layer
   attr_accessor :collision_mask
-  attr_reader   :static_friction
-  attr_reader   :dynamic_friction
+  attr_accessor :static_friction
+  attr_accessor :dynamic_friction
   attr_reader   :restitution
   attr_reader   :forces
   attr_reader   :aabb
@@ -49,8 +49,8 @@ class Physics_RigidBody
     @forces = Vector2.zero
     @layer = 0
     @collision_mask = 0
-    @static_friction = 0.5
-    @dynamic_friction = 0.3
+    @static_friction = 0.2
+    @dynamic_friction = 0.1
     @use_gravity = true
     PhysicsManager.add_rigidbody(self)
   end
@@ -119,5 +119,22 @@ class Physics_RigidBody
       end
     end
     return collision
+  end
+  #--------------------------------------------------------------------------
+  # * Apply friction
+  #--------------------------------------------------------------------------
+  def apply_friction(coef_friction)
+    #puts "---"
+    #p coef_friction
+    speed = @velocity.length
+  #  p speed
+    friction = Vector2.zero
+    if coef_friction < speed
+      friction = -(@velocity / speed) * coef_friction
+    else
+      friction = -@velocity
+    end
+  #  p friction
+    @velocity += friction
   end
 end

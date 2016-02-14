@@ -37,6 +37,7 @@ module LMBS
     def create_ground
       @ground = LMBS_Borders.new(GROUND_X, GROUND_Y, GROUND_WIDTH, GROUND_HEIGHT)
       @ground.layers(Physics_RigidBody::LAYER_GROUND, Physics_RigidBody::COLLISIONS_GROUND)
+      @ground.friction(10)
     end
     #--------------------------------------------------------------------------
     # * Create Sides

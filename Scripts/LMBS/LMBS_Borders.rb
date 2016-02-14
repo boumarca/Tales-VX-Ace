@@ -29,5 +29,11 @@ module LMBS
       @rigidbody.layer = layer
       @rigidbody.collision_mask = collision_mask
     end
+    #--------------------------------------------------------------------------
+    # * Set Friction
+    #--------------------------------------------------------------------------
+    def friction(static)
+      @rigidbody.static_friction = static
+    end
   end
 end

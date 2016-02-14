@@ -58,20 +58,30 @@ class Physics_Collision
     impulse_magnitude /= @body_a.inverse_mass + @body_b.inverse_mass
     impulse = @normal * impulse_magnitude
     apply_impulse(impulse)
-
+    @body_a.apply_friction(@body_b.static_friction)
+    @body_b.apply_friction(@body_a.static_friction)
+return
 #friction
-    tangent = relative_velocity - @normal * velocity_along_normal
-    tangent.normalize
+    puts "---"
+    p impulse_magnitude
+    tangent = (relative_velocity - @normal * velocity_along_normal).normalize
+    p tangent
     tangent_magnitude = -Vector2.dot_product(relative_velocity, tangent)
     tangent_magnitude = tangent_magnitude / (@body_a.inverse_mass + @body_b.inverse_mass).to_f
-    mu = Math.hypot(@body_a.static_friction, @body_a.static_friction)
+    p tangent_magnitude
+    mu = Math.hypot(@body_a.static_friction, @body_b.static_friction)
+    p mu
     friction_impulse = Vector2.zero
     if tangent_magnitude.abs < impulse_magnitude * mu
+      puts "true"
       friction_impulse = tangent * tangent_magnitude
     else
-      dynamic_friction = Math.hypot(@body_a.dynamic_friction, @body_a.dynamic_friction)
-      friction_impulse = tangent * (impulse_magnitude * mu) * dynamic_friction
+      puts "false"
+      dynamic_friction = Math.hypot(@body_a.dynamic_friction, @body_b.dynamic_friction)
+      p dynamic_friction
+      friction_impulse = tangent * -impulse_magnitude * dynamic_friction
     end
+    p friction_impulse
     apply_friction_impulse(friction_impulse)
   end
   #--------------------------------------------------------------------------
@@ -88,6 +98,7 @@ class Physics_Collision
   # * Apply friction
   #--------------------------------------------------------------------------
   def apply_friction_impulse(friction_impulse)
+    p friction_impulse
     @body_a.velocity -= friction_impulse * @body_a.inverse_mass
     @body_b.velocity += friction_impulse * @body_b.inverse_mass
   end

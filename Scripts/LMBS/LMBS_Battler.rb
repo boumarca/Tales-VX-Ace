@@ -43,6 +43,7 @@ module LMBS
       @states[:running] = LMBS_RunningState.new(@game_battler.battle_animations[:running])
       @states[:jump_up] = LMBS_JumpingUpState.new(@game_battler.battle_animations[:jump_up])
       @states[:jump_down] = LMBS_JumpingDownState.new(@game_battler.battle_animations[:jump_down])
+      @states[:stop_run] = LMBS_StopRunState.new(@game_battler.battle_animations[:stop_run])
     end
     #--------------------------------------------------------------------------
     # * Create Transform Component
@@ -101,11 +102,13 @@ module LMBS
     #--------------------------------------------------------------------------
     def on_collision(collision)
       hit = collision.object_hit
-      if hit.is_a?(LMBS_Battler) || hit.rigidbody.layer == Physics_RigidBody::LAYER_SIDES
+      if hit.is_a?(LMBS_Battler)
         @rigidbody.velocity.x = 0;
       elsif hit.rigidbody.layer == Physics_RigidBody::LAYER_GROUND
         @rigidbody.velocity.y = 0;
         @grounded = true
+      else hit.rigidbody.layer == Physics_RigidBody::LAYER_SIDES && @current_state == @states[:running]
+        change_state(@states[:stop_run])
       end
     end
     #--------------------------------------------------------------------------
@@ -127,6 +130,7 @@ module LMBS
     end
     #--------------------------------------------------------------------------
     # * Update movement
+    # * Refactor in update state
     #--------------------------------------------------------------------------
     def update_movement
       if @jumping
@@ -136,6 +140,12 @@ module LMBS
         elsif @rigidbody.velocity.y > 0
           change_state(@states[:jump_down]) unless @current_state == @states[:jump_down]
         end
+      end
+      if @current_state == @states[:running]
+        run(@facing_left)
+      end
+      if @current_state == @states[:stop_run] && @rigidbody.velocity.x == 0
+        idle
       end
     end
     #--------------------------------------------------------------------------
@@ -188,18 +198,6 @@ module LMBS
       @rigidbody.velocity.x = 0
     end
     #--------------------------------------------------------------------------
-    # * Walk Right
-    #--------------------------------------------------------------------------
-    def walk_right
-      walk(false)
-    end
-    #--------------------------------------------------------------------------
-    # * Walk Left
-    #--------------------------------------------------------------------------
-    def walk_left
-      walk(true)
-    end
-    #--------------------------------------------------------------------------
     # * Walk
     #--------------------------------------------------------------------------
     def walk(facing_left)
@@ -207,18 +205,6 @@ module LMBS
       change_state(@states[:walking]) unless @current_state == @states[:walking]
       modifier = facing_left ? -1 : 1
       @rigidbody.velocity.x = @walk_speed * modifier
-    end
-    #--------------------------------------------------------------------------
-    # * Run Right
-    #--------------------------------------------------------------------------
-    def run_right
-      run(false)
-    end
-    #--------------------------------------------------------------------------
-    # * Run Left
-    #--------------------------------------------------------------------------
-    def run_left
-      run(true)
     end
     #--------------------------------------------------------------------------
     # * Run
@@ -247,6 +233,12 @@ module LMBS
         @rigidbody.velocity.y += JUMP_FORCE
         change_state(@states[:jump_up])
       end
+    end
+    #--------------------------------------------------------------------------
+    # * Stop Running
+    #--------------------------------------------------------------------------
+    def stop_run
+      change_state(@states[:stop_run]) unless @current_state == @states[:stop_run]
     end
   end
 end

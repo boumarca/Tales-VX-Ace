@@ -25,7 +25,7 @@ module LMBS
   #==============================================================================
   class LMBS_WalkRightCommand < LMBS_Command
     def execute(battler)
-      battler.walk_right
+      battler.walk(false)
     end
   end
   #==============================================================================
@@ -33,7 +33,7 @@ module LMBS
   #==============================================================================
   class LMBS_WalkLeftCommand < LMBS_Command
     def execute(battler)
-      battler.walk_left
+      battler.walk(true)
     end
   end
   #==============================================================================
@@ -49,7 +49,7 @@ module LMBS
   #==============================================================================
   class LMBS_RunRightCommand < LMBS_Command
     def execute(battler)
-      battler.run_right
+      battler.run(false)
     end
   end
   #==============================================================================
@@ -57,7 +57,7 @@ module LMBS
   #==============================================================================
   class LMBS_RunLeftCommand < LMBS_Command
     def execute(battler)
-      battler.run_left
+      battler.run(true)
     end
   end
   #==============================================================================
@@ -66,6 +66,14 @@ module LMBS
   class LMBS_JumpCommand < LMBS_Command
     def execute(battler)
       battler.jump
+    end
+  end
+  #==============================================================================
+  # * Stop Run Command
+  #==============================================================================
+  class LMBS_StopRunCommand < LMBS_Command
+    def execute(battler)
+      battler.stop_run
     end
   end
 end
