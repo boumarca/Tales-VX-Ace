@@ -145,12 +145,19 @@ module LMBS
   # * Stop Run State
   #==============================================================================
   class LMBS_StopRunState < LMBS_AnimationState
+    STOP_TIME = 0.3
     def initialize(animation_id)
       super(animation_id)
       @actions = []
     end
+    def enter_state(battler)
+      super
+      @start_time = Time.now
+    end
     def update_movement(battler)
-      battler.idle if !battler.moving_horizontal?
+      if !battler.moving_horizontal? && Time.now - @start_time >= STOP_TIME
+        battler.idle
+      end
     end
   end
 end
