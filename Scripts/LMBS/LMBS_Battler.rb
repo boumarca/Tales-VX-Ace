@@ -44,8 +44,8 @@ module LMBS
       @states[:walking] = LMBS_WalkingState.new(@game_battler.battle_animations[:walking])
       @states[:guarding] = LMBS_GuardingState.new(@game_battler.battle_animations[:guarding])
       @states[:running] = LMBS_RunningState.new(@game_battler.battle_animations[:running])
-      @states[:jump_up] = LMBS_JumpingUpState.new(@game_battler.battle_animations[:jump_up])
-      @states[:jump_down] = LMBS_JumpingDownState.new(@game_battler.battle_animations[:jump_down])
+      @states[:jump] = LMBS_JumpingState.new(@game_battler.battle_animations[:jump])
+      @states[:fall] = LMBS_FallingState.new(@game_battler.battle_animations[:fall])
       @states[:stop_run] = LMBS_StopRunState.new(@game_battler.battle_animations[:stop_run])
     end
     #--------------------------------------------------------------------------
@@ -137,20 +137,7 @@ module LMBS
     # * Refactor in update state
     #--------------------------------------------------------------------------
     def update_movement
-      if @jumping
-        if @grounded
-          change_state(@states[:idle])
-          @jumping = false
-        elsif @rigidbody.velocity.y > 0
-          change_state(@states[:jump_down]) unless @current_state == @states[:jump_down]
-        end
-      end
-      if @current_state == @states[:running]
-        run(@facing_left)
-      end
-      if @current_state == @states[:stop_run] && @rigidbody.velocity.x == 0
-        idle
-      end
+      @current_state.update_movement(self)
     end
     #--------------------------------------------------------------------------
     # * Update sprite
@@ -207,6 +194,18 @@ module LMBS
       @rigidbody.velocity.y = value
     end
     #--------------------------------------------------------------------------
+    # * Is Moving Horizontal
+    #--------------------------------------------------------------------------
+    def moving_horizontal?
+      @rigidbody.velocity.x != 0
+    end
+    #--------------------------------------------------------------------------
+    # * Is Falling
+    #--------------------------------------------------------------------------
+    def falling?
+      @rigidbody.velocity.y > 0
+    end
+    #--------------------------------------------------------------------------
     # * Set the battler on the runnig collision layers
     #--------------------------------------------------------------------------
     def running_layer
@@ -243,9 +242,14 @@ module LMBS
     # * Jump
     #--------------------------------------------------------------------------
     def jump
-      @jumping = true
       @grounded = false
-      change_state(@states[:jump_up])
+      change_state(@states[:jump])
+    end
+    #--------------------------------------------------------------------------
+    # * Fall
+    #--------------------------------------------------------------------------
+    def fall
+      change_state(@states[:fall])
     end
     #--------------------------------------------------------------------------
     # * Stop Running

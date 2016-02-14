@@ -109,9 +109,9 @@ module LMBS
     end
   end
   #==============================================================================
-  # * Jump Up State
+  # * Jump State
   #==============================================================================
-  class LMBS_JumpingUpState < LMBS_AnimationState
+  class LMBS_JumpingState < LMBS_AnimationState
     def initialize(animation_id)
       super(animation_id)
       @actions = []
@@ -120,14 +120,20 @@ module LMBS
       super
       battler.vertical_velocity = LMBS_Battler::JUMP_FORCE   
     end
+    def update_movement(battler)
+      battler.fall if battler.falling?
+    end
   end
   #==============================================================================
-  # * Jump Down State
+  # * Falling State
   #==============================================================================
-  class LMBS_JumpingDownState < LMBS_AnimationState
+  class LMBS_FallingState < LMBS_AnimationState
     def initialize(animation_id)
       super(animation_id)
       @actions = []
+    end
+    def update_movement(battler)
+      battler.idle if battler.grounded
     end
   end
   #==============================================================================
@@ -137,6 +143,9 @@ module LMBS
     def initialize(animation_id)
       super(animation_id)
       @actions = []
+    end
+    def update_movement(battler)
+      battler.idle if !battler.moving_horizontal?
     end
   end
 end
