@@ -13,6 +13,11 @@ module LMBS
     GROUND_Y      = 490
     GROUND_WIDTH  = 1280
     GROUND_HEIGHT = 300
+    LEFT_SIDE_X   = -160
+    RIGHT_SIDE_X  = 800
+    SIDE_Y        = 240
+    SIDE_WIDTH    = 320
+    SIDE_HEIGHT   = 960
     #--------------------------------------------------------------------------
     # * Public Members
     #--------------------------------------------------------------------------
@@ -23,32 +28,24 @@ module LMBS
     def initialize(viewport)
       @viewport = viewport
       create_battleback
-      create_transform
-      create_rigidbody
+      create_ground
+      create_sides
     end
     #--------------------------------------------------------------------------
-    # * Create Transform
+    # * Create Ground
     #--------------------------------------------------------------------------
-    def create_transform
-      @transform = LMBS_Transform.new(Vector2.new(GROUND_X, GROUND_Y))
+    def create_ground
+      @ground = LMBS_Borders.new(GROUND_X, GROUND_Y, GROUND_WIDTH, GROUND_HEIGHT)
+      @ground.layers(Physics_RigidBody::LAYER_GROUND, Physics_RigidBody::COLLISIONS_GROUND)
     end
     #--------------------------------------------------------------------------
-    # * Create Rigidbody
+    # * Create Sides
     #--------------------------------------------------------------------------
-    def create_rigidbody
-      @groundbody = Physics_RigidBody.new(self)
-      @groundbody.aabb = Physics_AABB.new(aabb_rect)
-      @groundbody.mass = 0
-      @groundbody.use_gravity = false
-      @groundbody.position = Vector2.new(@transform.position.x, @transform.position.y)
-      @groundbody.layer = Physics_RigidBody::LAYER_GROUND
-      @groundbody.collision_mask = Physics_RigidBody::COLLISIONS_GROUND
-    end
-    #--------------------------------------------------------------------------
-    # * AABB Rect
-    #--------------------------------------------------------------------------
-    def aabb_rect
-      Rect.new(0 ,0 , GROUND_WIDTH, GROUND_HEIGHT)
+    def create_sides
+      @left_side = LMBS_Borders.new(LEFT_SIDE_X, SIDE_Y, SIDE_WIDTH, SIDE_HEIGHT)
+      @left_side.layers(Physics_RigidBody::LAYER_SIDES, Physics_RigidBody::COLLISIONS_SIDES)
+      @right_side = LMBS_Borders.new(RIGHT_SIDE_X, SIDE_Y, SIDE_WIDTH, SIDE_HEIGHT)
+      @right_side.layers(Physics_RigidBody::LAYER_SIDES, Physics_RigidBody::COLLISIONS_SIDES)
     end
     #--------------------------------------------------------------------------
     # * Create Battle Background Sprite
@@ -79,11 +76,6 @@ module LMBS
     #--------------------------------------------------------------------------
     def battleback_name
       return "BG1"
-    end
-    #--------------------------------------------------------------------------
-    # * On Collsion
-    #--------------------------------------------------------------------------
-    def on_collision(collision)
     end
     #--------------------------------------------------------------------------
     # * Free

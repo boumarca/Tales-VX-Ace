@@ -40,10 +40,14 @@ class Physics_Collision
   # * On Collision Triggers
   #--------------------------------------------------------------------------
   def on_collision_trigger
-    @object_hit = @body_b.parent
-    @body_a.parent.on_collision(self)
-    @object_hit = @body_a.parent
-    @body_b.parent.on_collision(self)
+    if @body_a.parent.respond_to?(:on_collision)
+      @object_hit = @body_b.parent
+      @body_a.parent.on_collision(self)
+    end
+    if @body_b.parent.respond_to?(:on_collision)
+      @object_hit = @body_a.parent
+      @body_b.parent.on_collision(self)
+    end
   end
   #--------------------------------------------------------------------------
   # * Resolves the collision by applying impulses

@@ -101,9 +101,9 @@ module LMBS
     #--------------------------------------------------------------------------
     def on_collision(collision)
       hit = collision.object_hit
-      if hit.is_a?(LMBS_Battler)
+      if hit.is_a?(LMBS_Battler) || hit.rigidbody.layer == Physics_RigidBody::LAYER_SIDES
         @rigidbody.velocity.x = 0;
-      elsif hit.is_a?(LMBS_Background)
+      elsif hit.rigidbody.layer == Physics_RigidBody::LAYER_GROUND
         @rigidbody.velocity.y = 0;
         @grounded = true
       end
