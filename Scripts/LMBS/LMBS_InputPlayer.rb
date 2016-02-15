@@ -24,6 +24,7 @@ module LMBS
       @actions[:guarding] = method(:guarding_action)
       @actions[:jump]     = method(:jump_action)
       @actions[:stop]     = method(:stop_action)
+      @actions[:attack]   = method(:attack_action)
     end
     #--------------------------------------------------------------------------
     # * Update Tap cooldown every frame
@@ -118,8 +119,14 @@ module LMBS
     #--------------------------------------------------------------------------
     def stop_action
       if (@last_input == Input::Keys::RIGHT && Input.press?(Input::Keys::LEFT)) || (@last_input == Input::Keys::LEFT && Input.press?(Input::Keys::RIGHT))
-        return stop_run_command
+        return stop_command
       end
+    end
+    #--------------------------------------------------------------------------
+    # * Attack Action
+    #--------------------------------------------------------------------------
+    def attack_action
+      return attack_command if Input.trigger?(Input::Keys::A)
     end
     #--------------------------------------------------------------------------
     # * Idle Command Instance
@@ -173,9 +180,16 @@ module LMBS
     #--------------------------------------------------------------------------
     # * Stop Run Command Instance
     #--------------------------------------------------------------------------
-    def stop_run_command
-      return @stop_run_command if @stop_run_command
-      @stop_run_command = LMBS_StopCommand.new
+    def stop_command
+      return @stop_command if @stop_command
+      @stop_command = LMBS_StopCommand.new
+    end
+    #--------------------------------------------------------------------------
+    # * Stop Run Command Instance
+    #--------------------------------------------------------------------------
+    def attack_command
+      return @attack_command if @attack_command
+      @attack_command = LMBS_AttackCommand.new
     end
   end
 end

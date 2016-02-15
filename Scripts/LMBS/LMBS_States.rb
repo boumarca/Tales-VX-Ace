@@ -37,7 +37,6 @@ module LMBS
     # * Exit State
     #--------------------------------------------------------------------------
     def exit_state(battler)
-      battler.reset_layer
     end
     #--------------------------------------------------------------------------
     # * Update On Command
@@ -62,7 +61,7 @@ module LMBS
   class LMBS_IdleState < LMBS_AnimationState
     def initialize(animation_id)
       super(animation_id)
-      @actions = [:jump, :guarding, :move, :idle]
+      @actions = [:attack, :jump, :guarding, :move, :idle]
     end
     def enter_state(battler)
       super
@@ -75,7 +74,7 @@ module LMBS
   class LMBS_WalkingState < LMBS_AnimationState
     def initialize(animation_id)
       super(animation_id)
-      @actions = [:jump, :guarding, :move, :idle]
+      @actions = [:attack, :jump, :guarding, :move, :idle]
     end
     def update_command(battler)
       modifier = battler.facing_left ? -1 : 1
@@ -88,11 +87,14 @@ module LMBS
   class LMBS_RunningState < LMBS_AnimationState
     def initialize(animation_id)
       super(animation_id)
-      @actions = [:jump, :stop]
+      @actions = [:attack, :jump, :stop]
     end
     def enter_state(battler)
       super
       battler.running_layer
+    end
+    def exit_state(battler)
+      battler.reset_layer
     end
     def update_collision(battler, hit)
       if hit.rigidbody.layer == Physics_RigidBody::LAYER_SIDES
@@ -175,6 +177,34 @@ module LMBS
     end
     def update_movement(battler)
       if Time.now - @start_time >= LAND_TIME
+        battler.idle
+      end
+    end
+  end
+  #==============================================================================
+  # * Attacking State
+  #==============================================================================
+  class LMBS_AttackingState < LMBS_AnimationState
+    def initialize(animation_id)
+      super(animation_id)
+      @actions = []
+    end
+  end
+  #==============================================================================
+  # * Attacking State
+  #==============================================================================
+  class LMBS_AttackCooldownState < LMBS_AnimationState
+    COOLDOWN_TIME = 0.2
+    def initialize(animation_id)
+      @actions = []
+    end
+    def enter_state(battler)
+      @start_time = Time.now
+    end
+    def exit_state(battler)
+    end
+    def update_movement(battler)
+      if Time.now - @start_time >= COOLDOWN_TIME
         battler.idle
       end
     end

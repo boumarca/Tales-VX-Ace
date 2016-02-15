@@ -13,10 +13,10 @@ module LMBS
     #--------------------------------------------------------------------------
     # * Public Members
     #--------------------------------------------------------------------------
-    attr_reader :transform
-    attr_reader :facing_left
-    attr_reader :grounded
-    attr_reader :walk_speed
+    attr_reader   :transform
+    attr_reader   :facing_left
+    attr_reader   :grounded
+    attr_reader   :walk_speed
     #--------------------------------------------------------------------------
     # * Object Initialization
     #--------------------------------------------------------------------------
@@ -26,6 +26,9 @@ module LMBS
       @facing_left = false
       @walk_speed = @game_battler.walk_speed
       @grounded = false
+      @loop_animation = true
+      @stretch_last_frame = false
+      @anim_end = nil
       create_states
       create_transform
       create_rigidbody
@@ -47,6 +50,8 @@ module LMBS
       @states[:falling] = LMBS_FallingState.new(@game_battler.battle_animations[:falling])
       @states[:stopping] = LMBS_StoppingState.new(@game_battler.battle_animations[:stopping])
       @states[:landing] = LMBS_LandingState.new(@game_battler.battle_animations[:landing])
+      @states[:attacking] = LMBS_AttackingState.new(@game_battler.battle_animations[:attack1])
+      @states[:attack_cooldown] = LMBS_AttackCooldownState.new(@game_battler.battle_animations[:attack1])
     end
     #--------------------------------------------------------------------------
     # * Create Transform Component
@@ -158,7 +163,7 @@ module LMBS
     # * Start animation
     #--------------------------------------------------------------------------
     def start_animation(animation)
-      @sprite.start_animation(animation, @facing_left, true)
+      @sprite.start_animation(animation, @facing_left, @loop_animation, @stretch_last_frame, @anim_end)
     end
     #--------------------------------------------------------------------------
     # * Reset Collision Layer
@@ -261,6 +266,24 @@ module LMBS
     #--------------------------------------------------------------------------
     def stop
       change_state(@states[:stopping]) unless @current_state == @states[:stopping]
+    end
+    #--------------------------------------------------------------------------
+    # * Attack
+    #--------------------------------------------------------------------------
+    def attack
+      @loop_animation = false
+      @anim_end = method(:attack_cooldown)
+      @stretch_last_frame = true
+      change_state(@states[:attacking]) unless @current_state == @states[:attacking]
+      @loop_animation = true
+      @stretch_last_frame = false
+      @anim_end = nil
+    end
+    #--------------------------------------------------------------------------
+    # * Attack Cool down
+    #--------------------------------------------------------------------------
+    def attack_cooldown
+      change_state(@states[:attack_cooldown])
     end
   end
 end

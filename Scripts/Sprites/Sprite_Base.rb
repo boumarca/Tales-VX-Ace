@@ -44,8 +44,10 @@ class Sprite_Base < Sprite
   #--------------------------------------------------------------------------
   # * Start Animation
   #--------------------------------------------------------------------------
-  def start_animation(animation, mirror = false, loop = false)
+  def start_animation(animation, mirror = false, loop = false, stretch_last_frame = false, anim_end = nil)
     dispose_animation
+    @anim_end = anim_end
+    @stretch_last_frame = stretch_last_frame
     @animation = animation
     if @animation
       @ani_mirror = mirror
@@ -183,7 +185,8 @@ class Sprite_Base < Sprite
   # * End Animation
   #--------------------------------------------------------------------------
   def end_animation
-    dispose_animation
+    @anim_end.call unless @anim_end.nil?
+    dispose_animation unless @stretch_last_frame
   end
   #--------------------------------------------------------------------------
   # * Set Animation Sprite

@@ -76,4 +76,12 @@ module LMBS
       battler.stop
     end
   end
+  #==============================================================================
+  # * Stop Run Command
+  #==============================================================================
+  class LMBS_AttackCommand < LMBS_Command
+    def execute(battler)
+      battler.attack
+    end
+  end
 end
