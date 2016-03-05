@@ -104,14 +104,13 @@ module LMBS
     # * Called when this object collides
     #--------------------------------------------------------------------------
     def on_collision(collision)
-      hit = collision.object_hit
-      if hit.is_a?(LMBS_Battler)
+      if collision.object_hit.is_a?(LMBS_Battler)
         @rigidbody.velocity.x = 0;
-      elsif hit.rigidbody.layer == Physics_RigidBody::LAYER_GROUND
+      elsif collision.collider_hit.layer == Physics_LayerMask::LAYER_GROUND
         @rigidbody.velocity.y = 0;
         @grounded = true
       end
-      @current_state.update_collision(self, hit)
+      @current_state.update_collision(self, collision)
     end
     #--------------------------------------------------------------------------
     # * Free
@@ -166,11 +165,11 @@ module LMBS
     #--------------------------------------------------------------------------
     def reset_layer
       if @game_battler.is_a?(Game_Actor)
-        @rigidbody.layer = Physics_RigidBody::LAYER_ALLY
-        @rigidbody.collision_mask = Physics_RigidBody::COLLISIONS_ALLY
+        @collider.layer = Physics_LayerMask::LAYER_ALLY
+        @collider.collision_mask = Physics_LayerMask::COLLISIONS_ALLY
       elsif @game_battler.is_a?(Game_Enemy)
-        @rigidbody.layer = Physics_RigidBody::LAYER_ENEMY
-        @rigidbody.collision_mask = Physics_RigidBody::COLLISIONS_ENEMY
+        @collider.layer = Physics_LayerMask::LAYER_ENEMY
+        @collider.collision_mask = Physics_LayerMask::COLLISIONS_ENEMY
       end
     end
     #--------------------------------------------------------------------------
@@ -209,8 +208,8 @@ module LMBS
     # * Set the battler on the runnig collision layers
     #--------------------------------------------------------------------------
     def running_layer
-      @rigidbody.layer = Physics_RigidBody::LAYER_RUNNING
-      @rigidbody.collision_mask = Physics_RigidBody::COLLISIONS_RUNNING
+      @collider.layer = Physics_LayerMask::LAYER_RUNNING
+      @collider.collision_mask = Physics_LayerMask::COLLISIONS_RUNNING
     end
     #--------------------------------------------------------------------------
     # * Idle

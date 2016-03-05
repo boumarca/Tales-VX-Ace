@@ -13,7 +13,8 @@ class Physics_Collision
   #--------------------------------------------------------------------------
   # * Public Members
   #--------------------------------------------------------------------------
-  attr_accessor :object_hit
+  attr_reader :collider_hit
+  attr_reader :object_hit
   #--------------------------------------------------------------------------
   # * Object Initialization
   #--------------------------------------------------------------------------
@@ -39,12 +40,14 @@ class Physics_Collision
   #--------------------------------------------------------------------------
   # * On Collision Triggers
   #--------------------------------------------------------------------------
-  def on_collision_trigger
+  def on_collision_trigger(collider_a, collider_b)
     if @body_a.parent.respond_to?(:on_collision)
+      @collider_hit = collider_b
       @object_hit = @body_b.parent
       @body_a.parent.on_collision(self)
     end
     if @body_b.parent.respond_to?(:on_collision)
+      @collider_hit = collider_a
       @object_hit = @body_a.parent
       @body_b.parent.on_collision(self)
     end

@@ -36,7 +36,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def create_ground
       @ground = LMBS_Borders.new(GROUND_X, GROUND_Y, GROUND_WIDTH, GROUND_HEIGHT)
-      @ground.layers(Physics_RigidBody::LAYER_GROUND, Physics_RigidBody::COLLISIONS_GROUND)
+      @ground.layers(Physics_LayerMask::LAYER_GROUND, Physics_LayerMask::COLLISIONS_GROUND)
       @ground.friction(10)
     end
     #--------------------------------------------------------------------------
@@ -44,9 +44,9 @@ module LMBS
     #--------------------------------------------------------------------------
     def create_sides
       @left_side = LMBS_Borders.new(LEFT_SIDE_X, SIDE_Y, SIDE_WIDTH, SIDE_HEIGHT)
-      @left_side.layers(Physics_RigidBody::LAYER_SIDES, Physics_RigidBody::COLLISIONS_SIDES)
+      @left_side.layers(Physics_LayerMask::LAYER_SIDES, Physics_LayerMask::COLLISIONS_SIDES)
       @right_side = LMBS_Borders.new(RIGHT_SIDE_X, SIDE_Y, SIDE_WIDTH, SIDE_HEIGHT)
-      @right_side.layers(Physics_RigidBody::LAYER_SIDES, Physics_RigidBody::COLLISIONS_SIDES)
+      @right_side.layers(Physics_LayerMask::LAYER_SIDES, Physics_LayerMask::COLLISIONS_SIDES)
     end
     #--------------------------------------------------------------------------
     # * Create Battle Background Sprite

@@ -27,8 +27,8 @@ module LMBS
     # * Set Layers
     #--------------------------------------------------------------------------
     def layers(layer, collision_mask)
-      @rigidbody.layer = layer
-      @rigidbody.collision_mask = collision_mask
+      @collider.layer = layer
+      @collider.collision_mask = collision_mask
     end
     #--------------------------------------------------------------------------
     # * Set Friction

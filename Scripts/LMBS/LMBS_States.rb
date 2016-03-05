@@ -46,7 +46,7 @@ module LMBS
     #--------------------------------------------------------------------------
     # * Update On Collision
     #--------------------------------------------------------------------------
-    def update_collision(battler, hit)
+    def update_collision(battler, collision)
     end
     #--------------------------------------------------------------------------
     # * Update On Movement
@@ -96,8 +96,8 @@ module LMBS
     def exit_state(battler)
       battler.reset_layer
     end
-    def update_collision(battler, hit)
-      if hit.rigidbody.layer == Physics_RigidBody::LAYER_SIDES
+    def update_collision(battler, collision)
+      if collision.collider_hit.layer == Physics_LayerMask::LAYER_SIDES
         battler.stop
       end
     end

@@ -1,7 +1,7 @@
 ﻿#==============================================================================
-# ** Physics AABB
+# ** Physics_BoxCollider
 #------------------------------------------------------------------------------
-#  This class handles Axis-Aligned Bounding Box (AABB) and their collisions
+#  This class handles Box containers and their collisions
 #==============================================================================
 
 class Physics_BoxCollider < Physics_Collider

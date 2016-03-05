@@ -26,6 +26,7 @@ module PhysicsManager
     @active = false
     @rigidbodies = []
     @collisions = []
+    @colliders = []
   end
   #--------------------------------------------------------------------------
   # * Initialize Member Variables
@@ -117,12 +118,12 @@ module PhysicsManager
   #--------------------------------------------------------------------------
   # * Update Collisions
   #--------------------------------------------------------------------------
-  def self.update_collisions(body_a, body_b)
-    return unless colliding_layers(body_a.rigidbody, body_b.rigidbody)
-    collision = Physics_Collider.collision_detection(body_a, body_b)
+  def self.update_collisions(collider_a, collider_b)
+    return unless colliding_layers(collider_a, collider_b)
+    collision = Physics_Collider.collision_detection(collider_a, collider_b)
     if collision && collision.velocity_along_normal <= 0
       @collisions.push(collision)
-      collision.on_collision_trigger
+      collision.on_collision_trigger(collider_a, collider_b)
       collision.resolve
     end
   end

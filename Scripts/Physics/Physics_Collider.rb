@@ -10,10 +10,14 @@ class Physics_Collider
   #--------------------------------------------------------------------------
   attr_accessor :position
   attr_accessor :rigidbody
+  attr_accessor :layer
+  attr_accessor :collision_mask
   #--------------------------------------------------------------------------
   # * Object Initialization
   #--------------------------------------------------------------------------
   def initialize
+    @layer = 0
+    @collision_mask = 0
     PhysicsManager.add_collider(self)
   end
   #--------------------------------------------------------------------------

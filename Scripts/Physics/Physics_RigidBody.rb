@@ -6,29 +6,11 @@
 
 class Physics_RigidBody
   #--------------------------------------------------------------------------
-  # * Collision Layers
-  #--------------------------------------------------------------------------
-  LAYER_ALLY    = 1
-  LAYER_ENEMY   = 2
-  LAYER_RUNNING = 4
-  LAYER_GROUND  = 8
-  LAYER_SIDES   = 16
-  #--------------------------------------------------------------------------
-  # * Collision Bitmasks
-  #--------------------------------------------------------------------------
-  COLLISIONS_ALLY    = LAYER_ENEMY + LAYER_GROUND + LAYER_SIDES
-  COLLISIONS_ENEMY   = LAYER_ALLY + LAYER_GROUND + LAYER_SIDES
-  COLLISIONS_RUNNING = LAYER_GROUND + LAYER_SIDES
-  COLLISIONS_GROUND  = LAYER_ENEMY + LAYER_ALLY + LAYER_RUNNING
-  COLLISIONS_SIDES   = LAYER_ENEMY + LAYER_ALLY + LAYER_RUNNING
-  #--------------------------------------------------------------------------
   # * Public members
   #--------------------------------------------------------------------------
   attr_accessor :velocity
   attr_accessor :use_gravity
   attr_accessor :parent
-  attr_accessor :layer
-  attr_accessor :collision_mask
   attr_accessor :static_friction
   attr_accessor :dynamic_friction
   attr_reader   :restitution
@@ -46,10 +28,7 @@ class Physics_RigidBody
     @restitution = 0.0
     @position = Vector2.zero
     @forces = Vector2.zero
-    @layer = 0
-    @collision_mask = 0
     @static_friction = 0.2
-    @dynamic_friction = 0.1
     @use_gravity = true
     PhysicsManager.add_rigidbody(self)
   end
