@@ -17,10 +17,11 @@ module LMBS
     def initialize(x, y, width, height)
       @transform = LMBS_Transform.new(Vector2.new(x, y))
       @rigidbody = Physics_RigidBody.new(self)
-      @rigidbody.aabb = Physics_AABB.new(Rect.new(0 ,0 , width, height))
+      @rigidbody.position = Vector2.new(@transform.position.x, @transform.position.y)
+      @collider = Physics_BoxCollider.new(Rect.new(0, 0, width, height))
+      @collider.rigidbody = @rigidbody
       @rigidbody.mass = 0
       @rigidbody.use_gravity = false
-      @rigidbody.position = Vector2.new(@transform.position.x, @transform.position.y)
     end
     #--------------------------------------------------------------------------
     # * Set Layers

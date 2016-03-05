@@ -33,7 +33,6 @@ class Physics_RigidBody
   attr_accessor :dynamic_friction
   attr_reader   :restitution
   attr_reader   :forces
-  attr_reader   :aabb
   attr_reader   :position
   attr_reader   :mass
   attr_reader   :inverse_mass
@@ -55,20 +54,11 @@ class Physics_RigidBody
     PhysicsManager.add_rigidbody(self)
   end
   #--------------------------------------------------------------------------
-  # * Set Bounding box
-  #--------------------------------------------------------------------------
-  def aabb=(value)
-    return if @aabb == value
-    @aabb = value
-    @aabb.position = @position
-  end
-  #--------------------------------------------------------------------------
   # * Set Position
   #--------------------------------------------------------------------------
   def position=(value)
     return if @position == value
     @position = value
-    @aabb.position = @position
   end
   #--------------------------------------------------------------------------
   # * Set Mass
@@ -98,27 +88,6 @@ class Physics_RigidBody
   #--------------------------------------------------------------------------
   def dispose
     PhysicsManager.remove_rigidbody(self)
-  end
-  #--------------------------------------------------------------------------
-  # * Determines if body collides
-  # * Returns a collision definition if hit, nil if not
-  #--------------------------------------------------------------------------
-  def self.collision_detection(body_a, body_b)
-    collision = nil
-    if body_a.aabb.is_a?(Physics_AABB)
-      if body_b.aabb.is_a?(Physics_AABB)
-        collision = Physics_AABB.collision(body_a, body_b)
-      elsif body_b.aabb.is_a?(Physics_Circle)
-        collision = Physics_AABB.collision_circle(body_a, body_b)
-      end
-    elsif body_a.aabb.is_a(Physics_Circle)
-      if body_b.aabb.is_a?(Physics_AABB)
-        collision = Physics_AABB.collision_circle(body_b, body_a)
-      elsif body_b.aabb.is_a?(Physics_Circle)
-        collision = Physics_Circle.collision(body_a, body_b)
-      end
-    end
-    return collision
   end
   #--------------------------------------------------------------------------
   # * Apply friction

@@ -64,7 +64,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def create_battler_sprite
       @sprite = LMBS_SpriteBattler.new(@viewport)
-      @sprite.move(@transform.position.x,  @transform.position.y)
+      @sprite.move(@transform.position.x, @transform.position.y)
       @sprite.z = @transform.depth
     end
     #--------------------------------------------------------------------------
@@ -86,8 +86,9 @@ module LMBS
     #--------------------------------------------------------------------------
     def create_rigidbody
       @rigidbody = Physics_RigidBody.new(self)
-      @rigidbody.aabb = Physics_AABB.new(aabb_rect)
       @rigidbody.position = Vector2.new(@transform.position.x, @transform.position.y)
+      @collider = Physics_BoxCollider.new(aabb_rect)
+      @collider.rigidbody = @rigidbody
       reset_layer
     end
     #--------------------------------------------------------------------------
@@ -98,12 +99,6 @@ module LMBS
       rect.x = @transform.position.x - rect.width*0.5
       rect.y = @transform.position.y - rect.height
       rect
-    end
-    #--------------------------------------------------------------------------
-    # * Update AABB
-    #--------------------------------------------------------------------------
-    def update_aabb
-      @rigidbody.move(aabb_rect)
     end
     #--------------------------------------------------------------------------
     # * Called when this object collides
@@ -122,6 +117,7 @@ module LMBS
     # * Free
     #--------------------------------------------------------------------------
     def dispose
+      @collider.dispose
       @rigidbody.dispose
       @sprite.bitmap.dispose
       @sprite.dispose

@@ -35,6 +35,7 @@ module PhysicsManager
     @last_time = Time.now
     @active = true
     @rigidbodies = []
+    @colliders = []
     @collisions = []
     @gravity = Vector2.new(0, GRAVITY * GRAVITY_SCALE)
   end
@@ -51,6 +52,20 @@ module PhysicsManager
   def self.remove_rigidbody(body)
     return if !@rigidbodies.include?(body)
     @rigidbodies.delete(body)
+  end
+  #--------------------------------------------------------------------------
+  # * Add a collider
+  #--------------------------------------------------------------------------
+  def self.add_collider(collider)
+    return if @colliders.include?(collider)
+    @colliders.push(collider)
+  end
+  #--------------------------------------------------------------------------
+  # * Remove a collider
+  #--------------------------------------------------------------------------
+  def self.remove_collider(collider)
+    return if !@colliders.include?(collider)
+    @colliders.delete(collider)
   end
   #--------------------------------------------------------------------------
   # * Physics Loop
@@ -76,9 +91,9 @@ module PhysicsManager
       update_forces(rigidbody)
     }
 
-    (0...@rigidbodies.size).each { |i|
-      ((i + 1)...@rigidbodies.size).each { |j|
-        update_collisions(@rigidbodies[i], @rigidbodies[j])
+    (0...@colliders.size).each { |i|
+      ((i + 1)...@colliders.size).each { |j|
+        update_collisions(@colliders[i], @colliders[j]) #colliders collisions
       }
     }
 
@@ -103,8 +118,8 @@ module PhysicsManager
   # * Update Collisions
   #--------------------------------------------------------------------------
   def self.update_collisions(body_a, body_b)
-    return unless colliding_layers(body_a, body_b)
-    collision = Physics_RigidBody.collision_detection(body_a, body_b)
+    return unless colliding_layers(body_a.rigidbody, body_b.rigidbody)
+    collision = Physics_Collider.collision_detection(body_a, body_b)
     if collision && collision.velocity_along_normal <= 0
       @collisions.push(collision)
       collision.on_collision_trigger
