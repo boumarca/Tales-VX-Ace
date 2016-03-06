@@ -67,14 +67,14 @@ module LMBS
     # * Create Actors
     #--------------------------------------------------------------------------
     def create_actors
-      @battlers.push(LMBS_Battler.new(@viewport, $game_party.members[0]))
-      @battlers.push(LMBS_Battler.new(@viewport, $game_party.members[1]))
+      @battlers.push(LMBS_Actor.new(@viewport, $game_party.members[0]))
+      @battlers.push(LMBS_Actor.new(@viewport, $game_party.members[1]))
     end
     #--------------------------------------------------------------------------
     # * Create Enemies
     #--------------------------------------------------------------------------
     def create_enemies
-      @battlers.push(LMBS_Battler.new(@viewport, Game_Enemy.new(0, 31)))
+      @battlers.push(LMBS_Enemy.new(@viewport, Game_Enemy.new(0, 31)))
     end
     #--------------------------------------------------------------------------
     # * Free Sprites

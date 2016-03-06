@@ -71,15 +71,6 @@ module LMBS
     # * Create Input Controller
     #--------------------------------------------------------------------------
     def create_input_controller
-      if @game_battler.is_a?(Game_Actor)
-        if @game_battler.battle_control == :manual
-          @controller = LMBS_InputPlayer.new
-        elsif @game_battler.battle_control == :auto
-          @controller = LMBS_InputController.new
-        end
-      elsif @game_battler.is_a?(Game_Enemy)
-        @controller = LMBS_InputController.new
-      end
     end
     #--------------------------------------------------------------------------
     # * Create AABB
@@ -164,13 +155,6 @@ module LMBS
     # * Reset Collision Layer
     #--------------------------------------------------------------------------
     def reset_layer
-      if @game_battler.is_a?(Game_Actor)
-        @collider.layer = Physics_LayerMask::LAYER_ALLY
-        @collider.collision_mask = Physics_LayerMask::COLLISIONS_ALLY
-      elsif @game_battler.is_a?(Game_Enemy)
-        @collider.layer = Physics_LayerMask::LAYER_ENEMY
-        @collider.collision_mask = Physics_LayerMask::COLLISIONS_ENEMY
-      end
     end
     #--------------------------------------------------------------------------
     # * Set Facing
@@ -205,7 +189,7 @@ module LMBS
       @rigidbody.velocity.y > 0
     end
     #--------------------------------------------------------------------------
-    # * Set the battler on the runnig collision layers
+    # * Set the battler on the running collision layers
     #--------------------------------------------------------------------------
     def running_layer
       @collider.layer = Physics_LayerMask::LAYER_RUNNING
