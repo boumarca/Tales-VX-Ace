@@ -72,17 +72,13 @@ class Physics_RigidBody
   # * Apply friction
   #--------------------------------------------------------------------------
   def apply_friction(coef_friction)
-    #puts "---"
-    #p coef_friction
     speed = @velocity.length
-  #  p speed
     friction = Vector2.zero
     if coef_friction < speed
       friction = -(@velocity / speed) * coef_friction
     else
       friction = -@velocity
     end
-  #  p friction
     @velocity += friction
   end
 end

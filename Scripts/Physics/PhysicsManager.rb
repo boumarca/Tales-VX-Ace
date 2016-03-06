@@ -94,7 +94,7 @@ module PhysicsManager
 
     (0...@colliders.size).each { |i|
       ((i + 1)...@colliders.size).each { |j|
-        update_collisions(@colliders[i], @colliders[j]) #colliders collisions
+        update_collisions(@colliders[i], @colliders[j])
       }
     }
 
@@ -147,7 +147,7 @@ module PhysicsManager
   #--------------------------------------------------------------------------
   # * Check if colliding layers
   #--------------------------------------------------------------------------
-  def self.colliding_layers(a, b)
-      return (a.collision_mask & b.layer) != 0
+  def self.colliding_layers(collider_a, collider_b)
+    return (collider_a.collision_mask & collider_b.layer) != 0
   end
 end

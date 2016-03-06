@@ -30,18 +30,18 @@ class Physics_CircleCollider < Physics_Collider
   # * Return a collision object including the collision details
   # * Returns nil if no collision.
   #--------------------------------------------------------------------------
-  def self.collision(body_a, body_b)
-    n = body_b.rigidbody.position - body_a.rigidbody.position
-    radii = body_a.radius + body_b.radius
+  def self.collision(circle_a, circle_b)
+    n = circle_b.rigidbody.position - circle_a.rigidbody.position
+    radii = circle_a.radius + circle_b.radius
     radii *= radii
     return nil if normal.squared_length > radii
     distance = normal.length
     if distance != 0
       penetration = radii - distance
       normal = Vector2.new(n.x / distance, n.y / distance)
-      return Physics_Collision.new(body_a.rigidbody, body_b.rigidbody, penetration, normal)
+      return Physics_Collision.new(circle_a.rigidbody, circle_b.rigidbody, penetration, normal)
     else
-      return Physics_Collision.new(body_a.rigidbody, body_b.rigidbody, body_a.radius, Vector2.unit_x)
+      return Physics_Collision.new(circle_a.rigidbody, circle_b.rigidbody, circle_a.radius, Vector2.unit_x)
     end
   end
 end

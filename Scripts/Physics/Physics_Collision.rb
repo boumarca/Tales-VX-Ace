@@ -78,7 +78,6 @@ class Physics_Collision
   # * Apply friction
   #--------------------------------------------------------------------------
   def apply_friction_impulse(friction_impulse)
-    p friction_impulse
     @body_a.velocity -= friction_impulse * @body_a.inverse_mass
     @body_b.velocity += friction_impulse * @body_b.inverse_mass
   end

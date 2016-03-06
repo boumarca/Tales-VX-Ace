@@ -31,20 +31,20 @@ class Physics_Collider
   # * Returns a collision definition if hit, nil if not
   #--------------------------------------------------------------------------
   def self.collision_detection(body_a, body_b)
-    collision = nil
-    if body_a.is_a?(Physics_BoxCollider)
-      if body_b.is_a?(Physics_BoxCollider)
+    #collision = nil
+    #if body_a.is_a?(Physics_BoxCollider)
+    #  if body_b.is_a?(Physics_BoxCollider)
         collision = Physics_BoxCollider.collision(body_a, body_b)
-      elsif body_b.is_a?(Physics_CircleCollider)
-        collision = Physics_BoxCollider.collision_circle(body_a, body_b)
-      end
-    elsif body_a.is_a(Physics_CircleCollider)
-      if body_b.is_a?(Physics_BoxCollider)
-        collision = Physics_BoxCollider.collision_circle(body_b, body_a)
-      elsif body_b.is_a?(Physics_CircleCollider)
-        collision = Physics_CircleCollider.collision(body_a, body_b)
-      end
-    end
+    #  elsif body_b.is_a?(Physics_CircleCollider)
+    #    collision = Physics_BoxCollider.collision_circle(body_a, body_b)
+    #  end
+    #elsif body_a.is_a(Physics_CircleCollider)
+    #  if body_b.is_a?(Physics_BoxCollider)
+    #    collision = Physics_BoxCollider.collision_circle(body_b, body_a)
+    #  elsif body_b.is_a?(Physics_CircleCollider)
+    #    collision = Physics_CircleCollider.collision(body_a, body_b)
+    #  end
+    #end
     return collision
   end
 end
