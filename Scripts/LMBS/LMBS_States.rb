@@ -77,8 +77,8 @@ module LMBS
       @actions = [:attack, :jump, :guarding, :move, :idle]
     end
     def update_command(battler)
-      modifier = battler.facing_left ? -1 : 1
-      battler.horizontal_velocity = battler.walk_speed * modifier
+      side = battler.facing_left ? -1 : 1
+      battler.horizontal_velocity = battler.walk_speed * side
     end
   end
   #==============================================================================
@@ -102,8 +102,8 @@ module LMBS
       end
     end
     def update_command(battler)
-      modifier = battler.facing_left ? -1 : 1
-      battler.horizontal_velocity = battler.walk_speed * modifier * 2
+      side = battler.facing_left ? -1 : 1
+      battler.horizontal_velocity = battler.walk_speed * side * 2
     end
   end
   #==============================================================================
