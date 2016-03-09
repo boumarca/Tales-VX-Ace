@@ -63,6 +63,7 @@ module LMBS
       super(animation_id)
       @actions = [:attack, :jump, :guarding, :move, :idle]
     end
+
     def enter_state(battler)
       super
       battler.horizontal_velocity = 0
@@ -76,6 +77,7 @@ module LMBS
       super(animation_id)
       @actions = [:attack, :jump, :guarding, :move, :idle]
     end
+
     def update_command(battler)
       side = battler.facing_left ? -1 : 1
       battler.horizontal_velocity = battler.walk_speed * side
@@ -89,18 +91,22 @@ module LMBS
       super(animation_id)
       @actions = [:attack, :jump, :stop]
     end
+
     def enter_state(battler)
       super
       battler.running_layer
     end
+
     def exit_state(battler)
       battler.reset_layer
     end
+
     def update_collision(battler, collision)
       if collision.collider_hit.layer == Physics_LayerMask::LAYER_SIDES
         battler.stop
       end
     end
+
     def update_command(battler)
       side = battler.facing_left ? -1 : 1
       battler.horizontal_velocity = battler.walk_speed * side * 2
