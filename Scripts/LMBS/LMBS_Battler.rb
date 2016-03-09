@@ -34,8 +34,7 @@ module LMBS
       create_rigidbody
       create_battler_sprite
       create_input_controller
-      @current_state = @states[:idle]
-      @current_state.enter_state(self)
+      idle
     end
     #--------------------------------------------------------------------------
     # * Create States
@@ -148,7 +147,7 @@ module LMBS
     #--------------------------------------------------------------------------
     def change_state(state)
       return if state.nil? || @current_state == state
-      @current_state.exit_state(self)
+      @current_state.exit_state(self) if @current_state
       @current_state = state
       @current_state.enter_state(self)
     end
