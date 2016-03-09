@@ -97,7 +97,8 @@ module LMBS
     def on_collision(collision)
       if collision.object_hit.is_a?(LMBS_Battler)
         @rigidbody.velocity.x = 0;
-      elsif collision.collider_hit.layer == Physics_LayerMask::LAYER_GROUND
+      end
+      if collision.collider_hit.layer == Physics_LayerMask::LAYER_GROUND
         @rigidbody.velocity.y = 0;
         @grounded = true
       end
@@ -111,6 +112,12 @@ module LMBS
       @rigidbody.dispose
       @sprite.bitmap.dispose
       @sprite.dispose
+    end
+    #--------------------------------------------------------------------------
+    # * Reset Grounded Status
+    #--------------------------------------------------------------------------
+    def reset_ground
+      @grounded = false
     end
     #--------------------------------------------------------------------------
     # * Update
@@ -225,7 +232,6 @@ module LMBS
     # * Jump
     #--------------------------------------------------------------------------
     def jump
-      @grounded = false
       change_state(@states[:jumping])
     end
     #--------------------------------------------------------------------------

@@ -88,22 +88,23 @@ module LMBS
     #--------------------------------------------------------------------------
     def update
       super
-      update_commands
+      pre_physics_update
       PhysicsManager.run_physics
-      update_sprites
+      post_physics_update
     end
     #--------------------------------------------------------------------------
     # * Update Battlers
     #--------------------------------------------------------------------------
-    def update_commands
+    def pre_physics_update
       @battlers.each { |battler|
         battler.update_command
+        battler.reset_ground
       }
     end
     #--------------------------------------------------------------------------
     # * Update Sprites
     #--------------------------------------------------------------------------
-    def update_sprites
+    def post_physics_update
       @battlers.each { |battler|
         battler.update_movement
         battler.update_sprite
