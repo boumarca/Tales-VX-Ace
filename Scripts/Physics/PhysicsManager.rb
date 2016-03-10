@@ -98,8 +98,8 @@ module PhysicsManager
       }
     }
 
-    @rigidbodies.each { |rigidbody|
-      update_position(rigidbody)
+    @colliders.each { |collider|
+      update_position(collider.rigidbody)
     }
 
     @collisions.each { |collision|
