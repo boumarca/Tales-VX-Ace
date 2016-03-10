@@ -30,7 +30,6 @@ class Physics_RigidBody
     @forces = Vector2.zero
     @static_friction = 0.2
     @use_gravity = true
-    PhysicsManager.add_rigidbody(self)
   end
   #--------------------------------------------------------------------------
   # * Set Position
@@ -66,7 +65,6 @@ class Physics_RigidBody
   # * Dispose
   #--------------------------------------------------------------------------
   def dispose
-    PhysicsManager.remove_rigidbody(self)
   end
   #--------------------------------------------------------------------------
   # * Apply friction

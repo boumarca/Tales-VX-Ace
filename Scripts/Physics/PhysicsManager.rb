@@ -41,20 +41,6 @@ module PhysicsManager
     @gravity = Vector2.new(0, GRAVITY * GRAVITY_SCALE)
   end
   #--------------------------------------------------------------------------
-  # * Add a Rigid Body
-  #--------------------------------------------------------------------------
-  def self.add_rigidbody(body)
-    return if @rigidbodies.include?(body)
-    @rigidbodies.push(body)
-  end
-  #--------------------------------------------------------------------------
-  # * Remove a Rigid Body
-  #--------------------------------------------------------------------------
-  def self.remove_rigidbody(body)
-    return if !@rigidbodies.include?(body)
-    @rigidbodies.delete(body)
-  end
-  #--------------------------------------------------------------------------
   # * Add a collider
   #--------------------------------------------------------------------------
   def self.add_collider(collider)
@@ -88,8 +74,8 @@ module PhysicsManager
   # * Update Physics
   #--------------------------------------------------------------------------
   def self.update_physics
-    @rigidbodies.each { |rigidbody|
-      update_forces(rigidbody)
+    @colliders.each { |collider|
+      update_forces(collider.rigidbody)
     }
 
     (0...@colliders.size).each { |i|
@@ -139,9 +125,9 @@ module PhysicsManager
   # * Interpolate Transforms
   #--------------------------------------------------------------------------
   def self.interpolate_transforms(ratio)
-    @rigidbodies.each { |rigidbody|
+    @colliders.each { |collider|
       #rigidbody.position = rigidbody.position * ratio + rigidbody.position * (1 - ratio)
-      rigidbody.parent.transform.position = rigidbody.position
+      collider.rigidbody.parent.transform.position = collider.rigidbody.position #plz refactor!
     }
   end
   #--------------------------------------------------------------------------

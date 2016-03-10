@@ -108,7 +108,6 @@ module LMBS
     #--------------------------------------------------------------------------
     def dispose
       @collider.dispose
-      @rigidbody.dispose
       @sprite.bitmap.dispose
       @sprite.dispose
     end
