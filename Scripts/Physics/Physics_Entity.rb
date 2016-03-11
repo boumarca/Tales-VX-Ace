@@ -5,14 +5,16 @@
 #==============================================================================
 
 class Physics_Entity
-  attr_reader   :parent
   attr_accessor :position
+  attr_reader   :parent
+  attr_accessor :is_trigger
   #--------------------------------------------------------------------------
   # * Object Initialization
   #--------------------------------------------------------------------------
   def initialize(parent)
     @parent = parent
     @position = Vector2.zero
+    @is_trigger = false
   end
   #--------------------------------------------------------------------------
   # * Update entity velocity

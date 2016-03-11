@@ -106,11 +106,17 @@ module PhysicsManager
   def self.update_collisions(collider_a, collider_b)
     return unless colliding_layers(collider_a, collider_b)
     collision = Physics_Collider.collision_detection(collider_a, collider_b)
-    if collision && collision.velocity_along_normal <= 0
+    if collision
+      if collision.is_trigger?
+        return
+      end
+
+      if collision.velocity_along_normal <= 0
       @collisions.push(collision)
-      collision.on_collision_trigger(collider_a, collider_b)
+        collision.on_collision_message(collider_a, collider_b)
       collision.resolve
     end
+  end
   end
   #--------------------------------------------------------------------------
   # * Interpolate Transforms

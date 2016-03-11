@@ -25,6 +25,12 @@ class Physics_Collision
     @normal = normal
   end
   #--------------------------------------------------------------------------
+  # * Collision is a trigger ?
+  #--------------------------------------------------------------------------
+  def is_trigger?
+    @body_a.is_trigger || @body_b.is_trigger
+  end
+  #--------------------------------------------------------------------------
   # * Returns the relative velocity
   #--------------------------------------------------------------------------
   def relative_velocity
@@ -40,7 +46,7 @@ class Physics_Collision
   #--------------------------------------------------------------------------
   # * On Collision Triggers
   #--------------------------------------------------------------------------
-  def on_collision_trigger(collider_a, collider_b)
+  def on_collision_message(collider_a, collider_b)
     if @body_a.parent.respond_to?(:on_collision)
       @collider_hit = collider_b
       @object_hit = @body_b.parent
