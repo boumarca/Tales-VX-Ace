@@ -8,8 +8,10 @@ class Physics_BoxCollider < Physics_Collider
   #--------------------------------------------------------------------------
   # * Public Members
   #--------------------------------------------------------------------------
-  attr_accessor :min
-  attr_accessor :max
+  attr_reader :min
+  attr_reader :max
+  attr_reader :half_width
+  attr_reader :half_height
   #--------------------------------------------------------------------------
   # * Object Initialization
   #--------------------------------------------------------------------------
@@ -17,6 +19,14 @@ class Physics_BoxCollider < Physics_Collider
     super()
     @min = Vector2.new(0, 0)
     @max = Vector2.new(rect.width, rect.height)
+    compute_box
+  end
+  #--------------------------------------------------------------------------
+  # * Compute Collider for optizimation
+  #--------------------------------------------------------------------------
+  def compute_box
+    @half_width = (@max.x - @min.x) / 2.0
+    @half_height = (@max.y - @min.y) / 2.0
   end
   #--------------------------------------------------------------------------
   # * Determines if two AABB collides with each other using SAT
@@ -33,13 +43,9 @@ class Physics_BoxCollider < Physics_Collider
   #--------------------------------------------------------------------------
   def self.collision(box_a, box_b)
     n = box_b.entity.position - box_a.entity.position
-    a_extent_x = (box_a.max.x - box_a.min.x) / 2.0
-    b_extent_x = (box_b.max.x - box_b.min.x) / 2.0
-    x_overlap = a_extent_x + b_extent_x - (n.x).abs
+    x_overlap = box_a.half_width + box_b.half_width - (n.x).abs
     if(x_overlap > 0)
-      a_extent_y = (box_a.max.y - box_a.min.y) / 2.0
-      b_extent_y = (box_b.max.y - box_b.min.y) / 2.0
-      y_overlap = a_extent_y + b_extent_y - (n.y).abs
+      y_overlap = box_a.half_height + box_b.half_height - (n.y).abs
       if(y_overlap > 0)
         if(x_overlap < y_overlap)
           normal = n.x < 0 ? Vector2.unit_x * -1 : Vector2.unit_x
