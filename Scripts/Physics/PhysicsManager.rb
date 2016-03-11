@@ -117,7 +117,7 @@ module PhysicsManager
   #--------------------------------------------------------------------------
   def self.interpolate_transforms(ratio)
     @colliders.each { |collider|
-      #rigidbody.position = rigidbody.position * ratio + rigidbody.position * (1 - ratio)
+      #collider.entity.interpolate_position(ratio)
       collider.entity.update_parent
     }
   end

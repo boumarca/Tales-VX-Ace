@@ -84,4 +84,10 @@ class Physics_RigidBody < Physics_Entity
   def update_parent
     @parent.transform.position = @position
   end
+  #--------------------------------------------------------------------------
+  # * Interpolate entity position
+  #--------------------------------------------------------------------------
+  def interpolate_position(ratio)
+    @position = @position * ratio + @position * (1 - ratio)
+  end
 end
