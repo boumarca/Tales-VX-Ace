@@ -108,6 +108,7 @@ module PhysicsManager
     collision = Physics_Collider.collision_detection(collider_a, collider_b)
     if collision
       if collision.is_trigger?
+        collision.on_trigger_message(collider_a, collider_b)
         return
       end
 

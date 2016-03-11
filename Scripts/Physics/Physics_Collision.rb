@@ -44,7 +44,7 @@ class Physics_Collision
     Vector2.dot_product(relative_velocity, @normal)
   end
   #--------------------------------------------------------------------------
-  # * On Collision Triggers
+  # * Send Message to Colliders on collisions
   #--------------------------------------------------------------------------
   def on_collision_message(collider_a, collider_b)
     if @body_a.parent.respond_to?(:on_collision)
@@ -56,6 +56,17 @@ class Physics_Collision
       @collider_hit = collider_a
       @object_hit = @body_a.parent
       @body_b.parent.on_collision(self)
+    end
+  end
+  #--------------------------------------------------------------------------
+  # * Send Message to Colliders on triggers
+  #--------------------------------------------------------------------------
+  def on_trigger_message(collider_a, collider_b)
+    if @body_a.parent.respond_to?(:on_trigger)
+      @body_a.parent.on_trigger(collider_b)
+    end
+    if @body_b.parent.respond_to?(:on_trigger)
+      @body_b.parent.on_trigger(collider_a)
     end
   end
   #--------------------------------------------------------------------------
