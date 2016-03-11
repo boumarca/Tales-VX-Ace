@@ -63,4 +63,25 @@ class Physics_RigidBody < Physics_Entity
     end
     @velocity += friction
   end
+  #--------------------------------------------------------------------------
+  # * Update Forces
+  #--------------------------------------------------------------------------
+  def update_velocity
+    gravity = @use_gravity ? PhysicsManager.gravity : Vector2.zero
+    @velocity += (@forces * @inverse_mass + gravity) * (PhysicsManager::DELTA_TIME/2.0)
+  end
+  #--------------------------------------------------------------------------
+  # * Update Rigidbody positions
+  #--------------------------------------------------------------------------
+  def update_position
+    @position += @velocity * PhysicsManager::DELTA_TIME
+    update_velocity
+    reset_forces
+  end
+  #--------------------------------------------------------------------------
+  # * Update Parent
+  #--------------------------------------------------------------------------
+  def update_parent
+    @parent.transform.position = @position
+  end
 end

@@ -6,7 +6,7 @@
 
 module PhysicsManager
   #--------------------------------------------------------------------------
-  # * Collision Bitmasks
+  # * Constants
   #--------------------------------------------------------------------------
   FPS = Graphics.frame_rate
   DELTA_TIME = 1.0 / FPS
@@ -39,6 +39,12 @@ module PhysicsManager
     @colliders = []
     @collisions = []
     @gravity = Vector2.new(0, GRAVITY * GRAVITY_SCALE)
+  end
+  #--------------------------------------------------------------------------
+  # * Get Gravity
+  #--------------------------------------------------------------------------
+  def self.gravity
+    @gravity
   end
   #--------------------------------------------------------------------------
   # * Add a collider
@@ -75,8 +81,7 @@ module PhysicsManager
   #--------------------------------------------------------------------------
   def self.update_physics
     @colliders.each { |collider|
-      next unless collider.entity.is_a?(Physics_RigidBody)
-      update_forces(collider.entity)
+      collider.entity.update_velocity
     }
 
     (0...@colliders.size).each { |i|
@@ -86,8 +91,7 @@ module PhysicsManager
     }
 
     @colliders.each { |collider|
-      next unless collider.entity.is_a?(Physics_RigidBody)
-      update_position(collider.entity)
+      collider.entity.update_position
     }
 
     @collisions.each { |collision|
@@ -95,13 +99,6 @@ module PhysicsManager
     }
 
     @collisions.clear
-  end
-  #--------------------------------------------------------------------------
-  # * Update Forces
-  #--------------------------------------------------------------------------
-  def self.update_forces(rigidbody)
-    gravity = rigidbody.use_gravity ? @gravity : Vector2.zero
-    rigidbody.velocity += (rigidbody.forces * rigidbody.inverse_mass + gravity) * (DELTA_TIME/2.0)
   end
   #--------------------------------------------------------------------------
   # * Update Collisions
@@ -116,20 +113,12 @@ module PhysicsManager
     end
   end
   #--------------------------------------------------------------------------
-  # * Update Rigidbody positions
-  #--------------------------------------------------------------------------
-  def self.update_position(rigidbody)
-    rigidbody.position += rigidbody.velocity * DELTA_TIME
-    update_forces(rigidbody)
-    rigidbody.reset_forces
-  end
-  #--------------------------------------------------------------------------
   # * Interpolate Transforms
   #--------------------------------------------------------------------------
   def self.interpolate_transforms(ratio)
     @colliders.each { |collider|
       #rigidbody.position = rigidbody.position * ratio + rigidbody.position * (1 - ratio)
-      collider.entity.parent.transform.position = collider.entity.position #plz refactor!
+      collider.entity.update_parent
     }
   end
   #--------------------------------------------------------------------------
