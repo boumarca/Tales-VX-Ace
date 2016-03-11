@@ -11,8 +11,7 @@ class Physics_RigidBody
   attr_accessor :velocity
   attr_accessor :use_gravity
   attr_accessor :parent
-  attr_accessor :static_friction
-  attr_accessor :dynamic_friction
+  attr_accessor :friction
   attr_reader   :restitution
   attr_reader   :forces
   attr_reader   :position
@@ -28,7 +27,7 @@ class Physics_RigidBody
     @restitution = 0.0
     @position = Vector2.zero
     @forces = Vector2.zero
-    @static_friction = 0.2
+    @friction = 0.2
     @use_gravity = true
   end
   #--------------------------------------------------------------------------

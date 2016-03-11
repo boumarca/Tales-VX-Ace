@@ -33,8 +33,8 @@ module LMBS
     #--------------------------------------------------------------------------
     # * Set Friction
     #--------------------------------------------------------------------------
-    def friction(static)
-      @rigidbody.static_friction = static
+    def friction(f)
+      @rigidbody.friction = f
     end
   end
 end

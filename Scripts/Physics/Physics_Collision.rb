@@ -61,8 +61,8 @@ class Physics_Collision
     impulse_magnitude /= @body_a.inverse_mass + @body_b.inverse_mass
     impulse = @normal * impulse_magnitude
     apply_impulse(impulse)
-    @body_a.apply_friction(@body_b.static_friction)
-    @body_b.apply_friction(@body_a.static_friction)
+    @body_a.apply_friction(@body_b.friction)
+    @body_b.apply_friction(@body_a.friction)
   end
   #--------------------------------------------------------------------------
   # * Apply impulse
