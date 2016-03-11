@@ -32,7 +32,7 @@ class Physics_BoxCollider < Physics_Collider
   # * Returns nil if no collision.
   #--------------------------------------------------------------------------
   def self.collision(box_a, box_b)
-    n = box_b.rigidbody.position - box_a.rigidbody.position
+    n = box_b.entity.position - box_a.entity.position
     a_extent_x = (box_a.max.x - box_a.min.x) / 2.0
     b_extent_x = (box_b.max.x - box_b.min.x) / 2.0
     x_overlap = a_extent_x + b_extent_x - (n.x).abs
@@ -43,10 +43,10 @@ class Physics_BoxCollider < Physics_Collider
       if(y_overlap > 0)
         if(x_overlap < y_overlap)
           normal = n.x < 0 ? Vector2.unit_x * -1 : Vector2.unit_x
-          return Physics_Collision.new(box_a.rigidbody, box_b.rigidbody, x_overlap, normal)
+          return Physics_Collision.new(box_a.entity, box_b.entity, x_overlap, normal)
         else
           normal = n.y < 0 ? Vector2.unit_y * -1 : Vector2.unit_y * 1
-          return Physics_Collision.new(box_a.rigidbody, box_b.rigidbody, y_overlap, normal)
+          return Physics_Collision.new(box_a.entity, box_b.entity, y_overlap, normal)
         end
       end
       return nil

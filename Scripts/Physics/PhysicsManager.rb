@@ -75,7 +75,8 @@ module PhysicsManager
   #--------------------------------------------------------------------------
   def self.update_physics
     @colliders.each { |collider|
-      update_forces(collider.rigidbody)
+      next unless collider.entity.is_a?(Physics_RigidBody)
+      update_forces(collider.entity)
     }
 
     (0...@colliders.size).each { |i|
@@ -85,7 +86,8 @@ module PhysicsManager
     }
 
     @colliders.each { |collider|
-      update_position(collider.rigidbody)
+      next unless collider.entity.is_a?(Physics_RigidBody)
+      update_position(collider.entity)
     }
 
     @collisions.each { |collision|
@@ -127,7 +129,7 @@ module PhysicsManager
   def self.interpolate_transforms(ratio)
     @colliders.each { |collider|
       #rigidbody.position = rigidbody.position * ratio + rigidbody.position * (1 - ratio)
-      collider.rigidbody.parent.transform.position = collider.rigidbody.position #plz refactor!
+      collider.entity.parent.transform.position = collider.entity.position #plz refactor!
     }
   end
   #--------------------------------------------------------------------------

@@ -78,7 +78,7 @@ module LMBS
       @rigidbody = Physics_RigidBody.new(self)
       @rigidbody.position = Vector2.new(@transform.position.x, @transform.position.y)
       @collider = Physics_BoxCollider.new(aabb_rect)
-      @collider.rigidbody = @rigidbody
+      @collider.entity = @rigidbody
       reset_layer
     end
     #--------------------------------------------------------------------------

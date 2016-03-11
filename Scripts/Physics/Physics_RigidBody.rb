@@ -4,38 +4,28 @@
 #  This class handles rigid bodies and contains differents physical properties
 #==============================================================================
 
-class Physics_RigidBody
+class Physics_RigidBody < Physics_Entity
   #--------------------------------------------------------------------------
   # * Public members
   #--------------------------------------------------------------------------
   attr_accessor :velocity
   attr_accessor :use_gravity
-  attr_accessor :parent
   attr_accessor :friction
   attr_reader   :restitution
   attr_reader   :forces
-  attr_reader   :position
   attr_reader   :mass
   attr_reader   :inverse_mass
   #--------------------------------------------------------------------------
   # * Object Initialization
   #--------------------------------------------------------------------------
   def initialize(parent)
-    @parent = parent
+    super(parent)
     self.mass = 1
     @velocity = Vector2.zero
     @restitution = 0.0
-    @position = Vector2.zero
     @forces = Vector2.zero
     @friction = 0.2
     @use_gravity = true
-  end
-  #--------------------------------------------------------------------------
-  # * Set Position
-  #--------------------------------------------------------------------------
-  def position=(value)
-    return if @position == value
-    @position = value
   end
   #--------------------------------------------------------------------------
   # * Set Mass
@@ -59,11 +49,6 @@ class Physics_RigidBody
   #--------------------------------------------------------------------------
   def reset_forces
     @forces = Vector2.zero
-  end
-  #--------------------------------------------------------------------------
-  # * Dispose
-  #--------------------------------------------------------------------------
-  def dispose
   end
   #--------------------------------------------------------------------------
   # * Apply friction

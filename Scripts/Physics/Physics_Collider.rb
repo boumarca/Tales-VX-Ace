@@ -8,8 +8,7 @@ class Physics_Collider
   #--------------------------------------------------------------------------
   # * Public Members
   #--------------------------------------------------------------------------
-  attr_accessor :position
-  attr_accessor :rigidbody
+  attr_accessor :entity
   attr_accessor :layer
   attr_accessor :collision_mask
   #--------------------------------------------------------------------------

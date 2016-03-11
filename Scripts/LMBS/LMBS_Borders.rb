@@ -19,7 +19,7 @@ module LMBS
       @rigidbody = Physics_RigidBody.new(self)
       @rigidbody.position = Vector2.new(@transform.position.x, @transform.position.y)
       @collider = Physics_BoxCollider.new(Rect.new(0, 0, width, height))
-      @collider.rigidbody = @rigidbody
+      @collider.entity = @rigidbody
       @rigidbody.mass = 0
       @rigidbody.use_gravity = false
     end
