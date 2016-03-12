@@ -13,8 +13,8 @@ class Physics_Collision
   #--------------------------------------------------------------------------
   # * Public Members
   #--------------------------------------------------------------------------
-  attr_reader :collider_hit
-  attr_reader :object_hit
+  attr_accessor :collider_hit
+  attr_accessor :object_hit
   attr_reader :collider_a
   attr_reader :collider_b
   #--------------------------------------------------------------------------
@@ -51,15 +51,17 @@ class Physics_Collision
   # * Send Message to Colliders on collisions
   #--------------------------------------------------------------------------
   def on_collision_message
+    collision_a = self.dup
+    collision_b = self.dup
     if @body_a.parent.respond_to?(:on_collision)
-      @collider_hit = @collider_b
-      @object_hit = @body_b.parent
-      @body_a.parent.on_collision(self)
+      collision_a.collider_hit = @collider_b
+      collision_a.object_hit = @body_b.parent
+      @body_a.parent.on_collision(collision_a)
     end
     if @body_b.parent.respond_to?(:on_collision)
-      @collider_hit = @collider_a
-      @object_hit = @body_a.parent
-      @body_b.parent.on_collision(self)
+      collision_b.collider_hit = @collider_a
+      collision_b.object_hit = @body_a.parent
+      @body_b.parent.on_collision(collision_b)
     end
   end
   #--------------------------------------------------------------------------
