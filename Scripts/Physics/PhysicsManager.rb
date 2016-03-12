@@ -108,16 +108,16 @@ module PhysicsManager
     collision = Physics_Collider.collision_detection(collider_a, collider_b)
     if collision
       if collision.is_trigger?
-        collision.on_trigger_message(collider_a, collider_b)
+        collision.on_trigger_message
         return
       end
 
       if collision.velocity_along_normal <= 0
-      @collisions.push(collision)
-        collision.on_collision_message(collider_a, collider_b)
-      collision.resolve
+        @collisions.push(collision)
+        collision.resolve
+        collision.on_collision_message
+      end
     end
-  end
   end
   #--------------------------------------------------------------------------
   # * Interpolate Transforms

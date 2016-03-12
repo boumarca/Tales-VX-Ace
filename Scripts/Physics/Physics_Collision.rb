@@ -15,12 +15,16 @@ class Physics_Collision
   #--------------------------------------------------------------------------
   attr_reader :collider_hit
   attr_reader :object_hit
+  attr_reader :collider_a
+  attr_reader :collider_b
   #--------------------------------------------------------------------------
   # * Object Initialization
   #--------------------------------------------------------------------------
-  def initialize(body_a, body_b, penetration, normal)
-    @body_a = body_a
-    @body_b = body_b
+  def initialize(collider_a, collider_b, penetration, normal)
+    @collider_a = collider_a
+    @collider_b = collider_b
+    @body_a = collider_a.entity
+    @body_b = collider_b.entity
     @penetration = penetration
     @normal = normal
   end
@@ -46,14 +50,14 @@ class Physics_Collision
   #--------------------------------------------------------------------------
   # * Send Message to Colliders on collisions
   #--------------------------------------------------------------------------
-  def on_collision_message(collider_a, collider_b)
+  def on_collision_message
     if @body_a.parent.respond_to?(:on_collision)
-      @collider_hit = collider_b
+      @collider_hit = @collider_b
       @object_hit = @body_b.parent
       @body_a.parent.on_collision(self)
     end
     if @body_b.parent.respond_to?(:on_collision)
-      @collider_hit = collider_a
+      @collider_hit = @collider_a
       @object_hit = @body_a.parent
       @body_b.parent.on_collision(self)
     end
@@ -61,12 +65,12 @@ class Physics_Collision
   #--------------------------------------------------------------------------
   # * Send Message to Colliders on triggers
   #--------------------------------------------------------------------------
-  def on_trigger_message(collider_a, collider_b)
+  def on_trigger_message
     if @body_a.parent.respond_to?(:on_trigger)
-      @body_a.parent.on_trigger(collider_b)
+      @body_a.parent.on_trigger(@collider_b)
     end
     if @body_b.parent.respond_to?(:on_trigger)
-      @body_b.parent.on_trigger(collider_a)
+      @body_b.parent.on_trigger(@collider_a)
     end
   end
   #--------------------------------------------------------------------------

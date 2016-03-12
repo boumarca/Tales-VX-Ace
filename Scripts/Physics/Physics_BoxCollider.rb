@@ -49,10 +49,10 @@ class Physics_BoxCollider < Physics_Collider
       if(y_overlap > 0)
         if(x_overlap < y_overlap)
           normal = n.x < 0 ? Vector2.unit_x * -1 : Vector2.unit_x
-          return Physics_Collision.new(box_a.entity, box_b.entity, x_overlap, normal)
+          return Physics_Collision.new(box_a, box_b, x_overlap, normal)
         else
           normal = n.y < 0 ? Vector2.unit_y * -1 : Vector2.unit_y
-          return Physics_Collision.new(box_a.entity, box_b.entity, y_overlap, normal)
+          return Physics_Collision.new(box_a, box_b, y_overlap, normal)
         end
       end
       return nil
