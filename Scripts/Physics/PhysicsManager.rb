@@ -37,7 +37,7 @@ module PhysicsManager
     @active = true
     @rigidbodies = []
     @colliders = []
-    @collisions = []
+    @new_collisions = []
     @gravity = Vector2.new(0, GRAVITY * GRAVITY_SCALE)
   end
   #--------------------------------------------------------------------------
