@@ -25,7 +25,7 @@ module PhysicsManager
   def self.stop
     @active = false
     @rigidbodies = []
-    @collisions = []
+    @new_collisions = []
     @colliders = []
   end
   #--------------------------------------------------------------------------
@@ -80,52 +80,83 @@ module PhysicsManager
   # * Update Physics
   #--------------------------------------------------------------------------
   def self.update_physics
+    update_velocities
+    update_collisions
+    send_messages
+    update_positions
+    correct_position
+    clear_collisions
+  end
+  #--------------------------------------------------------------------------
+  # * Update Velocities
+  #--------------------------------------------------------------------------
+  def self.update_velocities
     @colliders.each { |collider|
       collider.entity.update_velocity
     }
-
+  end
+  #--------------------------------------------------------------------------
+  # * Update Collisions
+  #--------------------------------------------------------------------------
+  def self.update_collisions
     (0...@colliders.size).each { |i|
       ((i + 1)...@colliders.size).each { |j|
-        update_collisions(@colliders[i], @colliders[j])
+        solve_collisions(@colliders[i], @colliders[j])
       }
     }
+  end
+  #--------------------------------------------------------------------------
+  # * Solve Collisions
+  #--------------------------------------------------------------------------
+  def self.solve_collisions(collider_a, collider_b)
+    return unless colliding_layers(collider_a, collider_b)
+    collision = Physics_Collider.collision_detection(collider_a, collider_b)
+    if collision
+      if collision.is_trigger?
+        @new_collisions.push(collision)
+        return
+      end
 
-    @collisions.each { |collision|
+      if collision.velocity_along_normal <= 0
+        @new_collisions.push(collision)
+        collision.resolve
+      end
+    end
+  end
+  #--------------------------------------------------------------------------
+  # * Update Collisions
+  #--------------------------------------------------------------------------
+  def self.send_messages
+    @new_collisions.each { |collision|
       if collision.is_trigger?
         collision.on_trigger_message
       else
         collision.on_collision_message
       end
     }
-
+  end
+  #--------------------------------------------------------------------------
+  # * Update Positions
+  #--------------------------------------------------------------------------
+  def self.update_positions
     @colliders.each { |collider|
       collider.entity.update_position
     }
-
-    @collisions.each { |collision|
-      next if collision.is_trigger?
-      collision.positional_correction
-    }
-
-    @collisions.clear
   end
   #--------------------------------------------------------------------------
   # * Update Collisions
   #--------------------------------------------------------------------------
-  def self.update_collisions(collider_a, collider_b)
-    return unless colliding_layers(collider_a, collider_b)
-    collision = Physics_Collider.collision_detection(collider_a, collider_b)
-    if collision
-      if collision.is_trigger?
-        @collisions.push(collision)
-        return
-      end
-
-      if collision.velocity_along_normal <= 0
-        @collisions.push(collision)
-        collision.resolve
-      end
-    end
+  def self.correct_position
+    @new_collisions.each { |collision|
+      next if collision.is_trigger?
+      collision.positional_correction
+    }
+  end
+  #--------------------------------------------------------------------------
+  # * Clear Collisions
+  #--------------------------------------------------------------------------
+  def self.clear_collisions
+    @new_collisions.clear
   end
   #--------------------------------------------------------------------------
   # * Interpolate Transforms
