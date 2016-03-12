@@ -90,11 +90,20 @@ module PhysicsManager
       }
     }
 
+    @collisions.each { |collision|
+      if collision.is_trigger?
+        collision.on_trigger_message
+      else
+        collision.on_collision_message
+      end
+    }
+
     @colliders.each { |collider|
       collider.entity.update_position
     }
 
     @collisions.each { |collision|
+      next if collision.is_trigger?
       collision.positional_correction
     }
 
@@ -108,14 +117,13 @@ module PhysicsManager
     collision = Physics_Collider.collision_detection(collider_a, collider_b)
     if collision
       if collision.is_trigger?
-        collision.on_trigger_message
+        @collisions.push(collision)
         return
       end
 
       if collision.velocity_along_normal <= 0
         @collisions.push(collision)
         collision.resolve
-        collision.on_collision_message
       end
     end
   end
