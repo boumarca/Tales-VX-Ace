@@ -93,7 +93,7 @@ module LMBS
     #--------------------------------------------------------------------------
     # * Called when this object collides
     #--------------------------------------------------------------------------
-    def on_collision(collision)
+    def on_collision_stay(collision)
       if collision.object_hit.is_a?(LMBS_Battler)
         @rigidbody.velocity.x = 0;
       end

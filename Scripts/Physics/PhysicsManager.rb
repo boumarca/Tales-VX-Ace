@@ -25,6 +25,7 @@ module PhysicsManager
   def self.stop
     @active = false
     @rigidbodies = []
+    @old_collisions = []
     @new_collisions = []
     @colliders = []
   end
@@ -37,6 +38,7 @@ module PhysicsManager
     @active = true
     @rigidbodies = []
     @colliders = []
+    @old_collisions = []
     @new_collisions = []
     @gravity = Vector2.new(0, GRAVITY * GRAVITY_SCALE)
   end
@@ -82,7 +84,7 @@ module PhysicsManager
   def self.update_physics
     update_velocities
     update_collisions
-    send_messages
+    notify_collisions
     update_positions
     correct_position
     clear_collisions
@@ -116,7 +118,6 @@ module PhysicsManager
         @new_collisions.push(collision)
         return
       end
-
       if collision.velocity_along_normal <= 0
         @new_collisions.push(collision)
         collision.resolve
@@ -126,13 +127,19 @@ module PhysicsManager
   #--------------------------------------------------------------------------
   # * Update Collisions
   #--------------------------------------------------------------------------
-  def self.send_messages
+  def self.notify_collisions
     @new_collisions.each { |collision|
-      if collision.is_trigger?
-        collision.on_trigger_message
+      old = @old_collisions.find {|obj|  collision.same_colliders(obj)}
+      if old
+        @old_collisions.delete(old)
+        collision.send_message(:on_trigger_stay, :on_collision_stay)
       else
-        collision.on_collision_message
+        collision.send_message(:on_trigger_enter, :on_collision_enter)
       end
+    }
+
+    @old_collisions.each { |collision|
+      collision.send_message(:on_trigger_exit, :on_collision_exit)       
     }
   end
   #--------------------------------------------------------------------------
@@ -156,7 +163,8 @@ module PhysicsManager
   # * Clear Collisions
   #--------------------------------------------------------------------------
   def self.clear_collisions
-    @new_collisions.clear
+    @old_collisions = @new_collisions
+    @new_collisions = []
   end
   #--------------------------------------------------------------------------
   # * Interpolate Transforms
