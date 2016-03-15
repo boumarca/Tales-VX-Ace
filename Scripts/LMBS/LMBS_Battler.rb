@@ -51,6 +51,7 @@ module LMBS
       @states[:landing] = LMBS_LandingState.new(@game_battler.battle_animations[:landing])
       @states[:attacking] = LMBS_AttackingState.new(@game_battler.battle_animations[:attack1])
       @states[:attack_cooldown] = LMBS_AttackCooldownState.new(@game_battler.battle_animations[:attack1])
+      @states[:hurt] = LMBS_HurtState.new(@game_battler.battle_animations[:hurt])
     end
     #--------------------------------------------------------------------------
     # * Create Transform Component
@@ -106,7 +107,8 @@ module LMBS
     #--------------------------------------------------------------------------
     # * Called when this object is in a trigger
     #--------------------------------------------------------------------------
-    def on_trigger(collider)
+    def on_trigger_enter(collider)
+      hurt
     end
     #--------------------------------------------------------------------------
     # * Free
@@ -272,6 +274,12 @@ module LMBS
     #--------------------------------------------------------------------------
     def attack_cooldown
       change_state(@states[:attack_cooldown])
+    end
+    #--------------------------------------------------------------------------
+    # * Hurt battler
+    #--------------------------------------------------------------------------
+    def hurt
+      change_state(@states[:hurt])
     end
   end
 end

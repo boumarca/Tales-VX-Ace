@@ -207,7 +207,24 @@ module LMBS
     def enter_state(battler)
       @start_time = Time.now
     end
-    def exit_state(battler)
+    def update_movement(battler)
+      if Time.now - @start_time >= COOLDOWN_TIME
+        battler.idle
+      end
+    end
+  end
+  #==============================================================================
+  # * Hurt State
+  #==============================================================================
+  class LMBS_HurtState < LMBS_AnimationState
+    COOLDOWN_TIME = 0.5
+    def initialize(animation_id)
+      super(animation_id)
+      @actions = []
+    end
+    def enter_state(battler)
+      super
+      @start_time = Time.now
     end
     def update_movement(battler)
       if Time.now - @start_time >= COOLDOWN_TIME
